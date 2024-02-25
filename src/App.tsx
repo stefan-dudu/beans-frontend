@@ -60,7 +60,7 @@ function App() {
     return <h2>Search</h2>;
   };
   const Stats = () => {
-    return <h2>Home</h2>;
+    return <h2>Stats</h2>;
   };
   const UserProfile = () => {
     return <h2>UserProfile</h2>;
