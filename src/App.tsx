@@ -43,7 +43,7 @@ function App() {
   const Home = () => {
     return (
       <div>
-        <h2>Count4: {count}</h2>
+        <h2>Count5: {count}</h2>
         <div>
           <button onClick={() => dispatch(decrement())}>Decrement -</button>
           <button onClick={() => dispatch(incrementByValue(10))}>
