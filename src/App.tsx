@@ -4,6 +4,7 @@ import { Routes, Route, Outlet, Link } from "react-router-dom";
 import "./App.css";
 import { AppDispatch, RootState } from "./store/store";
 import { decrement, incrementByValue } from "./store/counter/counterSlice";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   const count = useSelector((state: RootState) => state.counter.value);
@@ -62,9 +63,9 @@ function App() {
   const Stats = () => {
     return <h2>Stats</h2>;
   };
-  const UserProfile = () => {
-    return <h2>UserProfile</h2>;
-  };
+  // const UserProfile = () => {
+  //   return <h2>UserProfile</h2>;
+  // };
   const CatchPage = () => {
     return <h2>CatchPage</h2>;
   };
