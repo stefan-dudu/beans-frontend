@@ -33,7 +33,9 @@ const UserProfile: React.FC = () => {
   useEffect(() => {
     const fetchDataForPosts = async () => {
       try {
-        const response = await fetch(`http://beans-be.vercel.app/api/v1/beans`);
+        const response = await fetch(
+          `https://beans-be.vercel.app/api/v1/beans`
+        );
         if (!response.ok) {
           throw new Error(`HTTP error: Status ${response.status}`);
         }
