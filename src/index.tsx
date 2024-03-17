@@ -6,12 +6,14 @@ import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
+    <SpeedInsights />
     <Provider store={store}>
       <BrowserRouter>
         <App />
