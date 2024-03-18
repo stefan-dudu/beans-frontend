@@ -1,0 +1,14 @@
+const count = useSelector((state: RootState) => state.counter.value);
+  const Home = () => {
+    return (
+      <div>
+        <h2>Count5: {count}</h2>
+        <div>
+          <button onClick={() => dispatch(decrement())}>Decrement -</button>
+          <button onClick={() => dispatch(incrementByValue(10))}>
+            Increment +
+          </button>
+        </div>
+      </div>
+    );
+  };
