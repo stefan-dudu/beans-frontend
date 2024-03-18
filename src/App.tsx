@@ -71,21 +71,8 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/livematch/:id" element={<LiveMatchDetails />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/stats" element={<Stats />} />
-          <Route path="/profile" element={<UserProfile />} />
-
-          {/* Using path="*"" means "match anything", so this route
-                acts like a catch-all for URLs that we don't have explicit
-                routes for. */}
-          <Route path="*" element={<CatchPage />} />
-        </Route>
-      </Routes>
+    <div className="App-header">
+      <h2>Soon ☕</h2>
     </div>
   );
 }
