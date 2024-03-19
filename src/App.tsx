@@ -1,21 +1,22 @@
-// App.js
-import React, { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Routes, Route, Outlet, Link } from "react-router-dom";
 import "./App.scss";
+import { AppDispatch, RootState } from "./store/store";
+import { decrement, incrementByValue } from "./store/counter/counterSlice";
+import UserProfile from "./pages/UserProfile";
+import NavigationBar from "./components/NavigationBar";
 
-const App = () => {
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-
-  const toggleMobileMenu = () => {
-    setShowMobileMenu(!showMobileMenu);
-  };
-
-  return (
-    <div className="App">
-      <header className="header">
-        <div className="logo">Your Logo</div>
-        <nav className="navigation">
-          <ul className="desktop-menu navigation-links">
+function App() {
+  const count = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch<AppDispatch>();
+  function Layout() {
+    return (
+      <div>
+        {/* A "layout route" is a good place to put markup you want to
+            share across all the pages on your site, like navigation. */}
+        <nav>
+          <ul>
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -26,53 +27,167 @@ const App = () => {
               <Link to="/stats">Stats</Link>
             </li>
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link to="/profile">User profile</Link>
             </li>
           </ul>
-          <div className="menu-icon" onClick={toggleMobileMenu}>
-            ☰
-          </div>
         </nav>
-      </header>
-      {showMobileMenu && (
-        <div className="mobile-menu">
-          <div className="overlay" onClick={toggleMobileMenu}></div>
-          <div className="menu-content">
-            <ul className="navigation-links">
-              <li>
-                <Link to="/" onClick={toggleMobileMenu}>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/search" onClick={toggleMobileMenu}>
-                  Search
-                </Link>
-              </li>
-              <li>
-                <Link to="/stats" onClick={toggleMobileMenu}>
-                  Stats
-                </Link>
-              </li>
-              <li>
-                <Link to="/profile" onClick={toggleMobileMenu}>
-                  Profile
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      )}
-      <div className="content">
-        <Routes>
-          <Route path="/" element={<h2>Home</h2>} />
-          <Route path="/search" element={<h2>Search</h2>} />
-          <Route path="/stats" element={<h2>Stats</h2>} />
-          <Route path="/profile" element={<h2>Profile</h2>} />
-        </Routes>
+
+        <hr />
+
+        {/* An <Outlet> renders whatever child route is currently active,
+            so you can think about this <Outlet> as a placeholder for
+            the child routes we defined above. */}
+        <Outlet />
       </div>
+    );
+  }
+
+  const Home = () => {
+    return (
+      <div>
+        <h2>Count5: {count}</h2>
+        <div>
+          <button onClick={() => dispatch(decrement())}>Decrement -</button>
+          <button onClick={() => dispatch(incrementByValue(10))}>
+            Increment +
+          </button>
+        </div>
+      </div>
+    );
+  };
+  const LiveMatchDetails = () => {
+    return <h2>LiveMatchDetails</h2>;
+  };
+  const Search = () => {
+    return <h2>Search</h2>;
+  };
+  const Stats = () => {
+    return <h2>Stats</h2>;
+  };
+  const UserProfile = () => {
+    return <h2>UserProfile</h2>;
+  };
+  const CatchPage = () => {
+    return <h2>CatchPage</h2>;
+  };
+
+  return (
+    <div className="App-header">
+      <NavigationBar />
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
+      <h2>Content</h2>
     </div>
   );
-};
+}
 
 export default App;
