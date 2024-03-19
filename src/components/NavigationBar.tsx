@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import logo from "../assets/logo2.png";
+import { NavLink } from "react-router-dom";
 
 function NavigationBar() {
   return (
@@ -15,7 +16,7 @@ function NavigationBar() {
     >
       <Container fluid>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Brand href="#home">
+        <Nav.Link as={NavLink} to="">
           <img
             src={logo}
             width="40"
@@ -23,7 +24,7 @@ function NavigationBar() {
             className="d-inline-block align-top"
             alt="React Bootstrap logo"
           />
-        </Navbar.Brand>
+        </Nav.Link>
         <Form className="d-flex">
           <Form.Control
             type="search"
@@ -35,9 +36,12 @@ function NavigationBar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Container>
             <Nav className="me-auto justify-content-md-center">
-              <Nav.Link href="#features">Features</Nav.Link>
-              <Nav.Link href="#locations">Locations</Nav.Link>
-              <Nav.Link href="#pricing">Pricing</Nav.Link>
+              <Nav.Link as={NavLink} to="/features">
+                Features
+              </Nav.Link>
+              <Nav.Link as={NavLink} to="/locations">
+                Locations
+              </Nav.Link>
             </Nav>
           </Container>
           <Nav>
