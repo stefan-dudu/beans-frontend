@@ -1,22 +1,64 @@
 import React from "react";
+import HomeCarousel from "../components/HomeCarousel";
+import TopItems from "../components/TopItems";
+import "./Home.scss";
 
 type Props = {};
 
 const Home = (props: Props) => {
   return (
     <div>
-      <h2>Home</h2>
-      <h2>Home</h2>
-      <h2>Home</h2>
-      <h2>Home</h2>
-      <h2>Home</h2>
-      <h2>Home</h2>
-      <h2>Home</h2>
-      <h2>Home</h2>
-      <h2>Home</h2>
-      <h2>Home</h2>
-      <h2>Home</h2>
-      <h2>Home</h2>
+      <TopItems />
+      <div className="articles">
+        <h2>Title</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. In blandit
+          tincidunt aliquam. Vestibulum ante ipsum primis in faucibus orci
+          luctus et ultrices posuere cubilia curae;
+        </p>
+      </div>
+      <div className="articles">
+        <h2>Title</h2>
+        <p>
+          Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
+          Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
+        </p>
+      </div>
+      <div className="articles">
+        <h2>Title</h2>
+        <p>
+          Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
+          Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
+        </p>
+      </div>{" "}
+      <div className="articles">
+        <h2>Title</h2>
+        <p>
+          Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
+          Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
+        </p>
+      </div>{" "}
+      <div className="articles">
+        <h2>Title</h2>
+        <p>
+          Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
+          Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
+        </p>
+      </div>{" "}
+      <div className="articles">
+        <h2>Title</h2>
+        <p>
+          Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
+          Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
+        </p>
+      </div>{" "}
+      <div className="articles">
+        <h2>Title</h2>
+        <p>
+          Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
+          Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
+        </p>
+      </div>
     </div>
   );
 };
