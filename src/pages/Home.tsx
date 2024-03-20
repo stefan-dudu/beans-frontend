@@ -1,13 +1,14 @@
 import React from "react";
-import HomeCarousel from "../components/HomeCarousel";
 import TopItems from "../components/TopItems";
 import "./Home.scss";
+import DynamicSearchBar from "../components/searchBar/DynamicSearchBar";
 
 type Props = {};
 
 const Home = (props: Props) => {
   return (
     <div>
+      <DynamicSearchBar />
       <TopItems />
       <div className="articles">
         <h2>Title</h2>

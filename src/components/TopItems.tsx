@@ -48,7 +48,9 @@ const TopItems = (props: Props) => {
         <div className="item">
           {
             <img
-              src={bean1}
+              src={
+                "https://baristretto-bucket.s3.eu-central-1.amazonaws.com/ethiopian-yirgacheffe.jpg"
+              }
               width="200"
               height="200"
               className="d-inline-block align-top"
@@ -59,7 +61,9 @@ const TopItems = (props: Props) => {
         <div className="item">
           {
             <img
-              src={bean2}
+              src={
+                "https://baristretto-bucket.s3.eu-central-1.amazonaws.com/kenyan-aa.jpg"
+              }
               width="200"
               height="200"
               className="d-inline-block align-top"
