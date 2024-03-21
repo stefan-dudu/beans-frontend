@@ -8,7 +8,6 @@ type Props = {};
 const Home = (props: Props) => {
   return (
     <div>
-      <DynamicSearchBar />
       <TopItems />
       <div className="articles">
         <h2>Title</h2>

@@ -1,0 +1,23 @@
+.rating {
+  display: inline-block;
+}
+
+.star {
+  font-size: 2em;
+  color: gray;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star:hover {
+  color: gold;
+}
+
+.star.active {
+  color: gold;
+}
+
+.rating-text {
+  font-size: 1.2em;
+  margin-top: 0.5em;
+}

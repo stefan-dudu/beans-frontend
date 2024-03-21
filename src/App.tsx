@@ -9,11 +9,12 @@ import NavigationBar from "./components/NavigationBar";
 import Home from "./pages/Home";
 import Features from "./pages/Features";
 import Locations from "./pages/Locations";
-
+import DetailedCoffeeBeans from "./pages/DetailedCoffeeBeans";
 function App() {
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch<AppDispatch>();
 
+  console.log(process.env);
   const UserProfile = () => {
     return <h2>UserProfile</h2>;
   };
@@ -30,6 +31,7 @@ function App() {
           <Route path="/features" element={<Features />} />
           <Route path="/locations" element={<Locations />} />
           <Route path="/pricing" element={<UserProfile />} />
+          <Route path="/coffee/:id" element={<DetailedCoffeeBeans />} />
           <Route path="*" element={<CatchPage />} />
         </Route>
       </Routes>

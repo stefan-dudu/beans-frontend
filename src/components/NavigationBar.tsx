@@ -5,6 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import logo from "../assets/logo2.png";
 import { NavLink } from "react-router-dom";
+import DynamicSearchBar from "./searchBar/DynamicSearchBar";
 
 function NavigationBar() {
   return (
@@ -25,14 +26,16 @@ function NavigationBar() {
             alt="React Bootstrap logo"
           />
         </Nav.Link>
-        <Form className="d-flex">
+        {/* <Form className="d-flex">
           <Form.Control
             type="search"
             placeholder="Search"
             className="me-4"
             aria-label="Search"
           />
-        </Form>
+        </Form> */}
+
+        <DynamicSearchBar />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Container>
             <Nav className="me-auto justify-content-md-center">

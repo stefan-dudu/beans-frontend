@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 interface SearchResult {
   brand: string;
-  id: number;
+  _id: string;
   name: string;
 }
 
@@ -52,13 +53,15 @@ const DynamicSearchBar: React.FC = () => {
         <p>Loading...</p>
       ) : (
         searchTerm.trim().length >= 2 && ( // Display results only if searchTerm has at least 2 characters
-          <ul>
+          <div>
             {searchResults.map((item, index) => (
-              <li key={index}>
-                Name: {item.name} by {item.brand}
-              </li>
+              <div key={index} onClick={() => setSearchTerm("")}>
+                <Link to={`/coffee/${item._id}`}>
+                  Name: {item.name} by {item.brand}
+                </Link>
+              </div>
             ))}
-          </ul>
+          </div>
         )
       )}
     </div>
