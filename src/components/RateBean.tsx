@@ -18,7 +18,7 @@ const RateBean: React.FC<RatingProps> = ({ maxStars }) => {
   const asyncPostCall = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:5001/api/v1/beans/65f1be274bf681601179096f/reviews`,
+        `https://127.0.0.1:5001/api/v1/beans/65f1be274bf681601179096f/reviews`,
         {
           method: "POST",
           headers: {

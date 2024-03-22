@@ -20,7 +20,7 @@ const SignIn = (props: Props) => {
   const asyncPostCall = async () => {
     try {
       const response = await fetch(
-        ` http://beans-be.vercel.app/api/v1/users/login`,
+        ` https://beans-be.vercel.app/api/v1/users/login`,
         {
           method: "POST",
           headers: {
