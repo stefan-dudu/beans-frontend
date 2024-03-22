@@ -36,7 +36,7 @@ const TopItems = (props: any) => {
     const fetchDataForPosts = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_PROD_URL}api/v1/beans/top-7`
+          ` http://beans-be.vercel.app/api/v1/beans/top-7`
         );
         if (!response.ok) {
           throw new Error(`HTTP error: Status ${response.status}`);
