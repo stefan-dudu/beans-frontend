@@ -48,7 +48,9 @@ function NavigationBar() {
             </Nav>
           </Container>
           <Nav>
-            <Nav.Link href="#deets">Sign In</Nav.Link>
+            <Nav.Link as={NavLink} to="/signin">
+              Sign In
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
