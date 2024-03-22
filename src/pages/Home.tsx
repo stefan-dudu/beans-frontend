@@ -2,12 +2,16 @@ import React from "react";
 import TopItems from "../components/TopItems";
 import "./Home.scss";
 import DynamicSearchBar from "../components/searchBar/DynamicSearchBar";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 type Props = {};
 
 const Home = (props: Props) => {
+  const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
   return (
     <div>
+      <h1>Is Signed In: {signedIn ? "yes" : "no"}</h1>
       <TopItems />
       <div className="articles">
         <h2>Title</h2>

@@ -12,7 +12,7 @@ const RateBean: React.FC<RatingProps> = ({ maxStars }) => {
 
   // const { id } = useParams<{ id: string }>();
   // console.log("---id", id);
-  console.log("process.env", process.env.URL);
+  // console.log("process.env", process.env.URL);
 
   // TODO:
   const asyncPostCall = async () => {

@@ -36,7 +36,15 @@ const TopItems = (props: any) => {
     const fetchDataForPosts = async () => {
       try {
         const response = await fetch(
-          ` https://beans-be.vercel.app/api/v1/beans/top-7`
+          // ` https://beans-be.vercel.app/api/v1/beans/top-7`
+          ` http://127.0.0.1:5001/api/v1/beans/top-7`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // TODO: ESSENTIAL FOR jwt
+            credentials: "include",
+          }
         );
         if (!response.ok) {
           throw new Error(`HTTP error: Status ${response.status}`);

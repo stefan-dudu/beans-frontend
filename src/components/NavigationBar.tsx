@@ -6,8 +6,14 @@ import Navbar from "react-bootstrap/Navbar";
 import logo from "../assets/logo2.png";
 import { NavLink } from "react-router-dom";
 import DynamicSearchBar from "./searchBar/DynamicSearchBar";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../store/store";
+import { logout } from "../store/auth/authSlice";
+import { LogoutFn } from "../utils/auth";
 
 function NavigationBar() {
+  const dispatch = useDispatch<AppDispatch>();
+
   return (
     <Navbar
       collapseOnSelect
@@ -51,6 +57,17 @@ function NavigationBar() {
             <Nav.Link as={NavLink} to="/signin">
               Sign In
             </Nav.Link>
+          </Nav>
+          <Nav>
+            <h2
+              style={{ color: "red" }}
+              onClick={() => {
+                LogoutFn();
+                dispatch(logout());
+              }}
+            >
+              Log out
+            </h2>
           </Nav>
         </Navbar.Collapse>
       </Container>
