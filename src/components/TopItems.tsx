@@ -36,8 +36,7 @@ const TopItems = (props: any) => {
     const fetchDataForPosts = async () => {
       try {
         const response = await fetch(
-          ` https://beans-be.vercel.app/api/v1/beans/top-7`,
-          // ` http://127.0.0.1:5001/api/v1/beans/top-7`,
+          `${process.env.REACT_APP_URL}api/v1/beans/top-7`,
           {
             headers: {
               "Content-Type": "application/json",

@@ -28,9 +28,7 @@ const SignIn = (props: Props) => {
   const asyncPostCall = async () => {
     try {
       const response = await fetch(
-        ` https://beans-be.vercel.app/api/v1/users/login`,
-        // ` http://127.0.0.1:5001/api/v1/users/login`,
-
+        `${process.env.REACT_APP_URL}api/v1/users/login`,
         {
           method: "POST",
           headers: {

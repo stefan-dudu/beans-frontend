@@ -40,8 +40,7 @@ const DetailedCoffeeBeans = (props: any) => {
   const fetchDataForPosts = async () => {
     try {
       const response = await fetch(
-        `https://beans-be.vercel.app/api/v1/beans/${id}`,
-        // ` http://127.0.0.1:5001/api/v1/beans/${id}`,
+        `${process.env.REACT_APP_URL}api/v1/beans/${id}`,
         {
           headers: {
             "Content-Type": "application/json",

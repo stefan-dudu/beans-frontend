@@ -18,7 +18,7 @@ const DynamicSearchBar: React.FC = () => {
       setLoading(true);
       try {
         const response = await fetch(
-          `https://beans-be.vercel.app/api/v1/beans/search-bean/${searchTerm}`
+          `${process.env.REACT_APP_URL}api/v1/beans/search-bean/${searchTerm}`
         );
         const data = await response.json();
         setSearchResults(data.data.data);
