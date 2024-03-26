@@ -1,21 +1,16 @@
+// Login.tsx
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { AppDispatch, RootState } from "../store/store";
 import { login } from "../store/auth/authSlice";
-type Props = {};
+import { useNavigate } from "react-router-dom";
 
-const SignIn = (props: Props) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
-  const dispatch = useDispatch<AppDispatch>();
-
-  console.log("signedIn", signedIn);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -25,7 +20,7 @@ const SignIn = (props: Props) => {
     setPassword(e.target.value);
   };
 
-  const asyncPostCall = async () => {
+  const loginCall = async () => {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_URL}api/v1/users/login`,
@@ -44,19 +39,19 @@ const SignIn = (props: Props) => {
       const data = await response.json();
       // enter you logic when the fetch is successful
       console.log("after post", data);
-      data.status === "success" && dispatch(login());
+      if (data.status === "success") {
+        dispatch(login());
+        localStorage.setItem("token", data.token); // Store token in local storage
+        navigate(-1);
+      }
     } catch (error) {
       // enter your logic for when there is an error (ex. error toast)
-
       console.log(error);
     }
   };
 
   const SubmitHandler = () => {
-    //TODO:
-    // e.preventDefault()
-    asyncPostCall();
-    console.log("handle");
+    loginCall();
   };
 
   return (
@@ -91,4 +86,4 @@ const SignIn = (props: Props) => {
   );
 };
 
-export default SignIn;
+export default Login;

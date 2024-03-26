@@ -8,7 +8,7 @@ import { RootState } from "../store/store";
 type Props = {};
 
 const Home = (props: Props) => {
-  console.log('process.env.', process.env.REACT_APP_NAME)
+  // console.log("process.env.", process.env.REACT_APP_NAME);
   const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
   return (
     <div>

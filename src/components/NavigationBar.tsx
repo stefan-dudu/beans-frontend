@@ -54,8 +54,8 @@ function NavigationBar() {
             </Nav>
           </Container>
           <Nav>
-            <Nav.Link as={NavLink} to="/signin">
-              Sign In
+            <Nav.Link as={NavLink} to="/login">
+              Login
             </Nav.Link>
           </Nav>
           <Nav>

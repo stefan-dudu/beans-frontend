@@ -73,7 +73,7 @@ const TopItems = (props: any) => {
       <div className="container">
         {data &&
           data?.map((el) => (
-            <Link to={`/coffee/${el._id}`}>
+            <Link to={`/coffee/${el._id}`} key={el._id}>
               <div className="item">
                 <img
                   src={el?.image}

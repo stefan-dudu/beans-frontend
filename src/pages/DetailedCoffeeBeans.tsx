@@ -67,7 +67,7 @@ const DetailedCoffeeBeans = (props: any) => {
       "https://baristretto-bucket.s3.eu-central-1.amazonaws.com/catchBeanBag.jpg";
   }
 
-  console.log("data", data);
+  // console.log("data", data);
 
   return (
     <div>
@@ -86,7 +86,7 @@ const DetailedCoffeeBeans = (props: any) => {
       </div>
       <p>No of ratings: {data?.ratingsQuantity}</p>
       <p>Avg.rating: {data?.ratingsAverage}</p>
-      <RateBean maxStars={5} />
+      <RateBean maxStars={5} currentRating={data?.ratingsAverage} />
       <p>map implementation</p>
     </div>
   );

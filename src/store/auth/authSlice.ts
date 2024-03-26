@@ -1,11 +1,13 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+// authSlice.ts
+import { createSlice } from "@reduxjs/toolkit";
 
 interface AuthState {
   loggedIn: boolean;
 }
 
+const token = localStorage.getItem("token"); // Retrieve JWT from local storage
 const initialState: AuthState = {
-  loggedIn: false,
+  loggedIn: !!token, // Set loggedIn to true if token exists
 };
 
 const counterSlice = createSlice({
@@ -17,30 +19,10 @@ const counterSlice = createSlice({
     },
     logout: (state) => {
       state.loggedIn = false;
+      localStorage.removeItem("token"); // Clear token from local storage on logout
     },
   },
-  // TODO: to learn these
-  //   extraReducers: (builder) => {
-  //     builder
-  //       .addCase(incrementAsync.pending, () => {
-  //         console.log("incrementAsync.pending");
-  //       })
-  //       .addCase(
-  //         incrementAsync.fulfilled,
-  //         (state, action: PayloadAction<number>) => {
-  //           state.value += action.payload;
-  //         }
-  //       );
-  //   },
 });
-
-// export const incrementAsync = createAsyncThunk(
-//   "counter/incrementAsync",
-//   async (amount: number) => {
-//     await new Promise((resolve) => setTimeout(resolve, 1000));
-//     return amount;
-//   }
-// );
 
 export const { login, logout } = counterSlice.actions;
 export default counterSlice.reducer;

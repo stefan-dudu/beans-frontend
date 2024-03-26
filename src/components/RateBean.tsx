@@ -1,24 +1,35 @@
 import React, { useState } from "react";
 import "./RateBean.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 interface RatingProps {
   maxStars: number;
+  currentRating: number | undefined;
 }
 
-const RateBean: React.FC<RatingProps> = ({ maxStars }) => {
-  const [rating, setRating] = useState<number>(0);
+const RateBean: React.FC<RatingProps> = ({ maxStars, currentRating }) => {
   const [hoveredStar, setHoveredStar] = useState<number | null>(null);
 
-  // const { id } = useParams<{ id: string }>();
-  // console.log("---id", id);
-  // console.log("process.env", process.env.URL);
+  const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
+
+  const navigate = useNavigate();
+  let { id } = useParams();
+
+  // console.log("currentRating", currentRating);
+
+  const redirectToLogin = () => {
+    navigate(`/login`, { replace: true });
+  };
+
+  console.log("signedIn", signedIn);
 
   // TODO:
-  const asyncPostCall = async () => {
+  const PostRating = async (p0: number) => {
     try {
       const response = await fetch(
-        `https://127.0.0.1:5001/api/v1/beans/65f1be274bf681601179096f/reviews`,
+        `${process.env.REACT_APP_URL}api/v1/beans/${id}/reviews`,
         {
           method: "POST",
           headers: {
@@ -26,16 +37,16 @@ const RateBean: React.FC<RatingProps> = ({ maxStars }) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "POST,PATCH,OPTIONS",
           },
+          credentials: "include",
           body: JSON.stringify({
-            // TODO: ------- TO BE IMPLEMENTED
+            // TODO: ------- TO BE IMPLEMENTED:  aditional comment as review, eg: It was great! Nutty and light
             // "review": "5",
-            rating: rating,
+            rating: p0,
           }),
         }
       );
       const data = await response.json();
-      // enter you logic when the fetch is successful
-      console.log("after post", data);
+      data.status === "success" && navigate(0);
     } catch (error) {
       // enter your logic for when there is an error (ex. error toast)
 
@@ -44,9 +55,7 @@ const RateBean: React.FC<RatingProps> = ({ maxStars }) => {
   };
 
   const handleStarClick = (starIndex: number) => {
-    // TODO:
-    // asyncPostCall();
-    setRating(starIndex + 1);
+    signedIn ? PostRating(starIndex + 1) : redirectToLogin();
   };
 
   const handleStarHover = (starIndex: number) => {
@@ -66,7 +75,12 @@ const RateBean: React.FC<RatingProps> = ({ maxStars }) => {
           onMouseEnter={() => handleStarHover(index)}
           onMouseLeave={handleStarLeave}
           className={
-            index <= (hoveredStar !== null ? hoveredStar : rating - 1)
+            index <=
+            (hoveredStar !== null
+              ? hoveredStar
+              : currentRating !== undefined
+              ? currentRating - 1
+              : -1)
               ? "star active"
               : "star"
           }
