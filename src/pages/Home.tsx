@@ -16,7 +16,7 @@ const Home = (props: Props) => {
       <h2>ENV: {process.env.REACT_APP_NAME}</h2>
       <TopItems />
       <div className="articles">
-        <h2>Title 1</h2>
+        <h2>Title 2</h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. In blandit
           tincidunt aliquam. Vestibulum ante ipsum primis in faucibus orci
