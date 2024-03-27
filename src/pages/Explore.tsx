@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import ExploreRow from "../components/ExploreRow";
 
 type Props = {};
+
 type Coffee = {
   _id: string;
   name: string;
@@ -27,20 +29,21 @@ type Coffee = {
   id: string;
 };
 
-const Explore = (props: Props) => {
+const Explore: React.FC<Props> = (props) => {
   const [data, setData] = useState<Coffee[] | null>(null);
   const { state } = useLocation();
+
   useEffect(() => {
     setData(state?.data);
   }, [state]);
 
-  console.log("restults in explore", data);
+  console.log("results in explore", data);
 
   return (
     <div>
       {data &&
-        data?.map((el) => {
-          return <h3>{el.name}</h3>;
+        data.map((el) => {
+          return <ExploreRow key={el._id} data={el} />;
         })}
     </div>
   );
