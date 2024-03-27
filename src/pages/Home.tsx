@@ -4,6 +4,7 @@ import "./Home.scss";
 import DynamicSearchBar from "../components/searchBar/DynamicSearchBar";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import BeanSelector from "../components/BeanSelector";
 
 type Props = {};
 
@@ -22,6 +23,9 @@ const Home = (props: Props) => {
           tincidunt aliquam. Vestibulum ante ipsum primis in faucibus orci
           luctus et ultrices posuere cubilia curae;
         </p>
+      </div>
+      <div className="articles">
+        <BeanSelector />
       </div>
       <div className="articles">
         <h2>Title</h2>
