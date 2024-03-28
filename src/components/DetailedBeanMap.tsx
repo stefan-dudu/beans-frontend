@@ -42,8 +42,8 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
           center: [lng, lat],
           zoom: 2,
           maxZoom: 15,
-          // interactive: false,
-          scrollZoom: false,
+          interactive: false,
+          // scrollZoom: false,
         });
 
         // Add zoom controls
