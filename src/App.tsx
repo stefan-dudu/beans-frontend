@@ -17,7 +17,6 @@ function App() {
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch<AppDispatch>();
 
-  console.log(process.env);
   const UserProfile = () => {
     return <h2>UserProfile</h2>;
   };
