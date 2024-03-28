@@ -1,6 +1,7 @@
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RateBean from "../components/RateBean";
+import DetailedBeanMap from "../components/DetailedBeanMap";
 
 type Coffee = {
   _id: string;
@@ -67,8 +68,6 @@ const DetailedCoffeeBeans = (props: any) => {
       "https://baristretto-bucket.s3.eu-central-1.amazonaws.com/catchBeanBag.jpg";
   }
 
-  // console.log("data", data);
-
   return (
     <div>
       <h2>{data?.name || "name"}</h2>
@@ -87,7 +86,7 @@ const DetailedCoffeeBeans = (props: any) => {
       <p>No of ratings: {data?.ratingsQuantity}</p>
       <p>Avg.rating: {data?.ratingsAverage}</p>
       <RateBean maxStars={5} currentRating={data?.ratingsAverage} />
-      <p>map implementation</p>
+      {data?.locations && <DetailedBeanMap location={data?.locations} />}
     </div>
   );
 };

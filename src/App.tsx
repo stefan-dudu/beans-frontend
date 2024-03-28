@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 import "./App.scss";
+import "mapbox-gl/dist/mapbox-gl.css";
 import { AppDispatch, RootState } from "./store/store";
 import { decrement, incrementByValue } from "./store/counter/counterSlice";
 import UserProfile from "./pages/UserProfile";
