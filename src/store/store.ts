@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./counter/counterSlice";
-import authSlice from "./auth/authSlice";
+import authReducer from "./auth/authSlice";
+import navBarReducer from "./navBar/NavBarSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    auth: authSlice,
+    auth: authReducer,
+    navBar: navBarReducer,
   },
 });
 

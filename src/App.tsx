@@ -14,6 +14,7 @@ import DetailedCoffeeBeans from "./pages/DetailedCoffeeBeans";
 import Login from "./pages/Login";
 import Explore from "./pages/Explore";
 import SignUp from "./pages/Auth&User/SignUp";
+import Search from "./pages/Search";
 function App() {
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch<AppDispatch>();
@@ -34,6 +35,7 @@ function App() {
           <Route path="/features" element={<Features />} />
           <Route path="/locations" element={<Locations />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
