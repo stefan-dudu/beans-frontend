@@ -5,7 +5,7 @@ import "./App.scss";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { AppDispatch, RootState } from "./store/store";
 import { decrement, incrementByValue } from "./store/counter/counterSlice";
-import UserProfile from "./pages/UserProfile";
+import UserProfile from "./pages/Auth&User/UserProfile";
 import NavigationBar from "./components/NavigationBar";
 import Home from "./pages/Home";
 import Features from "./pages/Features";
@@ -13,12 +13,13 @@ import Locations from "./pages/Locations";
 import DetailedCoffeeBeans from "./pages/DetailedCoffeeBeans";
 import Login from "./pages/Login";
 import Explore from "./pages/Explore";
+import SignUp from "./pages/Auth&User/SignUp";
 function App() {
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch<AppDispatch>();
 
-  const UserProfile = () => {
-    return <h2>UserProfile</h2>;
+  const Pricing = () => {
+    return <h2>Pricing</h2>;
   };
   const CatchPage = () => {
     return <h2>CatchPage</h2>;
@@ -32,9 +33,11 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/features" element={<Features />} />
           <Route path="/locations" element={<Locations />} />
-          <Route path="/pricing" element={<UserProfile />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/explore" element={<Explore />} />
-          <Route path="/Login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<UserProfile />} />
           <Route path="/coffee/:id" element={<DetailedCoffeeBeans />} />
           <Route path="*" element={<CatchPage />} />
         </Route>

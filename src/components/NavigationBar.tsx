@@ -6,13 +6,14 @@ import Navbar from "react-bootstrap/Navbar";
 import logo from "../assets/logo2.png";
 import { NavLink } from "react-router-dom";
 import DynamicSearchBar from "./searchBar/DynamicSearchBar";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
 import { logout } from "../store/auth/authSlice";
 import { LogoutFn } from "../utils/auth";
 
 function NavigationBar() {
   const dispatch = useDispatch<AppDispatch>();
+  const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
 
   return (
     <Navbar
@@ -53,22 +54,19 @@ function NavigationBar() {
               </Nav.Link>
             </Nav>
           </Container>
-          <Nav>
-            <Nav.Link as={NavLink} to="/login">
-              Login
-            </Nav.Link>
-          </Nav>
-          <Nav>
-            <h2
-              style={{ color: "red" }}
-              onClick={() => {
-                LogoutFn();
-                dispatch(logout());
-              }}
-            >
-              Log out
-            </h2>
-          </Nav>
+          {!signedIn ? (
+            <Nav>
+              <Nav.Link as={NavLink} to="/signup">
+                Sign up
+              </Nav.Link>
+            </Nav>
+          ) : (
+            <Nav>
+              <Nav.Link as={NavLink} to="/profile">
+                User profile
+              </Nav.Link>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

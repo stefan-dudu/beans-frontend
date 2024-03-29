@@ -11,7 +11,9 @@ export const LogoutFn = async () => {
     );
 
     const data = await response.json();
-    if (data.status === "success") window.location.reload();
+    if (data.status === "success") {
+      // window.location.reload();
+    }
   } catch (error) {
     console.log(error);
   }
