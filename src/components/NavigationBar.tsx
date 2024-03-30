@@ -16,7 +16,6 @@ function NavigationBar() {
   const isExpanded = useSelector((state: RootState) => state.navBar.expanded);
   const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
 
-  console.log("isExpanded", isExpanded);
   return (
     <Navbar
       collapseOnSelect
@@ -33,26 +32,28 @@ function NavigationBar() {
             !isExpanded ? dispatch(expand()) : dispatch(minimize());
           }}
         />
-        <Nav.Link
-          as={NavLink}
-          to=""
-          onClick={() => dispatch(minimize())}
-          // onClick={() => {
-          //   !isExpanded ? dispatch(expand()) : dispatch(minimize());
-          // }}
-        >
-          <img
-            src={logo}
-            width="40"
-            height="40"
-            className="d-inline-block align-top"
-            alt="React Bootstrap logo"
-          />
-        </Nav.Link>
+        <div className="logoSearch">
+          <Nav.Link
+            as={NavLink}
+            to=""
+            onClick={() => dispatch(minimize())}
+            // onClick={() => {
+            //   !isExpanded ? dispatch(expand()) : dispatch(minimize());
+            // }}
+          >
+            <img
+              src={logo}
+              width="40"
+              height="40"
+              className="d-inline-block align-top"
+              alt="React Bootstrap logo"
+            />
+          </Nav.Link>
+          <DynamicSearchBar />
+        </div>
         <Navbar.Collapse id="responsive-navbar-nav">
           <Container className="containerStyle">
             <Nav className="searchAndLinksContainer">
-              <DynamicSearchBar />
               <Nav.Link
                 as={NavLink}
                 to="/features"

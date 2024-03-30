@@ -108,6 +108,7 @@ const DynamicSearchBar: React.FC = () => {
         searchTerm.trim().length >= 2 && // Display results only if searchTerm has at least 2 characters
         searchResults.length > 0 && (
           <div className="resultWrapper">
+            {/* TODO: to fetch only 4 result or how many we will show, to improve speed */}
             {searchResults.slice(0, 4).map((item, index) => (
               <SearchResultRow item={item} index={index} />
             ))}
@@ -117,8 +118,9 @@ const DynamicSearchBar: React.FC = () => {
                 onClick={() => {
                   // TODO: navigate here, pass data ( all of it, will show), pass the term that was searched by
                   // TODO: clise the search results and then navigate, now it happens a bit off, i can still see the results, but i am on the result page
+                  setSearchTerm("");
                   dispatch(minimize());
-                  navigate("/search", { state: "data" });
+                  navigate("/search", { state: { searchResults, searchTerm } });
                 }}
               >
                 View more results
