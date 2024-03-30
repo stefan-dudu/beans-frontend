@@ -101,7 +101,9 @@ const DynamicSearchBar: React.FC = () => {
         onChange={handleChange}
       />
       {loading ? (
-        <p>Loading...</p>
+        <div className="resultWrapper">
+          <p className="loadingText">Loading...</p>
+        </div>
       ) : (
         searchTerm.trim().length >= 2 && // Display results only if searchTerm has at least 2 characters
         searchResults.length > 0 && (

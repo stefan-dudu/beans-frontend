@@ -54,10 +54,10 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
         new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
 
         // TODO: animation but at the moment not working right
-        map.flyTo({
-          center: [lng, lat],
-          essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-        });
+        // map.flyTo({
+        //   center: [lng, lat],
+        //   essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+        // });
 
         // TODO: to add a bountry around the country to make it stand out
 
