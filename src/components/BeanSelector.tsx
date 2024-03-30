@@ -7,7 +7,9 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
+// Define types
 type Props = {};
+
 type Coffee = {
   _id: string;
   name: string;
@@ -34,39 +36,27 @@ type Coffee = {
 };
 
 const BeanSelector = (props: Props) => {
+  // State variables
   const [roastLevel, setRoastLevel] = useState("");
   const [data, setData] = useState<Coffee[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
-  const [checkedItems, setCheckedItems] = React.useState<string[]>([]);
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
 
+  // Navigation hook
   const navigate = useNavigate();
 
+  // Marks for the slider
   const marks = [
-    {
-      value: 0,
-      label: "Light",
-    },
-    {
-      value: 20,
-      label: "Medium",
-    },
-    {
-      value: 50,
-      label: "Medium-Dark",
-    },
-
-    {
-      value: 80,
-      label: "Dark ",
-    },
-    {
-      value: 100,
-      label: "Very Dark",
-    },
+    { value: 0, label: "Light" },
+    { value: 20, label: "Medium" },
+    { value: 50, label: "Medium-Dark" },
+    { value: 80, label: "Dark" },
+    { value: 100, label: "Very Dark" },
   ];
 
-  const FetchBeansData = async () => {
+  // Function to fetch bean data
+  const fetchBeansData = async () => {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_URL}api/v1/beans/bean-selector`,
@@ -88,11 +78,14 @@ const BeanSelector = (props: Props) => {
       }
 
       const data = await response.json();
-      console.log("data from req", data);
-      data.results > 0 && navigate("/explore", { state: data.data });
+      console.log("Data from request:", data);
+      if (data.results > 0) {
+        navigate("/explore", { state: data.data });
+      }
       setData(data.data);
       setError(null);
     } catch (err: any) {
+      console.error("Error fetching data:", err);
       setData(null);
       setError(err);
     } finally {
@@ -100,7 +93,8 @@ const BeanSelector = (props: Props) => {
     }
   };
 
-  function valuetext(value: number) {
+  // Function to handle slider value change
+  const handleSliderChange = (event: Event, value: number | number[]) => {
     switch (value) {
       case 0:
         setRoastLevel("Light");
@@ -120,49 +114,42 @@ const BeanSelector = (props: Props) => {
       default:
         setRoastLevel("Medium");
     }
-    return `${value}°C`;
-  }
+  };
 
-  const handleChange = (label: string) => {
-    // Check if the label already exists in the array
-    const currentIndex = checkedItems.indexOf(label);
-    const newCheckedItems = [...checkedItems];
-
-    if (currentIndex === -1) {
-      // If the label is not in the array, add it
-      newCheckedItems.push(label);
-    } else {
-      // If the label is already in the array, remove it
-      newCheckedItems.splice(currentIndex, 1);
-    }
-
-    // Update the state with the new array of checked labels
+  // Function to handle checkbox change
+  const handleCheckboxChange = (label: string) => {
+    const isChecked = checkedItems.includes(label);
+    const newCheckedItems = isChecked
+      ? checkedItems.filter((item) => item !== label)
+      : [...checkedItems, label];
     setCheckedItems(newCheckedItems);
   };
 
-  const FindHandler = () => {
-    FetchBeansData();
-    // navigate("/explore", { state: "test data passed" });
+  // Function to handle 'Find your bean' button click
+  const handleFindButtonClick = () => {
+    fetchBeansData();
   };
 
-  //   console.log("checkedItems", checkedItems);
   return (
     <div>
       <Box sx={{ width: 300 }}>
+        {/* Slider for selecting roast level */}
         <Slider
-          aria-label="Custom marks"
+          aria-label="Roast Level"
           defaultValue={20}
-          getAriaValueText={valuetext}
+          getAriaValueText={(value: number) => `${value}°C`}
           step={null}
           marks={marks}
+          onChange={handleSliderChange}
         />
 
+        {/* Checkboxes for selecting brands */}
         <FormGroup>
           <FormControlLabel
             control={
               <Checkbox
                 checked={checkedItems.includes("Starbucks")}
-                onChange={() => handleChange("Starbucks")}
+                onChange={() => handleCheckboxChange("Starbucks")}
               />
             }
             label="Starbucks"
@@ -171,7 +158,7 @@ const BeanSelector = (props: Props) => {
             control={
               <Checkbox
                 checked={checkedItems.includes("Origo")}
-                onChange={() => handleChange("Origo")}
+                onChange={() => handleCheckboxChange("Origo")}
               />
             }
             label="Origo"
@@ -180,14 +167,15 @@ const BeanSelector = (props: Props) => {
             control={
               <Checkbox
                 checked={checkedItems.includes("Costa")}
-                onChange={() => handleChange("Costa")}
+                onChange={() => handleCheckboxChange("Costa")}
               />
             }
             label="Costa"
           />
         </FormGroup>
 
-        <Button variant="contained" onClick={() => FindHandler()}>
+        {/* Button to trigger bean search */}
+        <Button variant="contained" onClick={handleFindButtonClick}>
           Find your bean
         </Button>
       </Box>

@@ -56,6 +56,13 @@ function NavigationBar() {
             <Nav className="searchAndLinksContainer">
               <Nav.Link
                 as={NavLink}
+                to="/explore"
+                onClick={() => dispatch(minimize())}
+              >
+                Explore
+              </Nav.Link>
+              <Nav.Link
+                as={NavLink}
                 to="/features"
                 onClick={() => dispatch(minimize())}
               >

@@ -31,20 +31,58 @@ type Coffee = {
 
 const Explore: React.FC<Props> = (props) => {
   const [data, setData] = useState<Coffee[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
   const { state } = useLocation();
 
-  useEffect(() => {
-    setData(state?.data);
-  }, [state]);
+  // TODO: Paginating, to increase loading time
+  const fetchAllBeans = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_URL}api/v1/beans`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // TODO: ESSENTIAL FOR jwt
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error: Status ${response.status}`);
+      }
+      const { data } = await response.json();
+      setData(data.data);
+      setError(null);
+    } catch (err: any) {
+      setData(null);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  console.log("results in explore", data);
+  useEffect(() => {
+    if (!state?.data) {
+      // console.log("there is no data so i will show beans to explore");
+      fetchAllBeans();
+    } else if (state?.data) {
+      // console.log("has data - it means it been redirected from a page ");
+      setData(state?.data);
+    }
+  }, [state]);
 
   return (
     <div>
-      {data &&
-        data.map((el) => {
-          return <ExploreRow key={el._id} data={el} />;
-        })}
+      <div>
+        <h4>Filter btn</h4>
+        {data &&
+          data.map((el) => {
+            return (
+              <div>
+                {/* TODO: have a filtering way for results */}
+                <ExploreRow key={el._id} data={el} />;
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 };
