@@ -1,6 +1,10 @@
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
 import "./TopItems.scss";
+import Skeleton from "@mui/material/Skeleton";
+import { AppDispatch, RootState } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
 
 type Coffee = {
   _id: string;
@@ -32,6 +36,11 @@ const TopItems = (props: any) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
+  const dispatch = useDispatch<AppDispatch>();
+  const loadingData = useSelector(
+    (state: RootState) => state.navBar.loadingData
+  );
+
   useEffect(() => {
     const fetchDataForPosts = async () => {
       try {
@@ -56,9 +65,10 @@ const TopItems = (props: any) => {
         setError(err);
       } finally {
         setLoading(false);
+        dispatch(notLoading());
       }
     };
-
+    dispatch(isLoading());
     fetchDataForPosts();
   }, []);
 
@@ -67,10 +77,26 @@ const TopItems = (props: any) => {
       "https://baristretto-bucket.s3.eu-central-1.amazonaws.com/catchBeanBag.jpg";
   }
 
+  const SkeletonComponent = () => {
+    const skeletons = [];
+
+    for (let i = 0; i < 10; i++) {
+      skeletons.push(
+        <div key={i} className="skeletonItem">
+          <Skeleton variant="rounded" width={200} height={200} />
+          <Skeleton variant="text" width={200} />
+        </div>
+      );
+    }
+
+    return <>{skeletons}</>;
+  };
+
   return (
     <div>
       <h2>Top beans </h2>
       <div className="container">
+        {loadingData && <SkeletonComponent />}
         {data &&
           data?.map((el) => (
             <Link to={`/coffee/${el._id}`} key={el._id}>

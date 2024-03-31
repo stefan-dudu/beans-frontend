@@ -15,9 +15,11 @@ import Login from "./pages/Login";
 import Explore from "./pages/Explore";
 import SignUp from "./pages/Auth&User/SignUp";
 import Search from "./pages/Search";
+import LinearProgress from "@mui/material/LinearProgress";
 function App() {
-  const count = useSelector((state: RootState) => state.counter.value);
-  const dispatch = useDispatch<AppDispatch>();
+  const loadingData = useSelector(
+    (state: RootState) => state.navBar.loadingData
+  );
 
   const Pricing = () => {
     return <h2>Pricing</h2>;
@@ -29,6 +31,7 @@ function App() {
   return (
     <div className="App-header">
       <NavigationBar />
+      {loadingData && <LinearProgress color="success" />}
       <Routes>
         <Route path="/" element={<Outlet />}>
           <Route index element={<Home />} />

@@ -2,6 +2,10 @@ import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RateBean from "../components/RateBean";
 import DetailedBeanMap from "../components/DetailedBeanMap";
+import Skeleton from "@mui/material/Skeleton";
+import { AppDispatch, RootState } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
 
 type Coffee = {
   _id: string;
@@ -35,6 +39,7 @@ const DetailedCoffeeBeans = (props: any) => {
   let { id } = useParams();
 
   useEffect(() => {
+    dispatch(isLoading());
     fetchDataForPosts();
   }, [id]);
 
@@ -60,33 +65,58 @@ const DetailedCoffeeBeans = (props: any) => {
       setError(err);
     } finally {
       setLoading(false);
+      dispatch(notLoading());
     }
   };
+
+  const dispatch = useDispatch<AppDispatch>();
+  const loadingData = useSelector(
+    (state: RootState) => state.navBar.loadingData
+  );
 
   function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
     e.currentTarget.src =
       "https://baristretto-bucket.s3.eu-central-1.amazonaws.com/catchBeanBag.jpg";
   }
 
+  const SkeletonComponent = () => {
+    return (
+      <div>
+        <Skeleton variant="text" width={200} />
+        <Skeleton variant="rounded" width={200} height={200} />
+        <Skeleton variant="text" width={200} />
+        <Skeleton variant="text" width={200} />
+        <Skeleton variant="text" width={200} />
+        <Skeleton variant="rounded" width={"100vw"} height={200} />
+      </div>
+    );
+  };
+
   return (
     <div>
-      <h2>{data?.name || "name"}</h2>
-      <div className="item">
-        {
-          <img
-            src={data?.image}
-            width="200"
-            height="200"
-            className="d-inline-block align-top"
-            alt="React Bootstrap logo"
-            onError={addDefaultSrc}
-          />
-        }
-      </div>
-      <p>No of ratings: {data?.ratingsQuantity}</p>
-      <p>Avg.rating: {data?.ratingsAverage}</p>
-      <RateBean maxStars={5} currentRating={data?.ratingsAverage} />
-      {data?.locations && <DetailedBeanMap location={data?.locations} />}
+      {loadingData ? (
+        <SkeletonComponent />
+      ) : (
+        <div>
+          <h2>{data?.name || "name"}</h2>
+          <div className="item">
+            {
+              <img
+                src={data?.image}
+                width="200"
+                height="200"
+                className="d-inline-block align-top"
+                alt="React Bootstrap logo"
+                onError={addDefaultSrc}
+              />
+            }
+          </div>
+          <p>No of ratings: {data?.ratingsQuantity}</p>
+          <p>Avg.rating: {data?.ratingsAverage}</p>
+          <RateBean maxStars={5} currentRating={data?.ratingsAverage} />
+          {data?.locations && <DetailedBeanMap location={data?.locations} />}
+        </div>
+      )}
     </div>
   );
 };
