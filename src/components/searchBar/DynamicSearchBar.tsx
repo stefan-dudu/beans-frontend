@@ -5,7 +5,7 @@ import "./DynamicSearchBar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { minimize } from "../../store/navBar/NavBarSlice";
-
+import catchBeanBag from "../../assets/catchBeanBag.jpg";
 interface SearchResult {
   brand: string;
   _id: string;
@@ -52,8 +52,7 @@ const DynamicSearchBar: React.FC = () => {
     setSearchTerm(event.target.value);
   };
   function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
-    e.currentTarget.src =
-      "https://baristretto-bucket.s3.eu-central-1.amazonaws.com/catchBeanBag.jpg";
+    e.currentTarget.src = catchBeanBag;
   }
 
   const SearchResultRow: React.FC<{ item: SearchResult; index: number }> = ({

@@ -26,7 +26,7 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
     // Define your moving objects here
   ];
 
-  console.log("location", location?.length);
+  // console.log("location", location?.length);
 
   const lng = (location && location[0].coordinates[0]) || -74.0060152;
   const lat = (location && location[0].coordinates[1]) || 40.7127281;

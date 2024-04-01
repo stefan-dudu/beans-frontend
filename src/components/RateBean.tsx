@@ -23,7 +23,7 @@ const RateBean: React.FC<RatingProps> = ({ maxStars, currentRating }) => {
     navigate(`/login`, { replace: true });
   };
 
-  console.log("signedIn", signedIn);
+  // console.log("signedIn", signedIn);
 
   // TODO:
   const PostRating = async (p0: number) => {

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ExploreRow from "../components/ExploreRow";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
+import { notLoading, isLoading } from "../store/navBar/NavBarSlice";
 
 type Props = {};
 
@@ -35,6 +38,11 @@ const Explore: React.FC<Props> = (props) => {
   const [error, setError] = useState<Error | null>(null);
   const { state } = useLocation();
 
+  const dispatch = useDispatch<AppDispatch>();
+  const loadingData = useSelector(
+    (state: RootState) => state.navBar.loadingData
+  );
+
   // TODO: Paginating, to increase loading time
   const fetchAllBeans = async () => {
     try {
@@ -55,6 +63,7 @@ const Explore: React.FC<Props> = (props) => {
       setData(null);
       setError(err);
     } finally {
+      dispatch(notLoading());
       setLoading(false);
     }
   };
@@ -62,6 +71,7 @@ const Explore: React.FC<Props> = (props) => {
   useEffect(() => {
     if (!state?.data) {
       // console.log("there is no data so i will show beans to explore");
+      dispatch(isLoading());
       fetchAllBeans();
     } else if (state?.data) {
       // console.log("has data - it means it been redirected from a page ");
@@ -72,13 +82,13 @@ const Explore: React.FC<Props> = (props) => {
   return (
     <div>
       <div>
+        {/* TODO: have a filtering way for results */}
         <h4>Filter btn</h4>
         {data &&
           data.map((el) => {
             return (
-              <div>
-                {/* TODO: have a filtering way for results */}
-                <ExploreRow key={el._id} data={el} />;
+              <div key={el._id}>
+                <ExploreRow data={el} />;
               </div>
             );
           })}

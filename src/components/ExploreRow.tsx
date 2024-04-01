@@ -1,6 +1,7 @@
 import React, { SyntheticEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ExploreRow.scss";
+import catchBeanBag from "../assets/catchBeanBag.jpg";
 
 type Props = {
   data: Coffee;
@@ -35,8 +36,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
   const navigate = useNavigate();
 
   function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
-    e.currentTarget.src =
-      "https://baristretto-bucket.s3.eu-central-1.amazonaws.com/catchBeanBag.jpg";
+    e.currentTarget.src = catchBeanBag;
   }
 
   const RowClickHandler = () => {

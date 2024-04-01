@@ -6,6 +6,7 @@ import Skeleton from "@mui/material/Skeleton";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
+import catchBeanBag from "../assets/catchBeanBag.jpg";
 
 type Coffee = {
   _id: string;
@@ -75,19 +76,23 @@ const DetailedCoffeeBeans = (props: any) => {
   );
 
   function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
-    e.currentTarget.src =
-      "https://baristretto-bucket.s3.eu-central-1.amazonaws.com/catchBeanBag.jpg";
+    e.currentTarget.src = catchBeanBag;
   }
 
   const SkeletonComponent = () => {
     return (
       <div>
-        <Skeleton variant="text" width={200} />
-        <Skeleton variant="rounded" width={200} height={200} />
-        <Skeleton variant="text" width={200} />
-        <Skeleton variant="text" width={200} />
-        <Skeleton variant="text" width={200} />
-        <Skeleton variant="rounded" width={"100vw"} height={200} />
+        <Skeleton animation="wave" variant="text" width={200} />
+        <Skeleton animation="wave" variant="rounded" width={200} height={200} />
+        <Skeleton animation="wave" variant="text" width={200} />
+        <Skeleton animation="wave" variant="text" width={200} />
+        <Skeleton animation="wave" variant="text" width={200} />
+        <Skeleton
+          animation="wave"
+          variant="rounded"
+          width={"100vw"}
+          height={200}
+        />
       </div>
     );
   };

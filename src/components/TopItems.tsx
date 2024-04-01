@@ -5,6 +5,7 @@ import "./TopItems.scss";
 import Skeleton from "@mui/material/Skeleton";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
+import catchBeanBag from "../assets/catchBeanBag.jpg";
 
 type Coffee = {
   _id: string;
@@ -73,8 +74,7 @@ const TopItems = (props: any) => {
   }, []);
 
   function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
-    e.currentTarget.src =
-      "https://baristretto-bucket.s3.eu-central-1.amazonaws.com/catchBeanBag.jpg";
+    e.currentTarget.src = catchBeanBag;
   }
 
   const SkeletonComponent = () => {
@@ -83,8 +83,13 @@ const TopItems = (props: any) => {
     for (let i = 0; i < 10; i++) {
       skeletons.push(
         <div key={i} className="skeletonItem">
-          <Skeleton variant="rounded" width={200} height={200} />
-          <Skeleton variant="text" width={200} />
+          <Skeleton
+            animation="wave"
+            variant="rounded"
+            width={200}
+            height={200}
+          />
+          <Skeleton animation="wave" variant="text" width={200} />
         </div>
       );
     }
