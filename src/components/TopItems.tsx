@@ -99,7 +99,7 @@ const TopItems = (props: any) => {
 
   return (
     <div>
-      <h2>Top beans </h2>
+      <h2>Top rated coffee beans right now </h2>
       <div className="container">
         {loadingData && <SkeletonComponent />}
         {data &&

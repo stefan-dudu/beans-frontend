@@ -1,24 +1,30 @@
+// Login.tsx
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { login } from "../../store/auth/authSlice";
-import "./SignUp.scss";
+import { useNavigate } from "react-router-dom";
+import "./Login.scss";
 
-type Props = {};
-
-const SignUp = (props: Props) => {
-  const [name, setName] = useState("");
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const SignupCall = async () => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const loginCall = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_URL}api/v1/users/signup`,
+        `${process.env.REACT_APP_URL}api/v1/users/login`,
         {
           method: "POST",
           headers: {
@@ -26,7 +32,6 @@ const SignUp = (props: Props) => {
           },
           credentials: "include",
           body: JSON.stringify({
-            name,
             email,
             password,
           }),
@@ -36,7 +41,6 @@ const SignUp = (props: Props) => {
       // enter you logic when the fetch is successful
       console.log("after post", data);
       if (data.status === "success") {
-        // TODO: might have to do it
         dispatch(login());
         localStorage.setItem("token", data.token); // Store token in local storage
         navigate(-1);
@@ -47,39 +51,17 @@ const SignUp = (props: Props) => {
     }
   };
 
-  const submitHandler = () => {
-    SignupCall();
+  const SubmitHandler = () => {
+    loginCall();
   };
 
-  const redirectToLogin = () => {
-    navigate(`/login`, { replace: true });
-  };
   return (
     <div>
-      {/* TODO: Tems of service and privacy */}
-      {/* <h3>
-            By signing in, you agree to the Baristretto Terms of Service and
-            Privacy Policy
-          </h3> */}
-      {/* <Button variant="primary" onClick={() => submitHandler()}>
-            Submit
-          </Button> */}
-
       <div className="text">
-        <h2>Sign in or create an account</h2>
-        <p>Join us and be part of the community</p>
+        <h2>Sign in to your account</h2>
       </div>
+
       <div className="inputAndButton">
-        <TextField
-          sx={{ m: 1, width: "25ch" }}
-          id="outlined-basic"
-          variant="outlined"
-          label="Your name"
-          color="success"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setName(event.target.value);
-          }}
-        />
         <TextField
           sx={{ m: 1, width: "25ch" }}
           color="success"
@@ -105,19 +87,54 @@ const SignUp = (props: Props) => {
           color="success"
           variant="contained"
           onClick={() => {
-            submitHandler();
+            SubmitHandler();
           }}
         >
-          Create account
+          Sign in
         </Button>
       </div>
-
       <div className="loginDiv">
-        <p>Already part of the community?&nbsp;</p>
-        <p onClick={() => redirectToLogin()}> Click&nbsp;here</p>
+        <p>Forgot your password?&nbsp;</p>
+        <p onClick={() => navigate("/forgotpassword")}> Click&nbsp;here</p>
       </div>
+
+      {/* <Form>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            onChange={handleEmailChange}
+          />
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            onChange={handlePasswordChange}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Check type="checkbox" label="Check me out" />
+        </Form.Group>
+        <Button variant="primary" onClick={SubmitHandler}>
+          Submit
+        </Button>
+        <h3>Forgot your password? Click</h3>
+        <h3
+          onClick={() => {
+            navigate("/forgotpassword");
+          }}
+        >
+          here
+        </h3>
+      </Form> */}
     </div>
   );
 };
 
-export default SignUp;
+export default Login;

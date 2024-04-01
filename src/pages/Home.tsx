@@ -13,8 +13,8 @@ const Home = (props: Props) => {
   const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
   return (
     <div>
-      <h1>Is Signed In: {signedIn ? "yes" : "no"}</h1>
-      <h2>ENV: {process.env.REACT_APP_NAME}</h2>
+      {/* <h1>Is Signed In: {signedIn ? "yes" : "no"}</h1>
+      <h2>ENV: {process.env.REACT_APP_NAME}</h2> */}
       <TopItems />
       <div className="articles">
         <h2>Title 2</h2>

@@ -11,11 +11,12 @@ import Home from "./pages/Home";
 import Features from "./pages/Features";
 import Locations from "./pages/Locations";
 import DetailedCoffeeBeans from "./pages/DetailedCoffeeBeans";
-import Login from "./pages/Login";
+import Login from "./pages/Auth&User/Login";
 import Explore from "./pages/Explore";
 import SignUp from "./pages/Auth&User/SignUp";
 import Search from "./pages/Search";
 import LinearProgress from "@mui/material/LinearProgress";
+import ForgotPassword from "./pages/Auth&User/ForgotPassword";
 function App() {
   const loadingData = useSelector(
     (state: RootState) => state.navBar.loadingData
@@ -32,21 +33,24 @@ function App() {
     <div className="App-header">
       <NavigationBar />
       {loadingData && <LinearProgress color="success" />}
-      <Routes>
-        <Route path="/" element={<Outlet />}>
-          <Route index element={<Home />} />
-          <Route path="/features" element={<Features />} />
-          <Route path="/locations" element={<Locations />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<UserProfile />} />
-          <Route path="/coffee/:id" element={<DetailedCoffeeBeans />} />
-          <Route path="*" element={<CatchPage />} />
-        </Route>
-      </Routes>
+      <div className="content">
+        <Routes>
+          <Route path="/" element={<Outlet />}>
+            <Route index element={<Home />} />
+            <Route path="/features" element={<Features />} />
+            <Route path="/locations" element={<Locations />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/coffee/:id" element={<DetailedCoffeeBeans />} />
+            <Route path="*" element={<CatchPage />} />
+          </Route>
+        </Routes>
+      </div>
     </div>
   );
 }
