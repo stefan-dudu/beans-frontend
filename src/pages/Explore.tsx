@@ -46,13 +46,17 @@ const Explore: React.FC<Props> = (props) => {
   // TODO: Paginating, to increase loading time
   const fetchAllBeans = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_URL}api/v1/beans`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // TODO: ESSENTIAL FOR jwt
-        credentials: "include",
-      });
+      // TODO: will have to update this inReview fasle thing
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}api/v1/beans?inReview=false`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // TODO: ESSENTIAL FOR jwt
+          credentials: "include",
+        }
+      );
       if (!response.ok) {
         throw new Error(`HTTP error: Status ${response.status}`);
       }

@@ -19,6 +19,7 @@ const DynamicSearchBar: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
+  const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
   const isExpanded = useSelector((state: RootState) => state.navBar.expanded);
 
   const navigate = useNavigate();
@@ -47,6 +48,16 @@ const DynamicSearchBar: React.FC = () => {
       setSearchResults([]);
     }
   }, [searchTerm]);
+
+  const redirectToLogin = () => {
+    navigate(`/login`, { replace: true });
+    setSearchTerm("");
+  };
+
+  const redirectToCreateBean = () => {
+    navigate(`/createbean`, { replace: true });
+    setSearchTerm("");
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -89,6 +100,10 @@ const DynamicSearchBar: React.FC = () => {
     );
   };
 
+  const handleCreateMissingBean = () => {
+    signedIn ? redirectToCreateBean() : redirectToLogin();
+  };
+
   return (
     <div className="SearchWrapper">
       <Form.Control
@@ -103,8 +118,14 @@ const DynamicSearchBar: React.FC = () => {
         <div className="resultWrapper">
           <p className="loadingText">Loading...</p>
         </div>
+      ) : searchTerm.trim().length >= 2 && // Display results only if searchTerm has at least 2 characters
+        searchResults.length === 0 ? (
+        <div className="resultWrapper">
+          <p className="loadingText" onClick={() => handleCreateMissingBean()}>
+            Create the missing one
+          </p>
+        </div>
       ) : (
-        searchTerm.trim().length >= 2 && // Display results only if searchTerm has at least 2 characters
         searchResults.length > 0 && (
           <div className="resultWrapper">
             {/* TODO: to fetch only 4 result or how many we will show, to improve speed */}

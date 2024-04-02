@@ -17,6 +17,9 @@ import SignUp from "./pages/Auth&User/SignUp";
 import Search from "./pages/Search";
 import LinearProgress from "@mui/material/LinearProgress";
 import ForgotPassword from "./pages/Auth&User/ForgotPassword";
+import UserCreatesBean from "./pages/UserCreatesBean";
+import ReviewBeans from "./pages/ReviewBeans";
+import PrivateRoutes from "./utils/PrivateRoutes";
 function App() {
   const loadingData = useSelector(
     (state: RootState) => state.navBar.loadingData
@@ -36,12 +39,18 @@ function App() {
       <div className="content">
         <Routes>
           <Route path="/" element={<Outlet />}>
+            {/* TODO: to checkout what routes need to be protected */}
+            <Route element={<PrivateRoutes />}>
+              <Route path="/reviewBeans" element={<ReviewBeans />} />
+            </Route>
             <Route index element={<Home />} />
             <Route path="/features" element={<Features />} />
             <Route path="/locations" element={<Locations />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/search" element={<Search />} />
             <Route path="/explore" element={<Explore />} />
+            <Route path="/createbean" element={<UserCreatesBean />} />
+            {/* <Route path="/reviewBeans" element={<ReviewBeans />} /> */}
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />

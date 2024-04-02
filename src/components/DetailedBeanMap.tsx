@@ -28,50 +28,48 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
 
   // console.log("location", location?.length);
 
-  const lng = (location && location[0].coordinates[0]) || -74.0060152;
-  const lat = (location && location[0].coordinates[1]) || 40.7127281;
-  const description = (location && location[0].description) || "description";
+  const lng = (location && location[0]?.coordinates[0]) || -74.0060152;
+  const lat = (location && location[0]?.coordinates[1]) || 40.7127281;
+  const description = (location && location[0]?.description) || "description";
 
   useEffect(() => {
-    if (location && location?.length > 0) {
-      mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || "";
-      if (mapContainer.current) {
-        const map = new mapboxgl.Map({
-          container: mapContainer.current,
-          style: "mapbox://styles/stefan01-dev/cle6x947u005b01nojysmi80b",
-          center: [lng, lat],
-          zoom: 2,
-          maxZoom: 15,
-          interactive: false,
-          // scrollZoom: false,
-        });
+    mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || "";
+    if (mapContainer.current) {
+      const map = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: "mapbox://styles/stefan01-dev/cle6x947u005b01nojysmi80b",
+        center: [lng, lat],
+        zoom: 2,
+        maxZoom: 15,
+        interactive: false,
+        // scrollZoom: false,
+      });
 
-        // Add zoom controls
-        // map.addControl(new mapboxgl.NavigationControl(), "top-left");
+      // Add zoom controls
+      // map.addControl(new mapboxgl.NavigationControl(), "top-left");
 
-        // Add your custom markers and lines here
-        // Create a new marker.
-        new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
+      // Add your custom markers and lines here
+      // Create a new marker.
+      new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
 
-        // TODO: animation but at the moment not working right
-        // map.flyTo({
-        //   center: [lng, lat],
-        //   essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-        // });
+      // TODO: animation but at the moment not working right
+      // map.flyTo({
+      //   center: [lng, lat],
+      //   essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+      // });
 
-        // TODO: to add a bountry around the country to make it stand out
+      // TODO: to add a bountry around the country to make it stand out
 
-        // new mapboxgl.Popup({ offset: 40 })
-        //   .setLngLat([lng, lat])
-        //   .setHTML(`<p style="color:black;">${description}</p>`)
-        //   .addTo(map);
+      // new mapboxgl.Popup({ offset: 40 })
+      //   .setLngLat([lng, lat])
+      //   .setHTML(`<p style="color:black;">${description}</p>`)
+      //   .addTo(map);
 
-        // Clean up on unmount
+      // Clean up on unmount
 
-        return () => map.remove();
-      }
+      return () => map.remove();
     }
-  }, [location]);
+  }, []);
 
   // display: flex;
   // position: absolute;

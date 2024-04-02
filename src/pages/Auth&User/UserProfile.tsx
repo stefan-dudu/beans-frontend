@@ -51,6 +51,33 @@ const UserProfile: React.FC = () => {
     fetchUserData();
   }, []);
 
+  const fetchInReviewBeans = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}api/v1/beans?inReview=true`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // TODO: ESSENTIAL FOR jwt
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error: Status ${response.status}`);
+      }
+      const { data } = await response.json();
+      console.log("in review data", data.data);
+      // setData(data.data);
+      setError(null);
+    } catch (err: any) {
+      // setData(null);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <h3>email : {data && data?.email}</h3>
@@ -67,6 +94,11 @@ const UserProfile: React.FC = () => {
       >
         Log out
       </h2>
+      {data?.role === "admin" && (
+        <button onClick={() => navigate(`/reviewBeans`, { replace: true })}>
+          To review beans page
+        </button>
+      )}
     </div>
   );
 };

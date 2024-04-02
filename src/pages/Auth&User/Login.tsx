@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { login } from "../../store/auth/authSlice";
+import { login, updateRole } from "../../store/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+
 import "./Login.scss";
 
 const Login = () => {
@@ -39,11 +40,12 @@ const Login = () => {
       );
       const data = await response.json();
       // enter you logic when the fetch is successful
-      console.log("after post", data);
+      // console.log("after post", data?.data.user.role);
       if (data.status === "success") {
         dispatch(login());
+        dispatch(updateRole(data?.data.user.role));
         localStorage.setItem("token", data.token); // Store token in local storage
-        navigate(-1);
+        navigate("/");
       }
     } catch (error) {
       // enter your logic for when there is an error (ex. error toast)
@@ -80,7 +82,7 @@ const Login = () => {
           variant="outlined"
           type="password"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setEmail(event.target.value);
+            setPassword(event.target.value);
           }}
         />
         <Button
@@ -94,45 +96,13 @@ const Login = () => {
         </Button>
       </div>
       <div className="loginDiv">
+        <p>Not a memebr yet?&nbsp;</p>
+        <p onClick={() => navigate("/signup")}> Join us&nbsp;here</p>
+      </div>
+      <div className="loginDiv">
         <p>Forgot your password?&nbsp;</p>
         <p onClick={() => navigate("/forgotpassword")}> Click&nbsp;here</p>
       </div>
-
-      {/* <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            onChange={handleEmailChange}
-          />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            onChange={handlePasswordChange}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-        <Button variant="primary" onClick={SubmitHandler}>
-          Submit
-        </Button>
-        <h3>Forgot your password? Click</h3>
-        <h3
-          onClick={() => {
-            navigate("/forgotpassword");
-          }}
-        >
-          here
-        </h3>
-      </Form> */}
     </div>
   );
 };
