@@ -88,7 +88,7 @@ const Explore: React.FC<Props> = (props) => {
           data.map((el) => {
             return (
               <div key={el._id}>
-                <ExploreRow data={el} />;
+                <ExploreRow data={el} />
               </div>
             );
           })}

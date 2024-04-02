@@ -5,6 +5,7 @@ import DynamicSearchBar from "../components/searchBar/DynamicSearchBar";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import BeanSelector from "../components/BeanSelector";
+import BestBeans2023 from "../components/BestBeans2023";
 
 type Props = {};
 
@@ -13,27 +14,9 @@ const Home = (props: Props) => {
   const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
   return (
     <div>
-      {/* <h1>Is Signed In: {signedIn ? "yes" : "no"}</h1>
-      <h2>ENV: {process.env.REACT_APP_NAME}</h2> */}
       <TopItems />
-      <div className="articles">
-        <h2>Title 2</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. In blandit
-          tincidunt aliquam. Vestibulum ante ipsum primis in faucibus orci
-          luctus et ultrices posuere cubilia curae;
-        </p>
-      </div>
-      <div className="articles">
-        <BeanSelector />
-      </div>
-      <div className="articles">
-        <h2>Title</h2>
-        <p>
-          Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
-          Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
-        </p>
-      </div>
+      <BeanSelector />
+      <BestBeans2023 />
       <div className="articles">
         <h2>Title</h2>
         <p>

@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import "./BeanSelector.scss";
 
 // Define types
 type Props = {};
@@ -131,7 +132,8 @@ const BeanSelector = (props: Props) => {
   };
 
   return (
-    <div>
+    <div className="beanSelectorWrapper">
+      <h2>Find the perfect coffee for you</h2>
       <Box sx={{ width: 300 }}>
         {/* Slider for selecting roast level */}
         <Slider

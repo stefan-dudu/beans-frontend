@@ -32,7 +32,7 @@ type Coffee = {
   id: string;
 };
 
-const TopItems = (props: any) => {
+const BestBeans2023 = (props: any) => {
   const [data, setData] = useState<Coffee[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -46,7 +46,7 @@ const TopItems = (props: any) => {
     const fetchDataForPosts = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_URL}api/v1/beans/top-7`,
+          `${process.env.REACT_APP_URL}api/v1/beans?brand=Origo`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -99,7 +99,7 @@ const TopItems = (props: any) => {
 
   return (
     <div>
-      <h2 style={{ padding: "1rem 0rem" }}>Trending right now ...</h2>
+      <h2 style={{ padding: "1rem 0rem" }}> 2023 Awards</h2>
       <div className="topBeansContainer">
         {loadingData && <SkeletonComponent />}
         {data &&
@@ -123,4 +123,4 @@ const TopItems = (props: any) => {
   );
 };
 
-export default TopItems;
+export default BestBeans2023;
