@@ -46,7 +46,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
   return (
     <div className="wrapper" onClick={() => RowClickHandler()}>
       <img
-        src={data?.image}
+        src={data?.image || catchBeanBag}
         width="100"
         height="100"
         className="d-inline-block align-top"

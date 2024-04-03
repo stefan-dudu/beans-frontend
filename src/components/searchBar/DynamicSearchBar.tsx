@@ -83,7 +83,7 @@ const DynamicSearchBar: React.FC = () => {
           className="SearchResultRow"
         >
           <img
-            src={item?.image}
+            src={item?.image || catchBeanBag}
             style={{ width: "5rem", height: "5rem", marginLeft: "10px" }}
             // width="10rem"
             // height="10rem"

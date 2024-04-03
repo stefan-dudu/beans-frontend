@@ -107,7 +107,7 @@ const DetailedCoffeeBeans = (props: any) => {
           <div className="item">
             {
               <img
-                src={data?.image}
+                src={data?.image || catchBeanBag}
                 width="200"
                 height="200"
                 className="d-inline-block align-top"

@@ -82,7 +82,11 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
   return (
     <div
       ref={mapContainer}
-      style={{ position: "absolute", width: "100%", height: "38%" }}
+      style={{
+        position: "absolute",
+        width: "99%",
+        height: "38%",
+      }}
     />
   );
 };

@@ -46,7 +46,7 @@ const BestBeans2023 = (props: any) => {
     const fetchDataForPosts = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_URL}api/v1/beans?brand=Origo`,
+          `${process.env.REACT_APP_URL}api/v1/beans/top-7`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -107,7 +107,7 @@ const BestBeans2023 = (props: any) => {
             <Link to={`/coffee/${el._id}`} key={el._id}>
               <div className="item">
                 <img
-                  src={el?.image}
+                  src={el?.image || catchBeanBag}
                   width="200"
                   height="200"
                   className="d-inline-block align-top"
