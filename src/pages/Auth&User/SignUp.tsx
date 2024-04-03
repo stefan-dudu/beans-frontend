@@ -37,7 +37,7 @@ const SignUp = (props: Props) => {
       console.log("after post", data);
       if (data.status === "success") {
         // TODO: might have to do it
-        dispatch(login());
+        dispatch(login(data?.data.user.role));
         localStorage.setItem("token", data.token); // Store token in local storage
         navigate(-1);
       }
@@ -98,7 +98,7 @@ const SignUp = (props: Props) => {
           variant="outlined"
           type="password"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setEmail(event.target.value);
+            setPassword(event.target.value);
           }}
         />
         <Button

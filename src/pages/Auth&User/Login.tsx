@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { login, updateRole } from "../../store/auth/authSlice";
+import { login } from "../../store/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 
 import "./Login.scss";
@@ -42,8 +42,7 @@ const Login = () => {
       // enter you logic when the fetch is successful
       // console.log("after post", data?.data.user.role);
       if (data.status === "success") {
-        dispatch(login());
-        dispatch(updateRole(data?.data.user.role));
+        dispatch(login(data?.data.user.role));
         localStorage.setItem("token", data.token); // Store token in local storage
         navigate("/");
       }
