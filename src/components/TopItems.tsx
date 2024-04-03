@@ -6,6 +6,12 @@ import Skeleton from "@mui/material/Skeleton";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import catchBeanBag from "../assets/catchBeanBag.jpg";
+import Rating from "@mui/material/Rating";
+import { styled } from "@mui/material/styles";
+import { COLORS } from ".././values/colors";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 
 type Coffee = {
   _id: string;
@@ -97,27 +103,52 @@ const TopItems = (props: any) => {
     return <>{skeletons}</>;
   };
 
+  const StyledRating = styled(Rating)({
+    "& .MuiRating-iconFilled": {
+      // color: "#ff6d75",
+      color: COLORS.darkGreen,
+    },
+    "& .MuiRating-iconHover": {
+      color: "#ff3d47",
+    },
+  });
+  console.log("data", data && data[0]);
+
+  const BeanCard = ({ data }: { data: Coffee }) => {
+    // console.log("data", data);
+    return (
+      <Link to={`/coffee/${data._id}`} key={data._id} className="parentWrapper">
+        <img
+          className="image"
+          src={data?.image || catchBeanBag}
+          alt="React Bootstrap logo"
+          onError={addDefaultSrc}
+        />
+        <div className="underPic">
+          <div className="title">{data?.name}</div>
+          <div className="ratingsAndNo">
+            <StyledRating
+              name="customized-color"
+              readOnly
+              value={data?.ratingsAverage}
+              precision={0.5}
+              icon={<LocalCafeIcon fontSize="inherit" />}
+              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+            />
+            <div className="reviewsNo">{data?.ratingsQuantity}</div>
+          </div>
+          <div className="origin"> {data?.origin}</div>
+        </div>
+      </Link>
+    );
+  };
+
   return (
     <div>
       <h2 style={{ padding: "1rem 0rem" }}>Trending right now ...</h2>
       <div className="topBeansContainer">
         {loadingData && <SkeletonComponent />}
-        {data &&
-          data?.map((el) => (
-            <Link to={`/coffee/${el._id}`} key={el._id}>
-              <div className="item">
-                <img
-                  src={el?.image || catchBeanBag}
-                  width="200"
-                  height="200"
-                  className="d-inline-block align-top"
-                  alt="React Bootstrap logo"
-                  onError={addDefaultSrc}
-                />
-              </div>
-              {el?.name}
-            </Link>
-          ))}
+        {data && data?.map((el) => <BeanCard data={el} />)}
       </div>
     </div>
   );
