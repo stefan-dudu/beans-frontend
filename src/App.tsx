@@ -41,6 +41,7 @@ function App() {
           <Route path="/" element={<Outlet />}>
             {/* TODO: to checkout what routes need to be protected */}
             <Route element={<PrivateRoutes />}>
+              {/* Restritcted to ADMINS */}
               <Route path="/reviewBeans" element={<ReviewBeans />} />
             </Route>
             <Route index element={<Home />} />

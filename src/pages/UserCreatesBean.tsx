@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 type Props = {};
 
@@ -11,6 +13,12 @@ const UserCreatesBean = (props: Props) => {
   const [brand, setBrand] = useState("");
   const [origin, setOrigin] = useState("");
   const [price, setPrice] = useState(0);
+  const [open, setOpen] = React.useState(false);
+  const [severity, setSeverity] = useState<
+    "success" | "error" | "info" | "warning" | undefined
+  >(undefined);
+  const [alertMessage, setAlertMessage] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -37,11 +45,26 @@ const UserCreatesBean = (props: Props) => {
         // dispatch(login());
         // localStorage.setItem("token", data.token); // Store token in local storage
         //TODO: edit alert
-        alert("posted");
-        navigate("/");
+
+        setOpen(true);
+        setSeverity("success");
+        setAlertMessage("The new coffee bean has been sent to review");
+
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      }
+
+      if (data.status === "error") {
+        // TODO: might have to do it
+        // dispatch(login());
+        // localStorage.setItem("token", data.token); // Store token in local storage
+        // navigate(-1);
+        setOpen(true);
+        setSeverity("error");
+        setAlertMessage("There was an issue adding this bean.");
       }
     } catch (error) {
-      alert("error");
       // enter your logic for when there is an error (ex. error toast)
       console.log(error);
     }
@@ -49,6 +72,17 @@ const UserCreatesBean = (props: Props) => {
 
   const submitHandler = () => {
     PostCall();
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -105,6 +139,17 @@ const UserCreatesBean = (props: Props) => {
         >
           Add a new bean
         </Button>
+      </div>
+      <div className="snackbar">
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity={severity}
+            sx={{ width: "100%" }}
+          >
+            {alertMessage}
+          </Alert>
+        </Snackbar>
       </div>
     </div>
   );
