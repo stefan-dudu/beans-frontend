@@ -12,6 +12,7 @@ import { COLORS } from ".././values/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
+import BeanCard from "./BeanCard";
 
 type Coffee = {
   _id: string;
@@ -114,34 +115,34 @@ const TopItems = (props: any) => {
   });
   // console.log("data", data && data[0]);
 
-  const BeanCard = ({ data }: { data: Coffee }) => {
-    // console.log("data", data);
-    return (
-      <Link to={`/coffee/${data._id}`} key={data._id} className="parentWrapper">
-        <img
-          className="image"
-          src={data?.image || catchBeanBag}
-          alt="React Bootstrap logo"
-          onError={addDefaultSrc}
-        />
-        <div className="underPic">
-          <div className="title">{data?.name}</div>
-          <div className="ratingsAndNo">
-            <StyledRating
-              name="customized-color"
-              readOnly
-              value={data?.ratingsAverage}
-              precision={0.5}
-              icon={<LocalCafeIcon fontSize="inherit" />}
-              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-            />
-            <div className="reviewsNo">{data?.ratingsQuantity}</div>
-          </div>
-          <div className="origin"> {data?.origin}</div>
-        </div>
-      </Link>
-    );
-  };
+  // const BeanCard = ({ data }: { data: Coffee }) => {
+  //   // console.log("data", data);
+  //   return (
+  //     <Link to={`/coffee/${data._id}`} key={data._id} className="parentWrapper">
+  //       <img
+  //         className="image"
+  //         src={data?.image || catchBeanBag}
+  //         alt="React Bootstrap logo"
+  //         onError={addDefaultSrc}
+  //       />
+  //       <div className="underPic">
+  //         <div className="title">{data?.name}</div>
+  //         <div className="ratingsAndNo">
+  //           <StyledRating
+  //             name="customized-color"
+  //             readOnly
+  //             value={data?.ratingsAverage}
+  //             precision={0.5}
+  //             icon={<LocalCafeIcon fontSize="inherit" />}
+  //             emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+  //           />
+  //           <div className="reviewsNo">{data?.ratingsQuantity}</div>
+  //         </div>
+  //         <div className="origin"> {data?.origin}</div>
+  //       </div>
+  //     </Link>
+  //   );
+  // };
 
   return (
     <div>

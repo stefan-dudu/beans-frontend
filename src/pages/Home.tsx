@@ -31,27 +31,6 @@ const Home = (props: Props) => {
           Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
         </p>
       </div>{" "}
-      <div className="articles">
-        <h2>Title</h2>
-        <p>
-          Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
-          Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
-        </p>
-      </div>{" "}
-      <div className="articles">
-        <h2>Title</h2>
-        <p>
-          Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
-          Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
-        </p>
-      </div>{" "}
-      <div className="articles">
-        <h2>Title</h2>
-        <p>
-          Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
-          Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
-        </p>
-      </div>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import Skeleton from "@mui/material/Skeleton";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import catchBeanBag from "../assets/catchBeanBag.jpg";
+import BeanCard from "./BeanCard";
 
 type Coffee = {
   _id: string;
@@ -102,22 +103,7 @@ const BestBeans2023 = (props: any) => {
       <h2 style={{ padding: "1rem 0rem" }}> 2023 Awards</h2>
       <div className="topBeansContainer">
         {loadingData && <SkeletonComponent />}
-        {data &&
-          data?.map((el) => (
-            <Link to={`/coffee/${el._id}`} key={el._id}>
-              <div className="item">
-                <img
-                  src={el?.image || catchBeanBag}
-                  width="200"
-                  height="200"
-                  className="d-inline-block align-top"
-                  alt="React Bootstrap logo"
-                  onError={addDefaultSrc}
-                />
-              </div>
-              {el?.name}
-            </Link>
-          ))}
+        {data && data?.map((el) => <BeanCard data={el} />)}
       </div>
     </div>
   );
