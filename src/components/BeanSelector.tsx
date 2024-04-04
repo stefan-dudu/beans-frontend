@@ -7,6 +7,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import "./BeanSelector.scss";
+import { COLORS } from "../values/colors";
 
 // Define types
 type Props = {};
@@ -50,10 +51,9 @@ const BeanSelector = (props: Props) => {
   // Marks for the slider
   const marks = [
     { value: 0, label: "Light" },
-    { value: 20, label: "Medium" },
-    { value: 50, label: "Medium-Dark" },
-    { value: 80, label: "Dark" },
-    { value: 100, label: "Very Dark" },
+    { value: 33, label: "Medium" },
+    { value: 66, label: "Medium-Dark" },
+    { value: 100, label: "Dark" },
   ];
 
   // Function to fetch bean data
@@ -69,7 +69,7 @@ const BeanSelector = (props: Props) => {
           credentials: "include",
           body: JSON.stringify({
             roastLevel,
-            brand: checkedItems,
+            type: checkedItems,
           }),
         }
       );
@@ -100,22 +100,22 @@ const BeanSelector = (props: Props) => {
       case 0:
         setRoastLevel("Light");
         break;
-      case 20:
+      case 33:
         setRoastLevel("Medium");
         break;
-      case 50:
+      case 66:
         setRoastLevel("Medium-Dark");
         break;
-      case 80:
-        setRoastLevel("Dark");
-        break;
       case 100:
-        setRoastLevel("Very Dark");
+        setRoastLevel("Dark");
         break;
       default:
         setRoastLevel("Medium");
     }
   };
+
+  console.log("roastLevel", roastLevel);
+  console.log("checkedItems", checkedItems);
 
   // Function to handle checkbox change
   const handleCheckboxChange = (label: string) => {
@@ -132,54 +132,83 @@ const BeanSelector = (props: Props) => {
   };
 
   return (
+    // Have a shodown this card for selector
     <div className="beanSelectorWrapper">
       <h2>Find the perfect coffee for you</h2>
-      <Box sx={{ width: 300 }}>
+      <Box className="box">
         {/* Slider for selecting roast level */}
-        <Slider
-          aria-label="Roast Level"
-          defaultValue={20}
-          getAriaValueText={(value: number) => `${value}°C`}
-          step={null}
-          marks={marks}
-          onChange={handleSliderChange}
-        />
-
-        {/* Checkboxes for selecting brands */}
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={checkedItems.includes("Starbucks")}
-                onChange={() => handleCheckboxChange("Starbucks")}
-              />
-            }
-            label="Starbucks"
+        <div className="roastLevel">
+          <p>Roast level</p>
+          <Slider
+            aria-label="Roast Level"
+            defaultValue={33}
+            getAriaValueText={(value: number) => `${value}°C`}
+            step={null}
+            marks={marks}
+            onChange={handleSliderChange}
           />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={checkedItems.includes("Origo")}
-                onChange={() => handleCheckboxChange("Origo")}
-              />
-            }
-            label="Origo"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={checkedItems.includes("Costa")}
-                onChange={() => handleCheckboxChange("Costa")}
-              />
-            }
-            label="Costa"
-          />
-        </FormGroup>
-
+        </div>
+        <div className="type">
+          {/* Checkboxes for selecting brands */}
+          <p>Type</p>
+          <FormGroup className="typeOptions">
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checkedItems.includes("arabica")}
+                  onChange={() => handleCheckboxChange("arabica")}
+                  sx={{
+                    color: COLORS.darkGreen,
+                    "&.Mui-checked": {
+                      color: COLORS.darkGreen,
+                    },
+                  }}
+                />
+              }
+              label="Arabica"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checkedItems.includes("robusta")}
+                  onChange={() => handleCheckboxChange("robusta")}
+                  sx={{
+                    color: COLORS.darkGreen,
+                    "&.Mui-checked": {
+                      color: COLORS.darkGreen,
+                    },
+                  }}
+                />
+              }
+              label="Robusta"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checkedItems.includes("blend")}
+                  onChange={() => handleCheckboxChange("blend")}
+                  sx={{
+                    color: COLORS.darkGreen,
+                    "&.Mui-checked": {
+                      color: COLORS.darkGreen,
+                    },
+                  }}
+                />
+              }
+              label="Blend"
+            />
+          </FormGroup>
+        </div>
         {/* Button to trigger bean search */}
-        <Button variant="contained" onClick={handleFindButtonClick}>
-          Find your bean
-        </Button>
+        <div className="findButton">
+          <Button
+            variant="contained"
+            className="button"
+            onClick={handleFindButtonClick}
+          >
+            Show coffee beans
+          </Button>
+        </div>
       </Box>
     </div>
   );

@@ -112,7 +112,7 @@ const TopItems = (props: any) => {
       color: "#ff3d47",
     },
   });
-  console.log("data", data && data[0]);
+  // console.log("data", data && data[0]);
 
   const BeanCard = ({ data }: { data: Coffee }) => {
     // console.log("data", data);
