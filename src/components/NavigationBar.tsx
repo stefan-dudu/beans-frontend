@@ -19,7 +19,7 @@ function NavigationBar() {
   return (
     <Navbar
       collapseOnSelect
-      expand="lg"
+      expand="sm"
       // defaultExpanded
       className="bg-body-tertiary"
       sticky="top"

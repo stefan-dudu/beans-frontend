@@ -17,6 +17,7 @@ import BeanCard from "./BeanCard";
 type Coffee = {
   _id: string;
   name: string;
+  brand: string;
   origin: string;
   roastLevel: string;
   flavorNotes: string[];

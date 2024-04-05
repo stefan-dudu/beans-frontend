@@ -9,6 +9,7 @@ import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 type Coffee = {
   _id: string;
   name: string;
+  brand: string;
   origin: string;
   ratingsAverage: number;
   ratingsQuantity: number;
@@ -39,6 +40,7 @@ const BeanCard = ({ data }: { data: Coffee }) => {
       />
       <div className="underPic">
         <div className="title">{data?.name}</div>
+        <p style={{ color: "lightgrey" }}>{data?.brand}</p>
         <div className="ratingsAndNo">
           <StyledRating
             name="customized-color"
