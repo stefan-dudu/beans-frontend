@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import mapboxgl, { GeoJSONSourceRaw } from "mapbox-gl";
+import "./DetailedBeanMap.scss";
 
 interface MovingObject {
   id: number;
@@ -82,11 +83,14 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
   return (
     <div
       ref={mapContainer}
-      style={{
-        position: "absolute",
-        width: "70%",
-        height: "50%",
-      }}
+      // style={{
+      //   position: "absolute",
+      //   // width: "80vw",
+      //   // height: "50%",
+      //   minWidth: "50vw",
+      //   height: "30vh",
+      // }}
+      className="map"
     />
   );
 };

@@ -3,10 +3,15 @@ import { useParams } from "react-router-dom";
 import RateBean from "../components/RateBean";
 import DetailedBeanMap from "../components/DetailedBeanMap";
 import Skeleton from "@mui/material/Skeleton";
+import Rating from "@mui/material/Rating";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
 import catchBeanBag from "../assets/catchBeanBag.jpg";
+import { COLORS } from "../values/colors";
+import LocalCafeIcon from "@mui/icons-material/LocalCafe";
+import "./DetailedCoffeeBeans.scss";
+import Button from "@mui/material/Button";
 
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -88,22 +93,10 @@ const DetailedCoffeeBeans = (props: any) => {
   const SkeletonComponent = () => {
     return (
       <div>
-        {/* <Skeleton animation="wave" variant="text" width={200} />
-
-        <Skeleton animation="wave" variant="text" width={200} />
-        <Skeleton animation="wave" variant="text" width={200} />
-        <Skeleton animation="wave" variant="text" width={200} />
-        <Skeleton
-          animation="wave"
-          variant="rounded"
-          width={"100vw"}
-          height={200}
-        /> */}
-
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
             {/* left component */}
-            <Grid item xs={9} sm={4}>
+            <Grid item xs={12} sm={4}>
               <div className="item">
                 <Skeleton
                   animation="wave"
@@ -116,7 +109,7 @@ const DetailedCoffeeBeans = (props: any) => {
               <Skeleton animation="wave" variant="text" width={200} />
             </Grid>
             {/* right component */}
-            <Grid item xs={3} sm={8}>
+            <Grid item xs={12} sm={8}>
               <Skeleton animation="wave" variant="text" width={200} />
               <Skeleton animation="wave" variant="text" width={200} />
               <div style={{ display: "flex" }}>
@@ -145,6 +138,57 @@ const DetailedCoffeeBeans = (props: any) => {
     );
   };
 
+  const Traits = () => {
+    const StyledRating = styled(Rating)({
+      "& .MuiRating-iconFilled": {
+        color: COLORS.darkGreen,
+      },
+      "& .MuiRating-iconHover": {
+        color: "#ff3d47",
+      },
+    });
+    return (
+      <div className="traits">
+        <p>
+          Body:{" "}
+          <StyledRating
+            name="customized-color"
+            readOnly
+            value={data?.body}
+            precision={0.1}
+            icon={<LocalCafeIcon fontSize="inherit" />}
+            emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+          />
+          {data?.body}
+        </p>
+        <p>
+          Acidity:
+          <StyledRating
+            name="customized-color"
+            readOnly
+            value={data?.acidity}
+            precision={0.1}
+            icon={<LocalCafeIcon fontSize="inherit" />}
+            emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+          />
+          {data?.acidity}
+        </p>
+        <p>
+          Sweetness:{" "}
+          <StyledRating
+            name="customized-color"
+            readOnly
+            value={data?.ratingsAverage}
+            precision={0.1}
+            icon={<LocalCafeIcon fontSize="inherit" />}
+            emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+          />
+          {data?.ratingsAverage}
+        </p>
+      </div>
+    );
+  };
+
   console.log("data", data);
 
   return (
@@ -155,7 +199,7 @@ const DetailedCoffeeBeans = (props: any) => {
       ) : (
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={4} className="imageBookmarkRating">
               <div className="item">
                 {
                   <img
@@ -168,30 +212,58 @@ const DetailedCoffeeBeans = (props: any) => {
                   />
                 }
               </div>
-              <p>Bookmark this coffe bean</p>
-              <RateBean maxStars={5} currentRating={data?.ratingsAverage} />
+              <Button variant="outlined" color="success">
+                Save it
+              </Button>
+              {/* <RateBean maxStars={5} currentRating={data?.ratingsAverage} /> */}
+              <Rating name="no-value" value={null} size="large" />
             </Grid>
-            <Grid item xs={12} sm={8}>
-              <h1>{data?.name || "name"}</h1>
-              <h3>{data?.brand || "brand"}</h3>
-              <div style={{ display: "flex" }}>
-                {/* <p>Ratings in stars here pretty big</p> */}
-                <RateBean maxStars={5} currentRating={data?.ratingsAverage} />
-                {/* <p>No of ratings: {data?.ratingsQuantity}</p> */}
+            <Grid item xs={12} sm={8} className="restOfContent">
+              <div className="aboveMap">
+                <div className="title">{data?.name || "name"}</div>
+                <div className="brand">{data?.brand || "brand"}</div>
+                <div style={{ display: "flex" }} className="ratingWrapper">
+                  {/* <p>Ratings in stars here pretty big</p> */}
+                  <Rating
+                    name="half-rating-read"
+                    defaultValue={2.5}
+                    precision={0.5}
+                    value={data?.ratingsAverage}
+                    size="large"
+                    readOnly
+                  />{" "}
+                  {data?.ratingsAverage}
+                  {/* <p>No of ratings: {data?.ratingsQuantity}</p> */}
+                </div>
+                <p>Origin: {data?.origin}</p>
+                {/* flag maybe? */}
+                <p>Processing: naturally washed</p>
+                <p>QGrading: 85 points</p>
+                <p>Altitude: 2821m </p>
+                <Traits />
+                <p>Flavour notes: CHOCOLTAE , NUTTY, SPICY </p>
               </div>
-              <p>Origin: {data?.origin}</p>
-              {/* flag maybe? */}
-
-              <p>Altitude: 2821m </p>
-              <div>
-                <p>Body: - - - - - </p>
-                <p>Acidity: - - - - - </p>
-                <p>Other: - - - - - </p>
-              </div>
-              <p>Flavour notes: CHOCOLTAE , NUTTY, SPICY </p>
               {data?.locations && (
                 <DetailedBeanMap location={data?.locations} />
               )}
+              <div>
+                <div className="articles">
+                  <h2>Title</h2>
+                  <p>
+                    Aenean tincidunt quis sem nec luctus. Donec non interdum
+                    eros. Phasellus facilisis facilisis eros, eu venenatis erat
+                    eleifend eget
+                  </p>
+                </div>{" "}
+                <div className="articles">
+                  <h2>Title</h2>
+                  <p>
+                    Aenean tincidunt quis sem nec luctus. Donec non interdum
+                    eros. Phasellus facilisis facilisis eros, eu venenatis erat
+                    eleifend eget
+                  </p>
+                </div>{" "}
+              </div>
             </Grid>
           </Grid>
         </Box>

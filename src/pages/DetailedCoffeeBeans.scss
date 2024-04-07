@@ -1,0 +1,36 @@
+.imageBookmarkRating {
+  display: flex;
+  flex-direction: column !important;
+  align-items: center;
+  padding-top: 2rem !important;
+  gap: 1rem;
+}
+.restOfContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding-top: 2rem !important;
+  .aboveMap {
+    padding-left: 1rem;
+
+    .title {
+      font-size: 2.5rem;
+      color: #1f3933;
+      font-weight: 600;
+    }
+
+    .ratingWrapper {
+      display: flex;
+      padding: 1rem 0rem;
+      align-items: center;
+      justify-content: flex-start;
+      flex-direction: row;
+      gap: 1rem;
+    }
+
+    .traits {
+      margin-left: 1rem;
+    }
+  }
+}
