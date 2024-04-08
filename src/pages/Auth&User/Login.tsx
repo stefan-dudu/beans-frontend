@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { login } from "../../store/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/logo2.png";
 
 import "./Login.scss";
 
@@ -57,12 +58,19 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="pageWrapper ">
       <div className="text">
-        <h2>Sign in to your account</h2>
+        <div>Sign in to your account</div>
       </div>
 
       <div className="inputAndButton">
+        <img
+          src={logo}
+          width="50"
+          height="50"
+          className="d-inline-block align-top"
+          alt="React Bootstrap logo"
+        />
         <TextField
           sx={{ m: 1, width: "25ch" }}
           color="success"
@@ -95,12 +103,18 @@ const Login = () => {
         </Button>
       </div>
       <div className="loginDiv">
-        <p>Not a memebr yet?&nbsp;</p>
-        <p onClick={() => navigate("/signup")}> Join us&nbsp;here</p>
+        <div>Not a memebr yet?&nbsp;</div>
+        <div onClick={() => navigate("/signup")} className="link">
+          {" "}
+          Join us&nbsp;here
+        </div>
       </div>
-      <div className="loginDiv">
-        <p>Forgot your password?&nbsp;</p>
-        <p onClick={() => navigate("/forgotpassword")}> Click&nbsp;here</p>
+      <div className="loginDiv" style={{ marginTop: "1rem" }}>
+        <div>Forgot your password?&nbsp;</div>
+        <div onClick={() => navigate("/forgotpassword")} className="link">
+          {" "}
+          Click&nbsp;here
+        </div>
       </div>
     </div>
   );

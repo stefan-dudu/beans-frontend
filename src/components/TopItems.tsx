@@ -147,7 +147,9 @@ const TopItems = (props: any) => {
 
   return (
     <div>
-      <h2 style={{ padding: "1rem 0rem" }}>Trending right now ...</h2>
+      <h2 style={{ padding: "1rem 0rem", color: "#1F3933" }}>
+        Trending right now ...
+      </h2>
       <div className="topBeansContainer">
         {loadingData && <SkeletonComponent />}
         {data && data?.map((el) => <BeanCard data={el} />)}

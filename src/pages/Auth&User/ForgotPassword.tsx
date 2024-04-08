@@ -98,10 +98,10 @@ const ForgotPassword = (props: Props) => {
       {/* TODO: Captch to add */}
       {/* <h3>Captch to add</h3> */}
       <div className="text">
-        <h2>Forgot password</h2>
+        <div>Forgot password</div>
         <p>
-          Just need to confirm your email to send you instructions to reset your
-          password.
+          Just need to confirm the email address to send you instructions to
+          reset the password
         </p>
       </div>
       <div className="inputAndButton">

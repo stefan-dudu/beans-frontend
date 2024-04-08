@@ -235,14 +235,16 @@ const DetailedCoffeeBeans = (props: any) => {
                 <div className="brand">{data?.brand || "brand"}</div>
                 <div style={{ display: "flex" }} className="ratingWrapper">
                   {/* <p>Ratings in stars here pretty big</p> */}
-                  <Rating
-                    name="half-rating-read"
-                    defaultValue={2.5}
-                    precision={0.5}
-                    value={data?.ratingsAverage}
-                    size="large"
-                    readOnly
-                  />{" "}
+                  {data?.ratingsAverage && (
+                    <Rating
+                      name="half-rating-read"
+                      // defaultValue={2.5}
+                      precision={0.5}
+                      value={data?.ratingsAverage}
+                      size="large"
+                      readOnly
+                    />
+                  )}
                   {data?.ratingsAverage}
                   {/* <p>No of ratings: {data?.ratingsQuantity}</p> */}
                 </div>

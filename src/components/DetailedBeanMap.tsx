@@ -40,7 +40,7 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
         container: mapContainer.current,
         style: "mapbox://styles/stefan01-dev/cle6x947u005b01nojysmi80b",
         center: [lng, lat],
-        zoom: 2,
+        zoom: 3,
         maxZoom: 15,
         interactive: false,
         // scrollZoom: false,

@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { login } from "../../store/auth/authSlice";
 import "./SignUp.scss";
+import logo from "../../assets/logo2.png";
 
 type Props = {};
 
@@ -55,7 +56,7 @@ const SignUp = (props: Props) => {
     navigate(`/login`, { replace: true });
   };
   return (
-    <div>
+    <div className="pageWrapper ">
       {/* TODO: Tems of service and privacy */}
       {/* <h3>
             By signing in, you agree to the Baristretto Terms of Service and
@@ -65,11 +66,18 @@ const SignUp = (props: Props) => {
             Submit
           </Button> */}
 
-      <div className="text">
-        <h2>Sign in or create an account</h2>
-        <p>Join us and be part of the community</p>
+      <div className="text" style={{ padding: "2rem 1rem 0rem 1rem" }}>
+        <div>Sign in or create an account</div>
+        {/* <div>Join us and be part of the community</div> */}
       </div>
       <div className="inputAndButton">
+        <img
+          src={logo}
+          width="50"
+          height="50"
+          className="d-inline-block align-top"
+          alt="React Bootstrap logo"
+        />
         <TextField
           sx={{ m: 1, width: "25ch" }}
           id="outlined-basic"
@@ -113,8 +121,11 @@ const SignUp = (props: Props) => {
       </div>
 
       <div className="loginDiv">
-        <p>Already part of the community?&nbsp;</p>
-        <p onClick={() => redirectToLogin()}> Click&nbsp;here</p>
+        <div>Already part of the community?&nbsp;</div>
+        <div onClick={() => redirectToLogin()} className="link">
+          {" "}
+          Click&nbsp;here
+        </div>
       </div>
     </div>
   );

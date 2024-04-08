@@ -9,7 +9,13 @@
 }
 
 .text {
-  padding: 2rem 0rem;
+  padding: 2rem 1rem;
+  div {
+    // color: #1f3933;
+    color: #1f3933;
+    font-size: 2rem;
+    font-weight: 600;
+  }
 }
 
 .loginDiv {
@@ -18,5 +24,4 @@
   justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
-  margin-top: 3rem;
 }
