@@ -96,7 +96,7 @@ const DetailedCoffeeBeans = (props: any) => {
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
             {/* left component */}
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={4} className="imageBookmarkRating">
               <div className="item">
                 <Skeleton
                   animation="wave"
@@ -105,32 +105,36 @@ const DetailedCoffeeBeans = (props: any) => {
                   height={200}
                 />
               </div>
-              <Skeleton animation="wave" variant="text" width={200} />
-              <Skeleton animation="wave" variant="text" width={200} />
+              <Skeleton animation="wave" variant="text" width={"50%"} />
+              <Skeleton animation="wave" variant="text" width={"50%"} />
             </Grid>
             {/* right component */}
-            <Grid item xs={12} sm={8}>
-              <Skeleton animation="wave" variant="text" width={200} />
-              <Skeleton animation="wave" variant="text" width={200} />
-              <div style={{ display: "flex" }}>
-                <Skeleton animation="wave" variant="text" width={200} />
+            <Grid item xs={12} sm={8} className="r">
+              <div className="aboveMap">
+                <Skeleton animation="wave" variant="text" width={"60vw"} />
+                <Skeleton animation="wave" variant="text" width={"100%"} />
+                <div style={{ display: "flex" }}>
+                  <Skeleton animation="wave" variant="text" width={"100%"} />
+                </div>
+                <Skeleton animation="wave" variant="text" width={"100%"} />
+                <Skeleton animation="wave" variant="text" width={"100%"} />
+                <div>
+                  <Skeleton animation="wave" variant="text" width={"100%"} />
+                  <Skeleton
+                    animation="wave"
+                    variant="text"
+                    width={"100%"}
+                    height={200}
+                  />
+                  <Skeleton animation="wave" variant="text" width={"100%"} />
+                  <Skeleton
+                    animation="wave"
+                    variant="rounded"
+                    width={"100%"}
+                    height={400}
+                  />
+                </div>
               </div>
-              <Skeleton animation="wave" variant="text" width={200} />
-              <Skeleton animation="wave" variant="text" width={200} />
-              <div>
-                <Skeleton animation="wave" variant="text" width={200} />
-                <Skeleton animation="wave" variant="text" width={200} />
-                <Skeleton animation="wave" variant="text" width={200} />
-              </div>
-              <Skeleton animation="wave" variant="text" width={200} />
-              {data?.locations && (
-                <Skeleton
-                  animation="wave"
-                  variant="rounded"
-                  width={200}
-                  height={400}
-                />
-              )}
             </Grid>
           </Grid>
         </Box>
@@ -149,47 +153,54 @@ const DetailedCoffeeBeans = (props: any) => {
     });
     return (
       <div className="traits">
-        <p>
-          Body:{" "}
-          <StyledRating
-            name="customized-color"
-            readOnly
-            value={data?.body}
-            precision={0.1}
-            icon={<LocalCafeIcon fontSize="inherit" />}
-            emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-          />
-          {data?.body}
-        </p>
-        <p>
-          Acidity:
-          <StyledRating
-            name="customized-color"
-            readOnly
-            value={data?.acidity}
-            precision={0.1}
-            icon={<LocalCafeIcon fontSize="inherit" />}
-            emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-          />
-          {data?.acidity}
-        </p>
-        <p>
-          Sweetness:{" "}
-          <StyledRating
-            name="customized-color"
-            readOnly
-            value={data?.ratingsAverage}
-            precision={0.1}
-            icon={<LocalCafeIcon fontSize="inherit" />}
-            emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-          />
-          {data?.ratingsAverage}
-        </p>
+        <div className="propWrapper">
+          <div className="propName">Body: </div>
+          <div className="propValue">
+            <StyledRating
+              name="customized-color"
+              readOnly
+              value={data?.body}
+              precision={0.1}
+              icon={<LocalCafeIcon fontSize="inherit" />}
+              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+            />
+            {data?.body}
+          </div>
+        </div>
+        <div className="propWrapper">
+          <div className="propName">Acidity: </div>
+
+          <div className="propValue">
+            <StyledRating
+              name="customized-color"
+              readOnly
+              value={data?.acidity}
+              precision={0.1}
+              icon={<LocalCafeIcon fontSize="inherit" />}
+              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+            />{" "}
+            {data?.acidity}
+          </div>
+        </div>
+        <div className="propWrapper">
+          <div className="propName">Sweetness: </div>
+          <div className="propValue">
+            <StyledRating
+              name="customized-color"
+              readOnly
+              value={data?.ratingsAverage}
+              precision={0.1}
+              icon={<LocalCafeIcon fontSize="inherit" />}
+              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+            />{" "}
+            {data?.ratingsAverage}
+          </div>
+        </div>
       </div>
     );
   };
 
-  console.log("data", data);
+  // console.log("data", data);
 
   return (
     <div>
@@ -235,13 +246,29 @@ const DetailedCoffeeBeans = (props: any) => {
                   {data?.ratingsAverage}
                   {/* <p>No of ratings: {data?.ratingsQuantity}</p> */}
                 </div>
-                <p>Origin: {data?.origin}</p>
-                {/* flag maybe? */}
-                <p>Processing: naturally washed</p>
-                <p>QGrading: 85 points</p>
-                <p>Altitude: 2821m </p>
+                <div className="propWrapper">
+                  <div className="propName">Origin: </div>
+                  <div className="propValue">{data?.origin}</div>
+                  {/* flag maybe? */}
+                </div>
+                <div className="propWrapper">
+                  <div className="propName">Processing: </div>
+                  <div className="propValue">Naturally washed</div>
+                </div>
+                {/*  */}
+                <div className="propWrapper">
+                  <div className="propName">QGrading: </div>
+                  <div className="propValue">85 points</div>
+                </div>
+                <div className="propWrapper">
+                  <div className="propName">Altitude:</div>
+                  <div className="propValue">2821m</div>
+                </div>
                 <Traits />
-                <p>Flavour notes: CHOCOLTAE , NUTTY, SPICY </p>
+                <div className="propWrapper">
+                  <div className="propName">Flavour notes: </div>
+                  <div className="propValue">CHOCOLTAE , NUTTY, SPICY </div>
+                </div>
               </div>
               {data?.locations && (
                 <DetailedBeanMap location={data?.locations} />

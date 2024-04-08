@@ -80,7 +80,9 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
   // top: 113vw;
   // left: 20vw;
 
-  return (
+  // console.log("location", location);
+
+  return location ? (
     <div
       ref={mapContainer}
       // style={{
@@ -92,7 +94,7 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
       // }}
       className="map"
     />
-  );
+  ) : null;
 };
 
 export default DetailedBeanMap;

@@ -28,9 +28,53 @@
       flex-direction: row;
       gap: 1rem;
     }
+    .propWrapper {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.3rem 0rem;
+      .propName {
+        color: #1f3933;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .propValue {
+        color: #006241;
+        font-size: 1.3rem;
+      }
+    }
 
     .traits {
-      margin-left: 1rem;
+      // margin: 1rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 1rem 2rem 1rem;
+      align-items: flex-start;
+      margin: 1rem 0.5rem 1rem -0.5rem;
+      border-radius: 20px;
+      box-shadow: 10px 20px 55px 0 rgba(92, 92, 92, 0.3);
+
+      .propWrapper {
+        display: flex;
+        align-items: flex-end;
+        gap: 1rem;
+        padding: 0.3rem 0rem;
+        .propName {
+          color: #1f3933;
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+
+        .propValue {
+          color: darkgray;
+          font-size: 1.3rem;
+          display: flex;
+          align-items: center;
+          gap: 0.7rem;
+        }
+      }
     }
   }
 }
