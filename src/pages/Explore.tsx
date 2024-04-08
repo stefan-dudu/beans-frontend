@@ -10,6 +10,8 @@ type Props = {};
 type Coffee = {
   _id: string;
   name: string;
+  brand: string;
+  type: string;
   origin: string;
   roastLevel: string;
   flavorNotes: string[];
@@ -43,7 +45,7 @@ const Explore: React.FC<Props> = (props) => {
     (state: RootState) => state.navBar.loadingData
   );
 
-  // TODO: Paginating, to increase loading time
+  // TODO: Paginating, to decrease loading time
   const fetchAllBeans = async () => {
     try {
       // TODO: will have to update this inReview fasle thing
@@ -87,7 +89,7 @@ const Explore: React.FC<Props> = (props) => {
     <div>
       <div>
         {/* TODO: have a filtering way for results */}
-        <h4>Filter btn</h4>
+        {/* <h4>Filter btn</h4> */}
         {data &&
           data.map((el) => {
             return (

@@ -7,6 +7,8 @@ type Props = {};
 type Coffee = {
   _id: string;
   name: string;
+  brand: string;
+  type: string;
   origin: string;
   roastLevel: string;
   flavorNotes: string[];

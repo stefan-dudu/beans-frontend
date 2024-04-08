@@ -9,6 +9,7 @@ interface Coffee {
   _id: string;
   name: string;
   brand: string;
+  type: string;
   slug: string;
   origin: string;
   roastLevel: string;

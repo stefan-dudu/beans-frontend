@@ -22,6 +22,7 @@ type Coffee = {
   _id: string;
   name: string;
   brand: string;
+  type: string;
   origin: string;
   roastLevel: string;
   flavorNotes: string[];
@@ -252,6 +253,10 @@ const DetailedCoffeeBeans = (props: any) => {
                   <div className="propName">Origin: </div>
                   <div className="propValue">{data?.origin}</div>
                   {/* flag maybe? */}
+                </div>
+                <div className="propWrapper">
+                  <div className="propName">Type: </div>
+                  <div className="propValue">{data?.type}</div>
                 </div>
                 <div className="propWrapper">
                   <div className="propName">Processing: </div>
