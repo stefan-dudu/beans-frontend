@@ -2,6 +2,6 @@
 
 npm run start:dev
 
-<!-- Run using server vercel deployed BE -->
+<!-- Run using server vercel deployed BE  -->
 
 npm start
