@@ -44,18 +44,16 @@ const Login = () => {
       // console.log("data", data?.data.user._id);
       // console.log("after post", data?.data.user.role);
       if (data.status === "success") {
-        dispatch(
-          login({
-            role: String(data?.data.user.role),
-            id: String(data?.data.user._id),
-          })
-        );
+        // dispatch(
+        //   login({
+        //     role: String(data?.data.user.role),
+        //     id: String(data?.data.user._id),
+        //   })
+        // );
+        dispatch(login(data?.data.user.role));
 
         localStorage.setItem("token", data.token); // Store token in local storage
-        setTimeout(() => {
-          console.log("token set");
-          navigate("/");
-        }, 2000);
+        navigate("/");
       }
     } catch (error) {
       // enter your logic for when there is an error (ex. error toast)
