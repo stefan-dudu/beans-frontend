@@ -52,7 +52,10 @@ const Login = () => {
         );
 
         localStorage.setItem("token", data.token); // Store token in local storage
-        navigate("/");
+        setTimeout(() => {
+          console.log("token set");
+          navigate("/");
+        }, 2000);
       }
     } catch (error) {
       // enter your logic for when there is an error (ex. error toast)
