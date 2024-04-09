@@ -66,7 +66,7 @@ const SignUp = (props: Props) => {
             Submit
           </Button> */}
 
-      <div className="text" style={{ padding: "2rem 1rem 0rem 1rem" }}>
+      <div className="text">
         <div>Sign in or create an account</div>
         {/* <div>Join us and be part of the community</div> */}
       </div>
