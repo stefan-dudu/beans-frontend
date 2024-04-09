@@ -152,7 +152,7 @@ const TopItems = (props: any) => {
       </h2>
       <div className="topBeansContainer">
         {loadingData && <SkeletonComponent />}
-        {data && data?.map((el) => <BeanCard data={el} />)}
+        {data && data?.map((el) => <BeanCard key={el.id} data={el} />)}
       </div>
     </div>
   );

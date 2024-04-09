@@ -46,9 +46,14 @@ const ReviewsComponent = (props: Props) => {
     fetchReviewsForBean();
   }, []);
 
+  // console.log("data", data);
+
   return (
     <div style={{ width: "100%", padding: "1rem 0.3rem" }}>
-      {data && data?.map((el) => <ReviewCard data={el} />)}
+      {data &&
+        data
+          ?.filter((el) => el.review)
+          .map((el) => <ReviewCard key={el.id} data={el} />)}
     </div>
   );
 };

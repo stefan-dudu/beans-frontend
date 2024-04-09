@@ -130,7 +130,7 @@ const DynamicSearchBar: React.FC = () => {
           <div className="resultWrapper">
             {/* TODO: to fetch only 4 result or how many we will show, to improve speed */}
             {searchResults.slice(0, 4).map((item, index) => (
-              <SearchResultRow item={item} index={index} />
+              <SearchResultRow item={item} index={index} key={index} />
             ))}
             {searchResults.length > 4 && (
               <p

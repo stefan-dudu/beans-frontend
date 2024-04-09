@@ -202,8 +202,10 @@ const DetailedCoffeeBeans = (props: any) => {
               <Button variant="outlined" color="success">
                 Save it
               </Button>
-              {/* <RateBean maxStars={5} currentRating={data?.ratingsAverage} /> */}
-              <Rating name="no-value" value={null} size="large" />
+              <RateBean maxStars={5} currentRating={data?.ratingsAverage} />
+              {/* <Rating name="no-value" value={null} size="large" /> */}
+              {/* TODO: if rated or not status */}
+              {/* <p>Rated, write a review / Rate this coffee</p> */}
             </Grid>
             <Grid item xs={12} sm={8} className="restOfContent">
               <div className="aboveMap">
