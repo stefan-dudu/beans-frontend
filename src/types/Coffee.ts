@@ -1,0 +1,26 @@
+export type CoffeeType = {
+  _id: string;
+  name: string;
+  brand: string;
+  type: string;
+  origin: string;
+  roastLevel: string;
+  flavorNotes: string[];
+  aroma: string;
+  acidity: number;
+  body: number;
+  price: number;
+  ratingsAverage: number;
+  ratingsQuantity: number;
+  summary: string;
+  image: string;
+  locations: {
+    type: string;
+    coordinates: number[];
+    description: string;
+    _id: string;
+    id: string;
+  }[];
+  slug: string;
+  id: string;
+};

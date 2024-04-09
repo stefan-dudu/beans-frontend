@@ -17,36 +17,11 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-
-type Coffee = {
-  _id: string;
-  name: string;
-  brand: string;
-  type: string;
-  origin: string;
-  roastLevel: string;
-  flavorNotes: string[];
-  aroma: string;
-  acidity: number;
-  body: number;
-  price: number;
-  ratingsAverage: number;
-  ratingsQuantity: number;
-  summary: string;
-  image: string;
-  locations: {
-    type: string;
-    coordinates: number[];
-    description: string;
-    _id: string;
-    id: string;
-  }[];
-  slug: string;
-  id: string;
-};
+import ReviewsComponent from "../components/ReviewsComponent";
+import { CoffeeType } from "../types/Coffee";
 
 const DetailedCoffeeBeans = (props: any) => {
-  const [data, setData] = useState<Coffee | null>(null);
+  const [data, setData] = useState<CoffeeType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
   let { id } = useParams();
@@ -280,24 +255,9 @@ const DetailedCoffeeBeans = (props: any) => {
               {data?.locations && (
                 <DetailedBeanMap location={data?.locations} />
               )}
-              <div>
-                <div className="articles">
-                  <h2>Title</h2>
-                  <p>
-                    Aenean tincidunt quis sem nec luctus. Donec non interdum
-                    eros. Phasellus facilisis facilisis eros, eu venenatis erat
-                    eleifend eget
-                  </p>
-                </div>{" "}
-                <div className="articles">
-                  <h2>Title</h2>
-                  <p>
-                    Aenean tincidunt quis sem nec luctus. Donec non interdum
-                    eros. Phasellus facilisis facilisis eros, eu venenatis erat
-                    eleifend eget
-                  </p>
-                </div>{" "}
-              </div>
+              {/* TODO: CTA */}
+              {/* <div>Call to action: Add review</div> */}
+              <ReviewsComponent />
             </Grid>
           </Grid>
         </Box>
