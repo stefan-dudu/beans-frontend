@@ -89,8 +89,7 @@ const UserProfile: React.FC = () => {
         onClick={() => {
           LogoutFn();
           navigate(`/`, { replace: true });
-          dispatch(logout("none"));
-          // dispatch(logout({ role: "none", id: "none" }));
+          dispatch(logout({ role: "none", id: "none" }));
         }}
       >
         Log out

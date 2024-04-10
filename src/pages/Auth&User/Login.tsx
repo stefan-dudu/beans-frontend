@@ -41,16 +41,15 @@ const Login = () => {
       );
       const data = await response.json();
       // enter you logic when the fetch is successful
-      // console.log("data", data?.data.user._id);
+      console.log("data", data?.data);
       // console.log("after post", data?.data.user.role);
       if (data.status === "success") {
-        // dispatch(
-        //   login({
-        //     role: String(data?.data.user.role),
-        //     id: String(data?.data.user._id),
-        //   })
-        // );
-        dispatch(login(data?.data.user.role));
+        dispatch(
+          login({
+            role: String(data?.data.user.role),
+            id: String(data?.data.user._id),
+          })
+        );
 
         localStorage.setItem("token", data.token); // Store token in local storage
         navigate("/");

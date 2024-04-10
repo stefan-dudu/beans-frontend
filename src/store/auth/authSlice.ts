@@ -20,16 +20,21 @@ const counterSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<string>) => {
+    login: (state, action: PayloadAction<{ role: string; id: string }>) => {
       state.loggedIn = true;
-      state.role = action.payload;
-      localStorage.setItem("role", action.payload);
+      state.role = action.payload.role;
+      state.id = action.payload.id;
+      localStorage.setItem("role", action.payload.role);
+      localStorage.setItem("id", action.payload.id);
     },
-    logout: (state, action: PayloadAction<string>) => {
+    logout: (state, action: PayloadAction<{ role: string; id: string }>) => {
       state.loggedIn = false;
       localStorage.removeItem("token"); // Clear token from local storage on logout
       localStorage.removeItem("role");
-      state.role = action.payload;
+      state.role = action.payload.role;
+
+      localStorage.removeItem("id");
+      state.id = action.payload.id;
     },
     // updateRole: (state, action: PayloadAction<string>) => {
     //   state.role = action.payload;

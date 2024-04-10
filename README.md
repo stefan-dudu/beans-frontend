@@ -1,6 +1,10 @@
-<!-- Run using the local BE: -->
+run locally
 
-npm run start:dev
+<!-- Run using the local BE: -->
+<!-- also BE has to be ran with-->
+
+FE: npm run start:dev
+BE: npm start
 
 <!-- Run using server vercel deployed BE   -->
 

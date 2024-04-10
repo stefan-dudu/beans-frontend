@@ -51,7 +51,8 @@ const RateBean: React.FC<RatingProps> = ({ maxStars, currentRating }) => {
         }
       );
       const data = await response.json();
-      data.status === "success" && navigate(0);
+      // TODO: add something to inform the user that review was created
+      data.status === "success" && setValue(p0);
     } catch (error) {
       // enter your logic for when there is an error (ex. error toast)
 
@@ -117,7 +118,7 @@ const RateBean: React.FC<RatingProps> = ({ maxStars, currentRating }) => {
       if (data.status === "success") {
         console.log("udpated, all good");
         setValue(rating);
-        navigate(0);
+        // navigate(0);
         // TODO: maybe prevent reload and just inform the user it been successfull
         // setOpen(true);
         // setSeverity("success");
