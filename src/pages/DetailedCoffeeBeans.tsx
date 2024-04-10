@@ -62,9 +62,9 @@ const DetailedCoffeeBeans = (props: any) => {
     (state: RootState) => state.navBar.loadingData
   );
 
-  function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
-    e.currentTarget.src = catchBeanBag;
-  }
+  // function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
+  //   e.currentTarget.src = catchBeanBag;
+  // }
 
   const SkeletonComponent = () => {
     return (
@@ -195,7 +195,7 @@ const DetailedCoffeeBeans = (props: any) => {
                     height="200"
                     className="d-inline-block align-top"
                     alt="React Bootstrap logo"
-                    onError={addDefaultSrc}
+                    // onError={addDefaultSrc}
                   />
                 }
               </div>

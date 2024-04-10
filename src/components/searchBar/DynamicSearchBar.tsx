@@ -62,9 +62,9 @@ const DynamicSearchBar: React.FC = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
-  function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
-    e.currentTarget.src = catchBeanBag;
-  }
+  // function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
+  //   e.currentTarget.src = catchBeanBag;
+  // }
 
   const SearchResultRow: React.FC<{ item: SearchResult; index: number }> = ({
     item,
@@ -89,7 +89,7 @@ const DynamicSearchBar: React.FC = () => {
             // height="10rem"
             // className="d-inline-block align-top"
             alt="React Bootstrap logo"
-            onError={addDefaultSrc}
+            // onError={addDefaultSrc}
           />
           <div className="rightSide">
             <p className="title">{item.name}</p>

@@ -81,9 +81,9 @@ const TopItems = (props: any) => {
     fetchDataForPosts();
   }, []);
 
-  function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
-    e.currentTarget.src = catchBeanBag;
-  }
+  // function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
+  //   e.currentTarget.src = catchBeanBag;
+  // }
 
   const SkeletonComponent = () => {
     const skeletons = [];

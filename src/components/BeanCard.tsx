@@ -61,9 +61,9 @@ const StyledRating = styled(Rating)({
 }
 
 const BeanCard = ({ data }: { data: Coffee }) => {
-  function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
-    e.currentTarget.src = catchBeanBag;
-  }
+  // function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
+  //   e.currentTarget.src = catchBeanBag;
+  // }
 
   return (
     <Link to={`/coffee/${data._id}`} key={data._id} className="parentWrapper">
@@ -71,7 +71,7 @@ const BeanCard = ({ data }: { data: Coffee }) => {
         className="image"
         src={data?.image || catchBeanBag}
         alt="React Bootstrap logo"
-        onError={addDefaultSrc}
+        // onError={addDefaultSrc}
       />
       <div className="underPic">
         <div className="title">{data?.name}</div>

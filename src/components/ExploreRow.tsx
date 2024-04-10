@@ -44,9 +44,9 @@ type Coffee = {
 const ExploreRow: React.FC<Props> = ({ data }) => {
   const navigate = useNavigate();
 
-  function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
-    e.currentTarget.src = catchBeanBag;
-  }
+  // function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
+  //   e.currentTarget.src = catchBeanBag;
+  // }
 
   const RowClickHandler = () => {
     navigate(`/coffee/${data._id}`);
@@ -104,7 +104,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
               src={data?.image || catchBeanBag}
               className="d-inline-block align-top beanImage"
               alt="React Bootstrap logo"
-              onError={addDefaultSrc}
+              // onError={addDefaultSrc}
               // width={100}
               // height={100}
             />
