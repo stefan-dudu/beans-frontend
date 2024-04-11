@@ -82,8 +82,6 @@ const ReviewBeans = (props: Props) => {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST,PATCH,OPTIONS",
           },
           credentials: "include",
           body: JSON.stringify({

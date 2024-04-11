@@ -5,20 +5,63 @@
   padding-top: 2rem !important;
   gap: 1rem;
 }
-
 .restOfContent {
   display: flex;
-  // flex-direction: column;
+  flex-direction: column;
   align-items: flex-start;
   flex-wrap: wrap;
   padding-top: 2rem !important;
-  .aboveMap {
-    padding-left: 1rem;
 
-    .title {
-      font-size: 2.5rem;
-      color: #1f3933;
-      font-weight: 600;
+  .aboveMapCreateBean {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+
+    .titleTextFieldWrapper {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      align-items: baseline;
+      .title {
+        font-size: 2rem;
+        color: #1f3933;
+        font-weight: 600;
+      }
+
+      .subtitle {
+        font-size: 1.7rem;
+        color: #1f3933;
+      }
+    }
+
+    .dropdownTitle {
+      margin-left: 2rem;
+      color: #006241;
+    }
+
+    .advancedWrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+
+      .subtitleTextFieldWrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        align-items: baseline;
+        .title {
+          font-size: 2.5rem;
+          color: #1f3933;
+          font-weight: 600;
+        }
+
+        .subtitle {
+          font-size: 1.7rem;
+          color: #1f3933;
+        }
+      }
     }
 
     .ratingWrapper {

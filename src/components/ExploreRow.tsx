@@ -60,7 +60,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
       color: "#ff3d47",
     },
   });
-  console.log("data", data);
+  // console.log("data", data);
 
   return (
     // <div className="wrapper" onClick={() => RowClickHandler()}>

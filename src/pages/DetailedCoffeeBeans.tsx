@@ -1,7 +1,7 @@
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RateBean from "../components/RateBean";
-import DetailedBeanMap from "../components/DetailedBeanMap";
+import DetailedBeanMap from "../components/map/DetailedBeanMap";
 import Skeleton from "@mui/material/Skeleton";
 import Rating from "@mui/material/Rating";
 import { AppDispatch, RootState } from "../store/store";
@@ -15,7 +15,6 @@ import Button from "@mui/material/Button";
 
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import ReviewsComponent from "../components/ReviewsComponent";
 import { CoffeeType } from "../types/Coffee";
@@ -160,6 +159,7 @@ const DetailedCoffeeBeans = (props: any) => {
         </div>
         <div className="propWrapper">
           <div className="propName">Sweetness: </div>
+          {/* TODO: alternative or another one INTENSITY */}
           <div className="propValue">
             <StyledRating
               name="customized-color"
@@ -176,7 +176,7 @@ const DetailedCoffeeBeans = (props: any) => {
     );
   };
 
-  // console.log("data", data);
+  console.log("data", data);
 
   return (
     <div>
@@ -213,7 +213,8 @@ const DetailedCoffeeBeans = (props: any) => {
                 <div className="brand">{data?.brand || "brand"}</div>
                 <div style={{ display: "flex" }} className="ratingWrapper">
                   {/* <p>Ratings in stars here pretty big</p> */}
-                  {data?.ratingsAverage && (
+
+                  {!!data?.ratingsAverage && (
                     <Rating
                       name="half-rating-read"
                       // defaultValue={2.5}
@@ -223,7 +224,7 @@ const DetailedCoffeeBeans = (props: any) => {
                       readOnly
                     />
                   )}
-                  {data?.ratingsAverage}
+                  {!!data?.ratingsAverage && data?.ratingsAverage}
                   {/* <p>No of ratings: {data?.ratingsQuantity}</p> */}
                 </div>
                 <div className="propWrapper">
@@ -237,16 +238,16 @@ const DetailedCoffeeBeans = (props: any) => {
                 </div>
                 <div className="propWrapper">
                   <div className="propName">Processing: </div>
-                  <div className="propValue">Naturally washed</div>
+                  <div className="propValue">{data?.processing}</div>
                 </div>
                 {/*  */}
                 <div className="propWrapper">
                   <div className="propName">QGrading: </div>
-                  <div className="propValue">85 points</div>
+                  <div className="propValue">{data?.qGrading}</div>
                 </div>
                 <div className="propWrapper">
                   <div className="propName">Altitude:</div>
-                  <div className="propValue">2821m</div>
+                  <div className="propValue">{data?.altitude} m</div>
                 </div>
                 <Traits />
                 <div className="propWrapper">
