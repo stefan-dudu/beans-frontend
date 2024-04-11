@@ -1,0 +1,22 @@
+// RateBean.scss
+
+.rating {
+  display: inline-block;
+
+  .star {
+    font-size: 2em;
+    color: gray;
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &.active,
+    &.hovered {
+      color: gold;
+    }
+  }
+
+  .rating-text {
+    font-size: 1.2em;
+    margin-top: 0.5em;
+  }
+}

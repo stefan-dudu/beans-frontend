@@ -1,0 +1,125 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  margin-top: 1rem;
+
+  .beanCard {
+    box-shadow: 0 0 0 1px rgba(87, 87, 87, 0.1),
+      0 8px 8px 0 rgba(234, 224, 218, 0.3);
+    border-radius: 16px;
+    transition: all 0.1s ease-in-out;
+    border: 0;
+    width: 100%;
+    cursor: pointer;
+    background-color: #fff;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 1rem;
+
+    // .beanImage {
+    //   transition: all 0.25s ease-in-out;
+    //   margin-top: -56px;
+    //   flex: 0 0 20%;
+    // }
+
+    .imageGrid {
+      display: flex;
+      align-items: center;
+      .beanImage {
+        transition: all 0.25s ease-in-out;
+        // margin-top: -56px;
+        flex: 1;
+        width: 100%;
+        max-width: 238px;
+      }
+    }
+
+    .beanInfoGrid {
+      display: flex;
+      flex-direction: column;
+      .beanInfo {
+        // transition: all 0.25s ease-in-out;
+        // margin-top: -56px;
+        flex: 2;
+        margin-left: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+
+        .propWrapper {
+          display: flex;
+          align-items: baseline;
+          gap: 1rem;
+          padding: 0.3rem 0rem;
+          .propName {
+            color: #1f3933;
+            font-size: 1.5rem;
+            font-weight: 600;
+          }
+
+          .propValue {
+            color: #006241;
+            font-size: 1.3rem;
+          }
+        }
+
+        .name {
+          color: #1f3933;
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+
+        .info {
+          color: #006241;
+          font-size: 1.3rem;
+        }
+
+        .flavs {
+          color: #006241;
+          font-size: 1.3rem;
+          margin-top: 1rem;
+        }
+      }
+    }
+
+    .beanRating {
+      // transition: all 0.25s ease-in-out;
+      // margin-top: -56px;
+      // flex: 1;
+      display: flex;
+      .ratingsAndNo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        justify-content: center;
+
+        .rating {
+          color: #1f3933;
+          font-size: 2.3rem;
+        }
+
+        .reviewsNo {
+          font-size: 1rem;
+        }
+      }
+
+      @media screen and (max-width: 600px) {
+        .beanCard {
+          padding: 2rem 1rem;
+        }
+        .ratingsAndNo {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 1rem;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

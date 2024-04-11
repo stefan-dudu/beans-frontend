@@ -1,0 +1,124 @@
+.imageBookmarkRating {
+  display: flex;
+  flex-direction: column !important;
+  align-items: center;
+  padding-top: 2rem !important;
+  gap: 1rem;
+}
+.restOfContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding-top: 2rem !important;
+
+  .aboveMapCreateBean {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+
+    .titleTextFieldWrapper {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      align-items: baseline;
+      .title {
+        font-size: 2rem;
+        color: #1f3933;
+        font-weight: 600;
+      }
+
+      .subtitle {
+        font-size: 1.7rem;
+        color: #1f3933;
+      }
+    }
+
+    .dropdownTitle {
+      margin-left: 2rem;
+      color: #006241;
+    }
+
+    .advancedWrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+
+      .subtitleTextFieldWrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        align-items: baseline;
+        .title {
+          font-size: 2.5rem;
+          color: #1f3933;
+          font-weight: 600;
+        }
+
+        .subtitle {
+          font-size: 1.7rem;
+          color: #1f3933;
+        }
+      }
+    }
+
+    .ratingWrapper {
+      display: flex;
+      padding: 1rem 0rem;
+      align-items: center;
+      justify-content: flex-start;
+      flex-direction: row;
+      gap: 1rem;
+    }
+    .propWrapper {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.3rem 0rem;
+      .propName {
+        color: #1f3933;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .propValue {
+        color: #006241;
+        font-size: 1.3rem;
+      }
+    }
+
+    .traits {
+      // margin: 1rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 1rem 2rem 1rem;
+      align-items: flex-start;
+      margin: 1rem 0.5rem 1rem -0.5rem;
+      border-radius: 20px;
+      box-shadow: 10px 20px 55px 0 rgba(92, 92, 92, 0.3);
+
+      .propWrapper {
+        display: flex;
+        align-items: flex-end;
+        gap: 1rem;
+        padding: 0.3rem 0rem;
+        .propName {
+          color: #1f3933;
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+
+        .propValue {
+          color: darkgray;
+          font-size: 1.3rem;
+          display: flex;
+          align-items: center;
+          gap: 0.7rem;
+        }
+      }
+    }
+  }
+}

@@ -1,78 +1,66 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
-import "./App.css";
+import "./App.scss";
+import "mapbox-gl/dist/mapbox-gl.css";
 import { AppDispatch, RootState } from "./store/store";
 import { decrement, incrementByValue } from "./store/counter/counterSlice";
-import UserProfile from "./pages/UserProfile";
-
+import UserProfile from "./pages/Auth&User/UserProfile";
+import NavigationBar from "./components/NavigationBar";
+import Home from "./pages/Home";
+import Features from "./pages/Features";
+import Locations from "./pages/Locations";
+import DetailedCoffeeBeans from "./pages/DetailedCoffeeBeans";
+import Login from "./pages/Auth&User/Login";
+import Explore from "./pages/Explore";
+import SignUp from "./pages/Auth&User/SignUp";
+import Search from "./pages/Search";
+import LinearProgress from "@mui/material/LinearProgress";
+import ForgotPassword from "./pages/Auth&User/ForgotPassword";
+import UserCreatesBean from "./pages/UserCreatesBean";
+import ReviewBeans from "./pages/ReviewBeans";
+import PrivateRoutes from "./utils/PrivateRoutes";
 function App() {
-  const count = useSelector((state: RootState) => state.counter.value);
-  const dispatch = useDispatch<AppDispatch>();
-  function Layout() {
-    return (
-      <div>
-        {/* A "layout route" is a good place to put markup you want to
-            share across all the pages on your site, like navigation. */}
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/search">Search</Link>
-            </li>
-            <li>
-              <Link to="/stats">Stats</Link>
-            </li>
-            <li>
-              <Link to="/profile">User profile</Link>
-            </li>
-          </ul>
-        </nav>
+  const loadingData = useSelector(
+    (state: RootState) => state.navBar.loadingData
+  );
 
-        <hr />
-
-        {/* An <Outlet> renders whatever child route is currently active,
-            so you can think about this <Outlet> as a placeholder for
-            the child routes we defined above. */}
-        <Outlet />
-      </div>
-    );
-  }
-
-  const Home = () => {
-    return (
-      <div>
-        <h2>Count5: {count}</h2>
-        <div>
-          <button onClick={() => dispatch(decrement())}>Decrement -</button>
-          <button onClick={() => dispatch(incrementByValue(10))}>
-            Increment +
-          </button>
-        </div>
-      </div>
-    );
+  const Pricing = () => {
+    return <h2>Pricing</h2>;
   };
-  const LiveMatchDetails = () => {
-    return <h2>LiveMatchDetails</h2>;
-  };
-  const Search = () => {
-    return <h2>Search</h2>;
-  };
-  const Stats = () => {
-    return <h2>Stats</h2>;
-  };
-  // const UserProfile = () => {
-  //   return <h2>UserProfile</h2>;
-  // };
   const CatchPage = () => {
     return <h2>CatchPage</h2>;
   };
 
   return (
     <div className="App-header">
-      <h2>Soon ☕</h2>
+      <NavigationBar />
+      {loadingData && <LinearProgress color="success" />}
+      <div className="content">
+        <Routes>
+          <Route path="/" element={<Outlet />}>
+            {/* TODO: to checkout what routes need to be protected */}
+            <Route element={<PrivateRoutes />}>
+              {/* Restritcted to ADMINS */}
+              <Route path="/reviewBeans" element={<ReviewBeans />} />
+            </Route>
+            <Route index element={<Home />} />
+            <Route path="/features" element={<Features />} />
+            <Route path="/locations" element={<Locations />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/createbean" element={<UserCreatesBean />} />
+            {/* <Route path="/reviewBeans" element={<ReviewBeans />} /> */}
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/coffee/:id" element={<DetailedCoffeeBeans />} />
+            <Route path="*" element={<CatchPage />} />
+          </Route>
+        </Routes>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,30 @@
+.containerStyle {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+}
+
+.searchAndLinksContainer {
+  display: flex;
+  justify-content: space-evenly;
+  width: 40vw;
+}
+
+@media screen and (max-width: 991px) {
+  .logoSearch {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-grow: 1;
+    justify-content: space-around;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .logoSearch {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+}

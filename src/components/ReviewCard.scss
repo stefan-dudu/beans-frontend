@@ -1,0 +1,57 @@
+.rowWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  //   margin-top: 2rem;
+  //   margin-right: 1rem;
+  //   padding: 1rem 0rem;
+  padding: 2rem 2rem 2rem 1rem;
+  border-bottom: 1px solid lightgray;
+
+  .leftSideGrid {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    .leftSide {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .name {
+        color: #1f3933;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .rightSide {
+    .ratingAndDate {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0rem;
+      align-items: center;
+    }
+
+    .reviewText {
+      padding: 0.5rem 0rem;
+      color: #1f3933;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    .leftSideGrid {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .leftSide {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 1rem;
+      }
+    }
+  }
+}
