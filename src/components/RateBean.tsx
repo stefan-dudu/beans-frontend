@@ -114,9 +114,9 @@ const RateBean: React.FC<RatingProps> = ({ maxStars, currentRating }) => {
       );
       const data = await response.json();
       // enter you logic when the fetch is successful
-      console.log("after post", data);
+      // console.log("after post", data);
       if (data.status === "success") {
-        console.log("udpated, all good");
+        // console.log("udpated, all good");
         setValue(rating);
         // navigate(0);
         // TODO: maybe prevent reload and just inform the user it been successfull
@@ -155,10 +155,10 @@ const RateBean: React.FC<RatingProps> = ({ maxStars, currentRating }) => {
       value={value}
       onChange={(event, newValue) => {
         if (newValue !== null && value !== null && value > 0) {
-          console.log("update func", newValue);
+          // console.log("update func", newValue);
           UpdateReviewCall(newValue);
         } else if (value === 0 && newValue !== null) {
-          console.log("create new rating", newValue);
+          // console.log("create new rating", newValue);
           handleStarClick(newValue - 1);
         }
       }}

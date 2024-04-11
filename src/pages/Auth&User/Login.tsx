@@ -41,7 +41,7 @@ const Login = () => {
       );
       const data = await response.json();
       // enter you logic when the fetch is successful
-      console.log("data", data?.data);
+      // console.log("data", data?.data);
       // console.log("after post", data?.data.user.role);
       if (data.status === "success") {
         dispatch(

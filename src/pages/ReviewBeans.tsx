@@ -60,7 +60,7 @@ const ReviewBeans = (props: Props) => {
           throw new Error(`HTTP error: Status ${response.status}`);
         }
         const { data } = await response.json();
-        console.log("in review data", data.data);
+        // console.log("in review data", data.data);
         setData(data.data);
         setError(null);
       } catch (err: any) {
@@ -95,7 +95,7 @@ const ReviewBeans = (props: Props) => {
       // console.log("after post", data);
       if (data.status === "success") {
         // TODO: to refresh
-        console.log("all good");
+        // console.log("all good");
         // refresh
         navigate(0);
       }

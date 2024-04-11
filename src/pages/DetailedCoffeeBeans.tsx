@@ -61,9 +61,9 @@ const DetailedCoffeeBeans = (props: any) => {
     (state: RootState) => state.navBar.loadingData
   );
 
-  // function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
-  //   e.currentTarget.src = catchBeanBag;
-  // }
+  function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
+    e.currentTarget.src = catchBeanBag;
+  }
 
   const SkeletonComponent = () => {
     return (
@@ -176,7 +176,13 @@ const DetailedCoffeeBeans = (props: any) => {
     );
   };
 
-  console.log("data", data);
+  const mapFlavorNotesToParagraphs = (coffee: CoffeeType): JSX.Element[] => {
+    return coffee.flavorNotes.map((flavorNote) => (
+      <p key={flavorNote}>{flavorNote}</p>
+    ));
+  };
+
+  // console.log("data", data);
 
   return (
     <div>
@@ -195,7 +201,7 @@ const DetailedCoffeeBeans = (props: any) => {
                     height="200"
                     className="d-inline-block align-top"
                     alt="React Bootstrap logo"
-                    // onError={addDefaultSrc}
+                    onError={addDefaultSrc}
                   />
                 }
               </div>
@@ -252,7 +258,9 @@ const DetailedCoffeeBeans = (props: any) => {
                 <Traits />
                 <div className="propWrapper">
                   <div className="propName">Flavour notes: </div>
-                  <div className="propValue">CHOCOLTAE , NUTTY, SPICY </div>
+                  <div className="flavorNotes">
+                    {data && data?.flavorNotes.map((el) => <div>{el}</div>)}
+                  </div>
                 </div>
               </div>
               {data?.locations && (

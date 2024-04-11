@@ -54,7 +54,7 @@ const Search = (props: Props) => {
   useEffect(() => {
     setSearchTerm(state.searchTerm);
     setSearchResults(state.searchResults);
-    console.log("this use eff is ran");
+    // console.log("this use eff is ran");
   }, [state]);
 
   useEffect(() => {

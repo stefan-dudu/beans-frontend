@@ -25,45 +25,10 @@ const StyledRating = styled(Rating)({
   },
 });
 
-{
-  /* <div className="wrapper" onClick={() => RowClickHandler()}>
-  <div className="beanCard">
-    <img
-      src={data?.image || catchBeanBag}
-      className="d-inline-block align-top beanImage"
-      alt="React Bootstrap logo"
-      onError={addDefaultSrc}
-    />
-    <div className="beanInfo">
-      <div>{data?.name}</div>
-      <div>
-        <div>by: {data?.brand}</div>
-        <div>{data?.type}</div>
-      </div>
-      <div className="propValue">CHOCOLTAE , NUTTY, SPICY </div>
-    </div>
-    <div className="beanRating">
-      {" "}
-      <div className="ratingsAndNo">
-        <StyledRating
-          name="customized-color"
-          readOnly
-          value={data?.ratingsAverage}
-          precision={0.5}
-          icon={<LocalCafeIcon fontSize="inherit" />}
-          emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-        />
-        <div className="reviewsNo">{data?.ratingsQuantity}</div>
-      </div>
-    </div>
-  </div>
-</div>; */
-}
-
 const BeanCard = ({ data }: { data: Coffee }) => {
-  // function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
-  //   e.currentTarget.src = catchBeanBag;
-  // }
+  function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
+    e.currentTarget.src = catchBeanBag;
+  }
 
   return (
     <Link to={`/coffee/${data._id}`} key={data._id} className="parentWrapper">
@@ -71,7 +36,7 @@ const BeanCard = ({ data }: { data: Coffee }) => {
         className="image"
         src={data?.image || catchBeanBag}
         alt="React Bootstrap logo"
-        // onError={addDefaultSrc}
+        onError={addDefaultSrc}
       />
       <div className="underPic">
         <div className="title">{data?.name}</div>

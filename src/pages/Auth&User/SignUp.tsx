@@ -35,7 +35,7 @@ const SignUp = (props: Props) => {
       );
       const data = await response.json();
       // enter you logic when the fetch is successful
-      console.log("after post", data);
+      // console.log("after post", data);
       if (data.status === "success") {
         // TODO: might have to do it
         dispatch(login(data?.data.user.role));

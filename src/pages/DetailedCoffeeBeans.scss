@@ -31,9 +31,10 @@
     }
     .propWrapper {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 1rem;
       padding: 0.3rem 0rem;
+      flex-wrap: wrap;
       .propName {
         color: #1f3933;
         font-size: 1.5rem;
@@ -43,6 +44,13 @@
       .propValue {
         color: #006241;
         font-size: 1.3rem;
+      }
+
+      .flavorNotes {
+        color: #006241;
+        font-size: 1.3rem;
+        display: flex;
+        gap: 1rem;
       }
     }
 

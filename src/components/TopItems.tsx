@@ -81,9 +81,6 @@ const TopItems = (props: any) => {
     fetchDataForPosts();
   }, []);
 
-  // function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
-  //   e.currentTarget.src = catchBeanBag;
-  // }
 
   const SkeletonComponent = () => {
     const skeletons = [];
@@ -114,36 +111,6 @@ const TopItems = (props: any) => {
       color: "#ff3d47",
     },
   });
-  // console.log("data", data && data[0]);
-
-  // const BeanCard = ({ data }: { data: Coffee }) => {
-  //   // console.log("data", data);
-  //   return (
-  //     <Link to={`/coffee/${data._id}`} key={data._id} className="parentWrapper">
-  //       <img
-  //         className="image"
-  //         src={data?.image || catchBeanBag}
-  //         alt="React Bootstrap logo"
-  //         onError={addDefaultSrc}
-  //       />
-  //       <div className="underPic">
-  //         <div className="title">{data?.name}</div>
-  //         <div className="ratingsAndNo">
-  //           <StyledRating
-  //             name="customized-color"
-  //             readOnly
-  //             value={data?.ratingsAverage}
-  //             precision={0.5}
-  //             icon={<LocalCafeIcon fontSize="inherit" />}
-  //             emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-  //           />
-  //           <div className="reviewsNo">{data?.ratingsQuantity}</div>
-  //         </div>
-  //         <div className="origin"> {data?.origin}</div>
-  //       </div>
-  //     </Link>
-  //   );
-  // };
 
   return (
     <div>

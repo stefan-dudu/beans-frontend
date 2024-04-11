@@ -79,9 +79,12 @@
         }
 
         .flavs {
-          color: #006241;
+          color: #1f3933;
           font-size: 1.3rem;
           margin-top: 1rem;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1rem;
         }
       }
     }

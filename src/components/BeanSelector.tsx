@@ -79,7 +79,7 @@ const BeanSelector = (props: Props) => {
       }
 
       const data = await response.json();
-      console.log("Data from request:", data);
+      // console.log("Data from request:", data);
       if (data.results > 0) {
         navigate("/explore", { state: data.data });
       }
@@ -114,8 +114,8 @@ const BeanSelector = (props: Props) => {
     }
   };
 
-  console.log("roastLevel", roastLevel);
-  console.log("checkedItems", checkedItems);
+  // console.log("roastLevel", roastLevel);
+  // console.log("checkedItems", checkedItems);
 
   // Function to handle checkbox change
   const handleCheckboxChange = (label: string) => {

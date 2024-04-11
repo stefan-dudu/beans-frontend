@@ -67,7 +67,7 @@ const UserProfile: React.FC = () => {
         throw new Error(`HTTP error: Status ${response.status}`);
       }
       const { data } = await response.json();
-      console.log("in review data", data.data);
+      // console.log("in review data", data.data);
       // setData(data.data);
       setError(null);
     } catch (err: any) {

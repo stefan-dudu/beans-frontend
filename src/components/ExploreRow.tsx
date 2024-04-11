@@ -44,9 +44,9 @@ type Coffee = {
 const ExploreRow: React.FC<Props> = ({ data }) => {
   const navigate = useNavigate();
 
-  // function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
-  //   e.currentTarget.src = catchBeanBag;
-  // }
+  function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
+    e.currentTarget.src = catchBeanBag;
+  }
 
   const RowClickHandler = () => {
     navigate(`/coffee/${data._id}`);
@@ -63,39 +63,6 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
   // console.log("data", data);
 
   return (
-    // <div className="wrapper" onClick={() => RowClickHandler()}>
-    //   <div className="beanCard">
-    //     <img
-    //       src={data?.image || catchBeanBag}
-    //       className="d-inline-block align-top beanImage"
-    //       alt="React Bootstrap logo"
-    //       onError={addDefaultSrc}
-    //     />
-    //     <div className="beanInfo">
-    //       <div>{data?.name}</div>
-    //       <div>
-    //         <div>by: {data?.brand}</div>
-    //         <div>{data?.type}</div>
-    //       </div>
-    //       <div className="propValue">CHOCOLTAE , NUTTY, SPICY </div>
-    //     </div>
-    //     <div className="beanRating">
-    //       {" "}
-    //       <div className="ratingsAndNo">
-    //         <StyledRating
-    //           name="customized-color"
-    //           readOnly
-    //           value={data?.ratingsAverage}
-    //           precision={0.5}
-    //           icon={<LocalCafeIcon fontSize="inherit" />}
-    //           emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-    //         />
-    //         <div className="reviewsNo">{data?.ratingsQuantity}</div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
-
     <div className="wrapper" onClick={() => RowClickHandler()}>
       <Box sx={{ flexGrow: 1 }} className="beanCard">
         <Grid container spacing={2}>
@@ -104,7 +71,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
               src={data?.image || catchBeanBag}
               className="d-inline-block align-top beanImage"
               alt="React Bootstrap logo"
-              // onError={addDefaultSrc}
+              onError={addDefaultSrc}
               // width={100}
               // height={100}
             />
@@ -121,7 +88,9 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
                 <div className="info">Type: {data?.type}</div>
                 <div className="info">Roast: {data?.roastLevel}</div>
               </div>
-              <div className="flavs">CHOCOLTAE , NUTTY, SPICY </div>
+              <div className="flavs">
+                {data && data?.flavorNotes.map((el) => <div>{el}</div>)}
+              </div>
             </div>
           </Grid>
           <Grid item xs={5} sm={1}></Grid>
@@ -151,38 +120,6 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
         </Grid>
       </Box>
     </div>
-    // <div className="wrapper" onClick={() => RowClickHandler()}>
-    //   <div className="beanCard">
-    //     <img
-    //       src={data?.image || catchBeanBag}
-    //       className="d-inline-block align-top beanImage"
-    //       alt="React Bootstrap logo"
-    //       onError={addDefaultSrc}
-    //     />
-    //     <div className="beanInfo">
-    //       <div>{data?.name}</div>
-    //       <div>
-    //         <div>by: {data?.brand}</div>
-    //         <div>{data?.type}</div>
-    //       </div>
-    //       <div className="propValue">CHOCOLTAE , NUTTY, SPICY </div>
-    //     </div>
-    // <div className="beanRating">
-    //   {" "}
-    //   <div className="ratingsAndNo">
-    //     <StyledRating
-    //       name="customized-color"
-    //       readOnly
-    //       value={data?.ratingsAverage}
-    //       precision={0.5}
-    //       icon={<LocalCafeIcon fontSize="inherit" />}
-    //       emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-    //     />
-    //     <div className="reviewsNo">{data?.ratingsQuantity}</div>
-    //   </div>
-    //  </div>
-    //   </div>
-    // </div>
   );
 };
 

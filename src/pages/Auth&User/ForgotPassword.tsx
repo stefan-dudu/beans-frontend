@@ -39,7 +39,7 @@ const ForgotPassword = (props: Props) => {
         }
       );
       const data = await response.json();
-      console.log("after post", data);
+      // console.log("after post", data);
       if (data.status === "success") {
         // TODO: might have to do it
         // dispatch(login());
@@ -90,7 +90,7 @@ const ForgotPassword = (props: Props) => {
     setOpen(false);
   };
 
-  console.log("email", email);
+  // console.log("email", email);
 
   return (
     <div className="resetPassWrapper">

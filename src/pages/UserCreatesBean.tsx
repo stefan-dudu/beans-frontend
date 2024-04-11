@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, SyntheticEvent } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -29,7 +29,7 @@ const UserCreatesBean = (props: Props) => {
   const [origin, setOrigin] = useState("");
   const [type, setType] = useState("Arabica");
   const [processing, setProcessing] = useState("");
-  const [qGrading, setQgrading] = useState(0);
+  const [qGrading, setQgrading] = useState("");
   const [altitude, setAltitude] = useState(0);
   const [coord, setCoord] = useState<Coordinates>({ lng: 0, lat: 0 });
 
@@ -63,7 +63,7 @@ const UserCreatesBean = (props: Props) => {
       });
       const data = await response.json();
       // enter you logic when the fetch is successful
-      console.log("after post", data);
+      // console.log("after post", data);
       if (data.status === "success") {
         //TODO: ALERT NOT SHOWN
         // alert("now is in review");
@@ -141,6 +141,10 @@ const UserCreatesBean = (props: Props) => {
     setCoord({ lng: data.lng, lat: data.lat });
   }
 
+  function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
+    e.currentTarget.src = catchBeanBag;
+  }
+
   // console.log("dataFromChild", coord);
 
   return (
@@ -155,7 +159,7 @@ const UserCreatesBean = (props: Props) => {
                 height="200"
                 className="d-inline-block align-top"
                 alt="React Bootstrap logo"
-                // onError={addDefaultSrc}
+                onError={addDefaultSrc}
               />
             }
           </div>
@@ -288,7 +292,7 @@ const UserCreatesBean = (props: Props) => {
                       onChange={(
                         event: React.ChangeEvent<HTMLInputElement>
                       ) => {
-                        setQgrading(parseFloat(event.target.value));
+                        setQgrading(event.target.value);
                       }}
                     />
                   </div>
