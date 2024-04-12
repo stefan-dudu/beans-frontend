@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import BeanSelector from "../components/BeanSelector";
 import BestBeans2023 from "../components/BestBeans2023";
+import YouMightLike from "../components/YouMightLike";
+import Discover from "../components/Discover";
 
 type Props = {};
 
@@ -16,7 +18,9 @@ const Home = (props: Props) => {
     <div>
       <TopItems />
       <BeanSelector />
+      <Discover />
       <BestBeans2023 />
+      <YouMightLike />
       <div className="articles">
         <h2>Title</h2>
         <p>

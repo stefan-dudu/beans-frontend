@@ -6,6 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { minimize } from "../../store/navBar/NavBarSlice";
 import catchBeanBag from "../../assets/catchBeanBag.jpg";
+import TextField from "@mui/material/TextField";
+
+import SearchIcon from "@mui/icons-material/Search";
+
+import Box from "@mui/material/Box";
+
 interface SearchResult {
   brand: string;
   _id: string;
@@ -106,14 +112,16 @@ const DynamicSearchBar: React.FC = () => {
 
   return (
     <div className="SearchWrapper">
-      <Form.Control
-        type="search"
-        placeholder="Search"
-        className="me-2"
-        aria-label="Search"
-        value={searchTerm}
-        onChange={handleChange}
-      />
+      <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+        <SearchIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+        <TextField
+          id="input-with-sx"
+          label="Look for coffee beans"
+          value={searchTerm}
+          onChange={handleChange}
+          variant="standard"
+        />
+      </Box>
       {loading ? (
         <div className="resultWrapper">
           <p className="loadingText">Loading...</p>

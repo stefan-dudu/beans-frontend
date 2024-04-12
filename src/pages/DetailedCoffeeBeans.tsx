@@ -26,6 +26,7 @@ const DetailedCoffeeBeans = (props: any) => {
   let { id } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(isLoading());
     fetchDataForPosts();
   }, [id]);

@@ -1,0 +1,31 @@
+.discoverWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem;
+  background: #f2f1ec;
+  border-radius: 15px;
+
+  .leftDiscover {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    .textDiscover {
+      display: flex;
+      flex-direction: column;
+
+      div {
+        color: #1f3933;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-left: 1rem;
+      }
+    }
+  }
+  .rightDiscover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

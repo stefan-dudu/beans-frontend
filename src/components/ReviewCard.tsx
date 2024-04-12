@@ -8,6 +8,7 @@ import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import { COLORS } from "../values/colors";
 import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
+import userPic from "../assets/user.png";
 
 const ReviewCard = ({ data }: { data: ReviewType }) => {
   //   console.log("data review card", data);
@@ -33,10 +34,10 @@ const ReviewCard = ({ data }: { data: ReviewType }) => {
   return (
     <Box sx={{ flexGrow: 1 }} className="rowWrapper">
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4} className="leftSideGrid">
+        <Grid item xs={12} md={2} className="leftSideGrid">
           <div className="leftSide">
             <img
-              src={logo}
+              src={userPic}
               width="40"
               height="40"
               className="d-inline-block align-top"
@@ -45,7 +46,7 @@ const ReviewCard = ({ data }: { data: ReviewType }) => {
             <div className="name">{data?.user?.name}</div>
           </div>
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={10}>
           <div className="rightSide">
             <div className="ratingAndDate">
               <StyledRating
@@ -59,7 +60,7 @@ const ReviewCard = ({ data }: { data: ReviewType }) => {
               <div>{formatDate(data?.createdAt)}</div>
             </div>
 
-            <div className="reviewText">Text: {data?.review}</div>
+            <div className="reviewText">{data?.review}</div>
           </div>
         </Grid>
       </Grid>

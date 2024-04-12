@@ -34,7 +34,7 @@ type Coffee = {
   id: string;
 };
 
-const BestBeans2023 = (props: any) => {
+const YouMightLike = (props: any) => {
   const [data, setData] = useState<Coffee[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -48,7 +48,7 @@ const BestBeans2023 = (props: any) => {
     const fetchDataForPosts = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_URL}api/v1/beans/top-7`,
+          `${process.env.REACT_APP_URL}api/v1/beans?roastLevel=Dark`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -97,7 +97,7 @@ const BestBeans2023 = (props: any) => {
 
   return (
     <div style={{ marginBottom: "2rem" }}>
-      <h2 style={{ padding: "1rem 0rem" }}> 2023 Awards</h2>
+      <h2 style={{ padding: "1rem 0rem" }}> You might like these</h2>
       <div className="topBeansContainer">
         {loadingData && <SkeletonComponent />}
         {data && data?.map((el) => <BeanCard key={el.id} data={el} />)}
@@ -106,4 +106,4 @@ const BestBeans2023 = (props: any) => {
   );
 };
 
-export default BestBeans2023;
+export default YouMightLike;

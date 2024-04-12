@@ -1,6 +1,6 @@
 .SearchWrapper {
   align-content: center;
-  margin-top: 5px;
+  margin-bottom: 11px;
 }
 
 .resultWrapper {
@@ -13,13 +13,14 @@
   padding: 10px;
   border: 1px solid darkgray;
   border-radius: 6px;
-  margin-top: 5px;
-  margin-left: -68px;
+  margin-top: 10px;
+  /* margin-left: -68px; */
+  max-width: 75vw;
 
   // loading text
   .loadingText {
     color: black;
-    margin: 0px 85px;
+    margin: 0px 50px;
   }
 
   .SearchResultRow {
