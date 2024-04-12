@@ -244,6 +244,10 @@ const DetailedCoffeeBeans = (props: any) => {
                   <div className="propValue">{data?.type}</div>
                 </div>
                 <div className="propWrapper">
+                  <div className="propName">Roast level: </div>
+                  <div className="propValue">{data?.roastLevel}</div>
+                </div>
+                <div className="propWrapper">
                   <div className="propName">Processing: </div>
                   <div className="propValue">{data?.processing}</div>
                 </div>

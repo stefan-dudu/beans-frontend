@@ -64,7 +64,7 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
             essential: true, // this animation is considered essential with respect to prefers-reduced-motion
           });
         }
-      }, 2000);
+      }, 1500);
 
       // Clean up on unmount
       return () => map.remove();

@@ -42,12 +42,12 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
         center: [lng, lat],
         zoom: 3,
         maxZoom: 15,
-        interactive: false,
+        // interactive: false,
         // scrollZoom: false,
       });
 
       // Add zoom controls
-      // map.addControl(new mapboxgl.NavigationControl(), "top-left");
+      map.addControl(new mapboxgl.NavigationControl(), "top-left");
 
       // Add your custom markers and lines here
       // Create a new marker.

@@ -8,42 +8,33 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import "./BeanSelector.scss";
 import { COLORS } from "../values/colors";
+import { CoffeeType } from "../types/Coffee";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
+import { notLoading, isLoading } from "../store/navBar/NavBarSlice";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 // Define types
 type Props = {};
 
-type Coffee = {
-  _id: string;
-  name: string;
-  origin: string;
-  roastLevel: string;
-  flavorNotes: string[];
-  aroma: string;
-  acidity: number;
-  body: number;
-  price: number;
-  ratingsAverage: number;
-  ratingsQuantity: number;
-  summary: string;
-  image: string;
-  locations: {
-    type: string;
-    coordinates: number[];
-    description: string;
-    _id: string;
-    id: string;
-  }[];
-  slug: string;
-  id: string;
-};
-
 const BeanSelector = (props: Props) => {
   // State variables
   const [roastLevel, setRoastLevel] = useState("");
-  const [data, setData] = useState<Coffee[] | null>(null);
+  const [data, setData] = useState<CoffeeType[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
+  const [open, setOpen] = React.useState(false);
+  const [severity, setSeverity] = useState<
+    "success" | "error" | "info" | "warning" | undefined
+  >(undefined);
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const dispatch = useDispatch<AppDispatch>();
+  const loadingData = useSelector(
+    (state: RootState) => state.navBar.loadingData
+  );
 
   // Navigation hook
   const navigate = useNavigate();
@@ -79,9 +70,17 @@ const BeanSelector = (props: Props) => {
       }
 
       const data = await response.json();
-      // console.log("Data from request:", data);
+      console.log("Data from request:", data);
       if (data.results > 0) {
         navigate("/explore", { state: data.data });
+      }
+
+      if (data.results === 0) {
+        setOpen(true);
+        setSeverity("warning");
+        setAlertMessage(
+          "No bean with this specifications found. Try another one!"
+        );
       }
       setData(data.data);
       setError(null);
@@ -91,6 +90,7 @@ const BeanSelector = (props: Props) => {
       setError(err);
     } finally {
       setLoading(false);
+      dispatch(notLoading());
     }
   };
 
@@ -114,6 +114,17 @@ const BeanSelector = (props: Props) => {
     }
   };
 
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   // console.log("roastLevel", roastLevel);
   // console.log("checkedItems", checkedItems);
 
@@ -128,6 +139,7 @@ const BeanSelector = (props: Props) => {
 
   // Function to handle 'Find your bean' button click
   const handleFindButtonClick = () => {
+    dispatch(isLoading());
     fetchBeansData();
   };
 
@@ -208,6 +220,17 @@ const BeanSelector = (props: Props) => {
           >
             Show coffee beans
           </Button>
+          <div className="snackbar">
+            <Snackbar open={open} autoHideDuration={7000} onClose={handleClose}>
+              <Alert
+                onClose={handleClose}
+                severity={severity}
+                sx={{ width: "100%" }}
+              >
+                {alertMessage}
+              </Alert>
+            </Snackbar>
+          </div>
         </div>
       </Box>
     </div>

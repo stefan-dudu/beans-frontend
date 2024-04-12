@@ -65,7 +65,6 @@ const UserCreatesBean = (props: Props) => {
       // enter you logic when the fetch is successful
       // console.log("after post", data);
       if (data.status === "success") {
-        //TODO: ALERT NOT SHOWN
         // alert("now is in review");
         setOpen(true);
         setSeverity("success");

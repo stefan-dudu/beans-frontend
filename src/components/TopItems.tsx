@@ -13,35 +13,10 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import BeanCard from "./BeanCard";
-
-type Coffee = {
-  _id: string;
-  name: string;
-  brand: string;
-  origin: string;
-  roastLevel: string;
-  flavorNotes: string[];
-  aroma: string;
-  acidity: number;
-  body: number;
-  price: number;
-  ratingsAverage: number;
-  ratingsQuantity: number;
-  summary: string;
-  image: string;
-  locations: {
-    type: string;
-    coordinates: number[];
-    description: string;
-    _id: string;
-    id: string;
-  }[];
-  slug: string;
-  id: string;
-};
+import { CoffeeType } from "../types/Coffee";
 
 const TopItems = (props: any) => {
-  const [data, setData] = useState<Coffee[] | null>(null);
+  const [data, setData] = useState<CoffeeType[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -80,7 +55,6 @@ const TopItems = (props: any) => {
     dispatch(isLoading());
     fetchDataForPosts();
   }, []);
-
 
   const SkeletonComponent = () => {
     const skeletons = [];
