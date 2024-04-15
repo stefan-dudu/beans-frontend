@@ -40,7 +40,7 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
         container: mapContainer.current,
         style: "mapbox://styles/stefan01-dev/cle6x947u005b01nojysmi80b",
         center: [lng, lat],
-        zoom: 3,
+        zoom: 1,
         maxZoom: 15,
         // interactive: false,
         // scrollZoom: false,
@@ -54,10 +54,14 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
       new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
 
       // TODO: animation but at the moment not working right
-      // map.flyTo({
-      //   center: [lng, lat],
-      //   essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-      // });
+
+      setTimeout(() => {
+        map.flyTo({
+          center: [lng, lat],
+          zoom: 3,
+          essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+        });
+      }, 1500);
 
       // TODO: to add a bountry around the country to make it stand out
 

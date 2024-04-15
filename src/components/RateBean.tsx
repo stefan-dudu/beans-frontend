@@ -83,7 +83,7 @@ const RateBean: React.FC<RatingProps> = ({ maxStars, currentRating }) => {
       // data && setValue(data?.review[data?.review.length - 1].rating);
       // console.log("data", data && data?.review[data?.review.length - 1].rating);
       // setData(data.data);
-      // console.log("data", data);
+      console.log("data", data);
       // setError(null);
       if (data && data.review.length > 0) {
         setValue(data.review[data.review.length - 1].rating);
@@ -142,6 +142,9 @@ const RateBean: React.FC<RatingProps> = ({ maxStars, currentRating }) => {
 
   useEffect(() => {
     fetchUsersRatingForBean();
+    // TODO: not having rating if wrote a review but not giving a number
+
+    // console.log("fetchUsersRatingForBean ran");
 
     // console.log("use efff ran");
   }, [value]);

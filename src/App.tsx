@@ -20,6 +20,8 @@ import ForgotPassword from "./pages/Auth&User/ForgotPassword";
 import UserCreatesBean from "./pages/UserCreatesBean";
 import ReviewBeans from "./pages/ReviewBeans";
 import PrivateRoutes from "./utils/PrivateRoutes";
+import Cafes from "./pages/Cafes";
+import RoasteriesFarms from "./pages/RoasteriesFarms";
 function App() {
   const loadingData = useSelector(
     (state: RootState) => state.navBar.loadingData
@@ -47,6 +49,8 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/features" element={<Features />} />
             <Route path="/locations" element={<Locations />} />
+            <Route path="/cafes" element={<Cafes />} />
+            <Route path="/roasteries" element={< RoasteriesFarms/>} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/search" element={<Search />} />
             <Route path="/explore" element={<Explore />} />

@@ -61,19 +61,33 @@ function NavigationBar() {
               >
                 Explore
               </Nav.Link>
-              <Nav.Link
+              {/* <Nav.Link
                 as={NavLink}
                 to="/features"
                 onClick={() => dispatch(minimize())}
               >
                 Features
-              </Nav.Link>
+              </Nav.Link> */}
               <Nav.Link
                 as={NavLink}
                 to="/locations"
                 onClick={() => dispatch(minimize())}
               >
                 Locations
+              </Nav.Link>
+              <Nav.Link
+                as={NavLink}
+                to="/cafes"
+                onClick={() => dispatch(minimize())}
+              >
+                Cafés
+              </Nav.Link>
+              <Nav.Link
+                as={NavLink}
+                to="/roasteries"
+                onClick={() => dispatch(minimize())}
+              >
+                Roasteries
               </Nav.Link>
             </Nav>
           </Container>

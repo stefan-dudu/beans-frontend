@@ -19,17 +19,17 @@ const Home = (props: Props) => {
       <TopItems />
       <BeanSelector />
       <Discover />
-      <BestBeans2023 />
       <YouMightLike />
+      <BestBeans2023 />
       <div className="articles">
-        <h2>Title</h2>
+        <h2>Future article</h2>
         <p>
           Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
           Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
         </p>
       </div>{" "}
       <div className="articles">
-        <h2>Title</h2>
+        <h2>Future article</h2>
         <p>
           Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
           Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget

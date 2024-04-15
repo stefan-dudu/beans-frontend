@@ -18,6 +18,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import ReviewsComponent from "../components/ReviewsComponent";
 import { CoffeeType } from "../types/Coffee";
+import WrittenReview from "../components/WrittenReview";
 
 const DetailedCoffeeBeans = (props: any) => {
   const [data, setData] = useState<CoffeeType | null>(null);
@@ -267,6 +268,7 @@ const DetailedCoffeeBeans = (props: any) => {
                     {data && data?.flavorNotes.map((el) => <div>{el}</div>)}
                   </div>
                 </div>
+                <WrittenReview />
               </div>
               {data?.locations && (
                 <DetailedBeanMap location={data?.locations} />
