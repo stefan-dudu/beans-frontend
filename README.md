@@ -6,6 +6,6 @@ run locally
 FE: npm run start:dev
 BE: npm start
 
-<!-- Run using server vercel deployed BE   -->
+<!-- Run using server vercel deployed BE  2 -->
 
 npm start
