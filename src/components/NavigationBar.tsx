@@ -61,13 +61,13 @@ function NavigationBar() {
               >
                 Explore
               </Nav.Link>
-              {/* <Nav.Link
+              <Nav.Link
                 as={NavLink}
                 to="/features"
                 onClick={() => dispatch(minimize())}
               >
-                Features
-              </Nav.Link> */}
+                Contact
+              </Nav.Link>
               <Nav.Link
                 as={NavLink}
                 to="/locations"
@@ -82,13 +82,13 @@ function NavigationBar() {
               >
                 Cafés
               </Nav.Link>
-              <Nav.Link
+              {/* <Nav.Link
                 as={NavLink}
                 to="/roasteries"
                 onClick={() => dispatch(minimize())}
               >
                 Roasteries
-              </Nav.Link>
+              </Nav.Link> */}
             </Nav>
           </Container>
           {!signedIn ? (
