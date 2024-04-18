@@ -52,7 +52,7 @@ function NavigationBar() {
           <DynamicSearchBar />
         </div>
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Container className="containerStyle">
+          <Container className="containerStyle" fluid="sm">
             <Nav className="searchAndLinksContainer">
               <Nav.Link
                 as={NavLink}
@@ -66,7 +66,7 @@ function NavigationBar() {
                 to="/features"
                 onClick={() => dispatch(minimize())}
               >
-                Contact
+                About
               </Nav.Link>
               <Nav.Link
                 as={NavLink}

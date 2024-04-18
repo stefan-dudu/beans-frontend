@@ -4,6 +4,7 @@ import { CoffeeType } from "../types/Coffee";
 import { notLoading, isLoading } from "../store/navBar/NavBarSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
+import "./Locations.scss";
 
 type Props = {};
 
@@ -49,6 +50,10 @@ const Locations = (props: Props) => {
 
   return (
     <div className="locationsWrapper">
+      <div className="location-title">
+        It will display all coffee farms locations and informations, so you know
+        where you coffee is comming from
+      </div>
       {data && <LocationsMap data={data} />}
     </div>
   );

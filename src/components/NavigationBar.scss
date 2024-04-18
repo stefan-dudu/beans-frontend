@@ -8,13 +8,23 @@
 .searchAndLinksContainer {
   display: flex;
   justify-content: space-evenly;
-  width: 40vw;
+  // width: 40vw;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 576px) {
   .logoSearch {
     display: flex;
+    flex-grow: 1;
     flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 11px;
+  }
+}
+
+@media screen and (min-width: 577px) and (max-width: 991px) {
+  .logoSearch {
+    display: flex;
     flex-grow: 1;
     justify-content: space-around;
     align-items: center;
