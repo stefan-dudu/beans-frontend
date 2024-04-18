@@ -141,8 +141,8 @@ const DynamicSearchBar: React.FC = () => {
               <SearchResultRow item={item} index={index} key={index} />
             ))}
             {searchResults.length > 4 && (
-              <p
-                style={{ color: "black" }}
+              <div
+                className="view-more"
                 onClick={() => {
                   // TODO: navigate here, pass data ( all of it, will show), pass the term that was searched by
                   // TODO: clise the search results and then navigate, now it happens a bit off, i can still see the results, but i am on the result page
@@ -152,7 +152,7 @@ const DynamicSearchBar: React.FC = () => {
                 }}
               >
                 View more results
-              </p>
+              </div>
             )}
           </div>
         )

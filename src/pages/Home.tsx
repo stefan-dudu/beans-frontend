@@ -18,8 +18,8 @@ const Home = (props: Props) => {
     <div>
       <TopItems />
       <BeanSelector />
-      <Discover />
       <YouMightLike />
+      <Discover />
       <BestBeans2023 />
       <div className="articles">
         <h2>Future article</h2>

@@ -96,7 +96,7 @@ const BestBeans2023 = (props: any) => {
   };
 
   return (
-    <div style={{ marginBottom: "2rem" }}>
+    <div style={{ marginBottom: "2rem", marginTop: "1rem" }}>
       <h2
         style={{ padding: "1rem 0rem", marginLeft: "1rem", color: "#006241" }}
       >

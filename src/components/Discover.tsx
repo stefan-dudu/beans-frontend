@@ -18,7 +18,7 @@ const Discover = (props: Props) => {
           className="d-inline-block"
           alt="React Bootstrap logo"
           onError={addDefaultSrc}
-          style={{ maxWidth: "30vw" }}
+          style={{ maxWidth: "30%" }}
         />
         <div className="textDiscover">
           <div>The Tale of Vietnamese Coffee Farmers</div>
