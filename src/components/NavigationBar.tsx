@@ -97,6 +97,7 @@ function NavigationBar() {
                 as={NavLink}
                 to="/signup"
                 onClick={() => dispatch(minimize())}
+                style={{ color: "#006241" }}
               >
                 Sign up
               </Nav.Link>

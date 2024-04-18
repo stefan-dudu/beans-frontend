@@ -97,7 +97,12 @@ const BestBeans2023 = (props: any) => {
 
   return (
     <div style={{ marginBottom: "2rem" }}>
-      <h2 style={{ padding: "1rem 0rem" }}> 2023 Awards</h2>
+      <h2
+        style={{ padding: "1rem 0rem", marginLeft: "1rem", color: "#006241" }}
+      >
+        {" "}
+        2023 Awards
+      </h2>
       <div className="topBeansContainer">
         {loadingData && <SkeletonComponent />}
         {data && data?.map((el) => <BeanCard key={el.id} data={el} />)}

@@ -87,8 +87,10 @@ const TopItems = (props: any) => {
   });
 
   return (
-    <div>
-      <h2 style={{ padding: "1rem 0rem", color: "#1F3933" }}>
+    <div className="top-items-wrapper">
+      <h2
+        style={{ padding: "1rem 0rem", marginLeft: "1rem", color: "#006241" }}
+      >
         Trending right now ...
       </h2>
       <div className="topBeansContainer">

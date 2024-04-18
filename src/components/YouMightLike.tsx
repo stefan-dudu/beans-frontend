@@ -96,8 +96,13 @@ const YouMightLike = (props: any) => {
   };
 
   return (
-    <div style={{ marginBottom: "2rem" }}>
-      <h2 style={{ padding: "1rem 0rem" }}> You might like these</h2>
+    <div style={{ marginBottom: "2rem", marginTop: "1rem" }}>
+      <h2
+        style={{ padding: "1rem 0rem", marginLeft: "1rem", color: "#006241" }}
+      >
+        {" "}
+        You might like these
+      </h2>
       <div className="topBeansContainer">
         {loadingData && <SkeletonComponent />}
         {data && data?.map((el) => <BeanCard key={el.id} data={el} />)}
