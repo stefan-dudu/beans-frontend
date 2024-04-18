@@ -20,7 +20,7 @@ const Features = (props: Props) => {
           should I consider abandoning it if it doesn’t provide any benefit?❓
         </p>
         <p>
-          You can send me your thoughts at{" "}
+          Please send me your thoughts at{" "}
           <a href="mailto:stefan01.dev@gmail.com">stefan01.dev@gmail.com</a> 📥
         </p>
         <p>
