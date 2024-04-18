@@ -11,7 +11,6 @@ import catchBeanBag from "../assets/catchBeanBag.jpg";
 import { COLORS } from "../values/colors";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import "./DetailedCoffeeBeans.scss";
-import Button from "@mui/material/Button";
 
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -22,14 +21,18 @@ import WrittenReview from "../components/WrittenReview";
 
 const DetailedCoffeeBeans = (props: any) => {
   const [data, setData] = useState<CoffeeType | null>(null);
+  const [value, setValue] = React.useState<number | null>(0);
+  const [reviewText, setReviewText] = React.useState<string | null>("");
+  const [ratingId, setRatingId] = React.useState<string | null>("");
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
   let { id } = useParams();
+  const userId = useSelector((state: RootState) => state.auth.id);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(isLoading());
     fetchDataForPosts();
+    fetchUsersRatingForBean();
   }, [id]);
 
   const fetchDataForPosts = async () => {
@@ -49,12 +52,36 @@ const DetailedCoffeeBeans = (props: any) => {
       }
       const { data } = await response.json();
       setData(data.data);
-      setError(null);
     } catch (err: any) {
-      setError(err);
     } finally {
       setLoading(false);
       dispatch(notLoading());
+    }
+  };
+
+  const fetchUsersRatingForBean = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}api/v1/reviews/${id}/${userId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // TODO: ESSENTIAL FOR jwt
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error: Status ${response.status}`);
+      }
+      const { data } = await response.json();
+      if (data && data.review.length > 0) {
+        setValue(data.review[0].rating);
+        setReviewText(data.review[0].review);
+        setRatingId(data.review[0].id);
+      }
+    } catch (err: any) {
+    } finally {
     }
   };
 
@@ -178,13 +205,7 @@ const DetailedCoffeeBeans = (props: any) => {
     );
   };
 
-  const mapFlavorNotesToParagraphs = (coffee: CoffeeType): JSX.Element[] => {
-    return coffee.flavorNotes.map((flavorNote) => (
-      <p key={flavorNote}>{flavorNote}</p>
-    ));
-  };
-
-  // console.log("data", data);
+  console.log("value", value);
 
   return (
     <div>
@@ -207,21 +228,23 @@ const DetailedCoffeeBeans = (props: any) => {
                   />
                 }
               </div>
-              <Button variant="outlined" color="success">
-                Save it
-              </Button>
-              <RateBean maxStars={5} currentRating={data?.ratingsAverage} />
-              {/* <Rating name="no-value" value={null} size="large" /> */}
-              {/* TODO: if rated or not status */}
-              {/* <p>Rated, write a review / Rate this coffee</p> */}
+              {value !== null && value === 0 ? (
+                <div style={{ color: "#006241" }}>Rate this coffee</div>
+              ) : (
+                <div>Rated</div>
+              )}
+              <RateBean
+                maxStars={5}
+                currentRating={data?.ratingsAverage}
+                usersRating={value}
+                ratingId={ratingId}
+              />
             </Grid>
             <Grid item xs={12} sm={8} className="restOfContent">
               <div className="aboveMap">
                 <div className="title">{data?.name || "name"}</div>
                 <div className="brand">{data?.brand || "brand"}</div>
                 <div style={{ display: "flex" }} className="ratingWrapper">
-                  {/* <p>Ratings in stars here pretty big</p> */}
-
                   {!!data?.ratingsAverage && (
                     <Rating
                       name="half-rating-read"
@@ -233,7 +256,6 @@ const DetailedCoffeeBeans = (props: any) => {
                     />
                   )}
                   {!!data?.ratingsAverage && data?.ratingsAverage}
-                  {/* <p>No of ratings: {data?.ratingsQuantity}</p> */}
                 </div>
                 <div className="propWrapper">
                   <div className="propName">Origin: </div>
@@ -268,7 +290,11 @@ const DetailedCoffeeBeans = (props: any) => {
                     {data && data?.flavorNotes.map((el) => <div>{el}</div>)}
                   </div>
                 </div>
-                <WrittenReview />
+                <WrittenReview
+                  usersRating={value}
+                  reviewText={reviewText}
+                  ratingId={ratingId}
+                />
               </div>
               {data?.locations && (
                 <DetailedBeanMap location={data?.locations} />

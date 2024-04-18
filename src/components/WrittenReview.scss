@@ -1,5 +1,18 @@
-.boxStyling {
-  display: flex;
-  gap: 1rem;
-  flex-direction: column;
+.written-reviews-wrapper {
+  margin: 2rem 1rem;
+  padding: 3rem 0rem;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+
+  .boxStyling {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    .add-rating-CTA {
+      display: flex;
+      justify-content: center;
+      color: #006241;
+      margin-bottom: 1rem;
+    }
+  }
 }
