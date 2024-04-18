@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -8,16 +8,22 @@ import Button from "@mui/material/Button";
 import "./WrittenReview.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import Rating from "@mui/material/Rating";
 
-type Props = {};
+type Props = {
+  usersRating: number | null;
+  reviewText: string | null;
+  ratingId: string | null;
+};
 
-const WrittenReview = (props: Props) => {
+const WrittenReview = ({ usersRating, reviewText, ratingId }: Props) => {
   const [open, setOpen] = React.useState(false);
+  const [ratingValue, setRatingValue] = React.useState<number | null>(0);
+  const [review, setReview] = React.useState<string | null>("");
   const [severity, setSeverity] = useState<
     "success" | "error" | "info" | "warning" | undefined
   >(undefined);
   const [alertMessage, setAlertMessage] = useState("");
-  const [review, setReview] = React.useState<string | null>("");
 
   let { id } = useParams();
   const navigate = useNavigate();
@@ -28,7 +34,7 @@ const WrittenReview = (props: Props) => {
     navigate(`/login`, { replace: true });
   };
 
-  const PostWrittenReview = async () => {
+  const PostReview = async () => {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_URL}api/v1/beans/${id}/reviews`,
@@ -41,19 +47,16 @@ const WrittenReview = (props: Props) => {
           },
           credentials: "include",
           body: JSON.stringify({
-            // TODO: ------- TO BE IMPLEMENTED:  aditional comment as review, eg: It was great! Nutty and light
-            // "review": "5",
-            // rating: p0,
             review,
+            rating: ratingValue,
           }),
         }
       );
       const data = await response.json();
-      // TODO: add something to inform the user that review was created
       console.log("data", data);
 
       if (data.status === "success") {
-        // alert("now is in review");
+        console.log("new review created");
         setOpen(true);
         setSeverity("success");
         setAlertMessage("Review posted. Thank you!");
@@ -62,19 +65,56 @@ const WrittenReview = (props: Props) => {
           navigate(0);
         }, 1000);
       }
+
+      if (data.status === "error") {
+        setOpen(true);
+        setSeverity("error");
+        setAlertMessage("A review needs to have also a rating");
+      }
     } catch (error) {
       console.log("error", error);
-      // enter your logic for when there is an error (ex. error toast)
+    }
+  };
 
+  const UpdateReview = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}api/v1/reviews/${ratingId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            review,
+            rating: ratingValue,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (data.status === "success") {
+        console.log("new review created");
+        setOpen(true);
+        setSeverity("success");
+        setAlertMessage("Review updated");
+
+        setTimeout(() => {
+          navigate(0);
+        }, 1000);
+      }
+
+      if (data.status === "error") {
+        console.log("error mate");
+        setOpen(true);
+        setSeverity("error");
+        setAlertMessage("There was an error");
+      }
+    } catch (error) {
       console.log(error);
     }
   };
 
-  const PostButtonHandler = () => {
-    signedIn ? PostWrittenReview() : redirectToLogin();
-  };
-
-  console.log("review", review);
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -86,16 +126,43 @@ const WrittenReview = (props: Props) => {
     setOpen(false);
   };
 
+  const handleCreateNewReview = () => {
+    signedIn ? PostReview() : redirectToLogin();
+  };
+
+  const handleUpdateExistingReview = () => {
+    signedIn ? UpdateReview() : redirectToLogin();
+  };
+
+  useEffect(() => {
+    setRatingValue(usersRating);
+    setReview(reviewText);
+  }, [usersRating, reviewText]);
+
   return (
-    <div style={{ padding: "1rem" }}>
+    <div className="written-reviews-wrapper">
       {/* <h2>WrittenReview</h2> */}
       <Box className="boxStyling">
+        {usersRating === 0 && (
+          <div className="add-rating-CTA">
+            What do you think about this coffee?
+          </div>
+        )}
+
+        <Rating
+          name="simple-controlled"
+          size="large"
+          value={ratingValue}
+          onChange={(event, newValue) => {
+            setRatingValue(newValue !== null ? newValue * 1 : 0);
+          }}
+        />
         <TextField
           id="outlined-multiline-static"
-          label="What do you think about this coffee?"
+          // label="Your opinion"
           multiline
           rows={4}
-          //   defaultValue="Default Value"
+          value={review}
           style={{ width: "100%" }}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setReview(event.target.value);
@@ -104,9 +171,17 @@ const WrittenReview = (props: Props) => {
         <Button
           variant="contained"
           color="success"
-          onClick={() => PostButtonHandler()}
+          onClick={() => {
+            if (!usersRating) {
+              // console.log("no value > will create new review");
+              handleCreateNewReview();
+            } else if (usersRating) {
+              // console.log("there is a rating >> will update");
+              handleUpdateExistingReview();
+            }
+          }}
         >
-          Post
+          {usersRating === 0 ? "Post" : "Update"}
         </Button>
       </Box>
       <div className="snackbar">
