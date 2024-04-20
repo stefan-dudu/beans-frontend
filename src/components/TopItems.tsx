@@ -29,7 +29,7 @@ const TopItems = (props: any) => {
     const fetchDataForPosts = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_URL}api/v1/beans`,
+          `${process.env.REACT_APP_URL}api/v1/beans/top-7`,
           {
             headers: {
               "Content-Type": "application/json",
