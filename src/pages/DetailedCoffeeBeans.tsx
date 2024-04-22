@@ -1,5 +1,5 @@
 import React, { SyntheticEvent, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import RateBean from "../components/RateBean";
 import DetailedBeanMap from "../components/map/DetailedBeanMap";
 import Skeleton from "@mui/material/Skeleton";
@@ -15,17 +15,22 @@ import "./DetailedCoffeeBeans.scss";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import ReviewsComponent from "../components/ReviewsComponent";
 import { CoffeeType } from "../types/Coffee";
 import WrittenReview from "../components/WrittenReview";
+import SplitButton from "../utils/SplitButton";
 
 const DetailedCoffeeBeans = (props: any) => {
   const [data, setData] = useState<CoffeeType | null>(null);
   const [value, setValue] = React.useState<number | null>(0);
   const [reviewText, setReviewText] = React.useState<string | null>("");
   const [ratingId, setRatingId] = React.useState<string | null>("");
+  const [isFavourite, setIsFavourite] = React.useState<boolean>(false);
+  const [favouriteId, setFavouriteId] = React.useState<string | null>("");
   const [loading, setLoading] = useState<boolean>(true);
   let { id } = useParams();
+  const navigate = useNavigate();
   const userId = useSelector((state: RootState) => state.auth.id);
 
   useEffect(() => {
@@ -33,6 +38,7 @@ const DetailedCoffeeBeans = (props: any) => {
     dispatch(isLoading());
     fetchDataForPosts();
     fetchUsersRatingForBean();
+    fetchUsersSavedBean();
   }, [id]);
 
   const fetchDataForPosts = async () => {
@@ -82,6 +88,142 @@ const DetailedCoffeeBeans = (props: any) => {
       }
     } catch (err: any) {
     } finally {
+    }
+  };
+
+  const createSaveBeanStatus = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}api/v1/saved-beans`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            bean: id,
+            user: userId,
+            favourite: true,
+            // roastLevel,
+            // type: checkedItems,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error: Status ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Data from request:", data);
+      setIsFavourite((prevCheck) => !prevCheck);
+      // if (data.results > 0) {
+      //   navigate("/explore", { state: data.data });
+      // }
+
+      // if (data.results === 0) {
+      //   setOpen(true);
+      //   setSeverity("warning");
+      //   setAlertMessage(
+      //     "No bean with this specifications found. Try another one!"
+      //   );
+      // }
+      // setData(data.data);
+      // setError(null);
+    } catch (err: any) {
+      // console.error("Error fetching data:", err);
+      // setData(null);
+      // setError(err);
+    } finally {
+      // setLoading(false);
+      // dispatch(notLoading());
+      // navigate(0);
+    }
+  };
+
+  const updateSaveBeanStaus = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}api/v1/saved-beans/${favouriteId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            favourite: !isFavourite,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error: Status ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Data from request:", data);
+      setIsFavourite((prevCheck) => !prevCheck);
+      // if (data.results > 0) {
+      //   navigate("/explore", { state: data.data });
+      // }
+
+      // if (data.results === 0) {
+      //   setOpen(true);
+      //   setSeverity("warning");
+      //   setAlertMessage(
+      //     "No bean with this specifications found. Try another one!"
+      //   );
+      // }
+      // setData(data.data);
+      // setError(null);
+    } catch (err: any) {
+      // console.error("Error fetching data:", err);
+      // setData(null);
+      // setError(err);
+    } finally {
+      // setLoading(false);
+      // dispatch(notLoading());
+      // navigate(0);
+    }
+  };
+
+  const fetchUsersSavedBean = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}api/v1/saved-beans/${id}/${userId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // TODO: ESSENTIAL FOR jwt
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error: Status ${response.status}`);
+      }
+      const { data } = await response.json();
+      data && data?.savedItem[0]?.favourite === true
+        ? setIsFavourite(true)
+        : setIsFavourite(false);
+
+      if (data && data?.savedItem.length > 0) {
+        setFavouriteId(data?.savedItem[0]?._id);
+      }
+
+      // console.log("is bean saved", data?.savedItem.length > 0);
+      // console.log("is bean saved", data?.savedItem[0]?.favourite === true);
+      // if (data && data.review.length > 0) {
+      //   setValue(data.review[0].rating);
+      //   setReviewText(data.review[0].review);
+      //   setRatingId(data.review[0].id);
+      // }
+    } catch (err: any) {
+      console.log("err", err);
+    } finally {
+      // navigate(0);
     }
   };
 
@@ -205,8 +347,6 @@ const DetailedCoffeeBeans = (props: any) => {
     );
   };
 
-  console.log("value", value);
-
   return (
     <div>
       {loadingData ? (
@@ -228,17 +368,32 @@ const DetailedCoffeeBeans = (props: any) => {
                   />
                 }
               </div>
-              {value !== null && value === 0 ? (
-                <div style={{ color: "#006241" }}>Rate this coffee</div>
-              ) : (
-                <div>Rated</div>
-              )}
+              <Button
+                variant={isFavourite ? "outlined" : "contained"}
+                color="success"
+                onClick={() => {
+                  if (favouriteId) {
+                    console.log("data is saved so we will have to update it");
+                    updateSaveBeanStaus();
+                  } else if (!favouriteId) {
+                    console.log("there is no data so we will create it");
+                    createSaveBeanStatus();
+                  }
+                }}
+              >
+                {isFavourite ? "Favourite" : "Add to favourite"}
+              </Button>
               <RateBean
                 maxStars={5}
                 currentRating={data?.ratingsAverage}
                 usersRating={value}
                 ratingId={ratingId}
-              />
+              />{" "}
+              {value !== null && value === 0 ? (
+                <div style={{ color: "#006241" }}>Rate this coffee</div>
+              ) : (
+                <div>Rated</div>
+              )}
             </Grid>
             <Grid item xs={12} sm={8} className="restOfContent">
               <div className="aboveMap">

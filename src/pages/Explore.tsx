@@ -85,6 +85,8 @@ const Explore: React.FC<Props> = (props) => {
     }
   }, [state]);
 
+  console.log(data);
+
   return (
     <div>
       <div>

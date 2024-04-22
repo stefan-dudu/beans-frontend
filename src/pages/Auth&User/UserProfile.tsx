@@ -4,6 +4,7 @@ import { logout } from "../../store/auth/authSlice";
 import { AppDispatch } from "../../store/store";
 import { LogoutFn } from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
+import SavedBeans from "../../components/SavedBeans";
 
 type User = {
   email: string;
@@ -99,6 +100,7 @@ const UserProfile: React.FC = () => {
           To review beans page
         </button>
       )}
+      <SavedBeans />
     </div>
   );
 };
