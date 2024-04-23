@@ -107,6 +107,10 @@ const UserProfile: React.FC = () => {
           <div className="propName">Favourite origin</div>
           <div className="propValue">Ethiopian</div>
         </div>
+        <div className="propWrapper">
+          <div className="propName">Coffee grinder</div>
+          <div className="propValue">Lelit PL71</div>
+        </div>
         {/* <div>name : {data && data?.name}</div>
         <div>role : {data && data?.role}</div>
         <div>id : {data && data?._id}</div> */}

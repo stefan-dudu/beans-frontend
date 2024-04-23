@@ -54,7 +54,7 @@ const SavedBeans = (props: Props) => {
 
   return (
     <div>
-      Your favourite coffe:
+      Your favourite coffee:
       {favouriteBeans &&
         favouriteBeans
           .filter((el) => el.favourite === true)

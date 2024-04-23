@@ -43,9 +43,6 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
     "& .MuiRating-iconFilled": {
       color: COLORS.darkGreen,
     },
-    "& .MuiRating-iconHover": {
-      color: "#ff3d47",
-    },
   });
   // console.log("data", data);
 
@@ -221,7 +218,11 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
                 }
               }}
             >
-              {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              {isFavourite ? (
+                <FavoriteIcon fontSize="large" />
+              ) : (
+                <FavoriteBorderIcon fontSize="large" />
+              )}
             </IconButton>
           </Grid>
         </Grid>

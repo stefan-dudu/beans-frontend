@@ -19,7 +19,7 @@ import Button from "@mui/material/Button";
 import ReviewsComponent from "../components/ReviewsComponent";
 import { CoffeeType } from "../types/Coffee";
 import WrittenReview from "../components/WrittenReview";
-import SplitButton from "../utils/SplitButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const DetailedCoffeeBeans = (props: any) => {
   const [data, setData] = useState<CoffeeType | null>(null);
@@ -262,9 +262,6 @@ const DetailedCoffeeBeans = (props: any) => {
       "& .MuiRating-iconFilled": {
         color: COLORS.darkGreen,
       },
-      "& .MuiRating-iconHover": {
-        color: "#ff3d47",
-      },
     });
     return (
       <div className="traits">
@@ -339,6 +336,7 @@ const DetailedCoffeeBeans = (props: any) => {
               </div>
               <Button
                 variant={isFavourite ? "outlined" : "contained"}
+                endIcon={<FavoriteIcon />}
                 color="success"
                 onClick={() => {
                   if (favouriteId) {
@@ -350,7 +348,7 @@ const DetailedCoffeeBeans = (props: any) => {
                   }
                 }}
               >
-                {isFavourite ? "Favourite" : "Add to favourite"}
+                {isFavourite ? "Favourite " : "Add to favourite"}
               </Button>
               <RateBean
                 maxStars={5}

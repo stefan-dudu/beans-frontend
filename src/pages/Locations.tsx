@@ -51,8 +51,8 @@ const Locations = (props: Props) => {
   return (
     <div className="locationsWrapper">
       <div className="location-title">
-        It will display all coffee farms locations and informations, so you know
-        where you coffee is comming from
+        Coffee farms locations and informations, so you know where you coffee
+        beans are comming from
       </div>
       {data && <LocationsMap data={data} />}
     </div>
