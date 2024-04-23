@@ -8,12 +8,8 @@ const Features = (props: Props) => {
   return (
     <div className="featuresWrapper">
       <h2>More about this project</h2>
-      <div>
-        <p>
-          After months of hard work, I'm happy to introduce you to{" "}
-          <a href="http://www.baristretto.com">baristretto.com</a> - your go-to
-          destination for coffee reviews and more!
-        </p>
+      <div style={{ color: "#006241" }}>
+        <p>Your go-to destination for coffee reviews and more!</p>
         <p>
           The site is currently in a Minimum Viable Product phase and I need
           your opinion. Is it worth pursuing further? Would you use it, or
@@ -30,7 +26,7 @@ const Features = (props: Props) => {
 
         <p>Cheers, Stefan</p>
       </div>
-
+      {/* 
       <Button
         variant="contained"
         onClick={() => {
@@ -38,7 +34,7 @@ const Features = (props: Props) => {
         }}
       >
         Contact Me
-      </Button>
+      </Button> */}
     </div>
   );
 };

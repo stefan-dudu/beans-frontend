@@ -43,7 +43,7 @@ const SavedBeans = (props: Props) => {
 
   return (
     <div>
-      SavedBeans
+      Explore your favourite saved coffee
       {favouriteBeans &&
         favouriteBeans.map((el: any) => {
           return (
