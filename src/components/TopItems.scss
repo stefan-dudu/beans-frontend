@@ -13,12 +13,16 @@
 }
 
 .parentWrapper {
+  max-width: 219px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   flex-wrap: wrap;
   margin: 0px 8px 10px 8px;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  padding: 1rem;
+  box-shadow: 10px 20px 55px 0 rgba(92, 92, 92, 0.1);
+  border-radius: 20px;
   .image {
     margin: 0px 5px;
     width: 11rem;
@@ -29,6 +33,11 @@
 
   .underPic {
     // flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-evenly;
+    margin-left: 10px;
     .title {
       font-size: 1.4rem;
     }

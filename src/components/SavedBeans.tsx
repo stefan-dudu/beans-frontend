@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FavouriteBeanListType } from "../types/FavouriteBeans";
 import ExploreRow from "./ExploreRow";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 type Props = {};
 
@@ -9,7 +12,10 @@ const SavedBeans = (props: Props) => {
     FavouriteBeanListType[] | null
   >(null);
 
-  const fetchUsersSavedBeans = async () => {
+  const navigate = useNavigate();
+  const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
+
+  const fetchUsersFavouriteBeans = async () => {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_URL}api/v1/users/saved-beans`,
@@ -25,33 +31,41 @@ const SavedBeans = (props: Props) => {
         throw new Error(`HTTP error: Status ${response.status}`);
       }
       const { data } = await response.json();
-      // console.log("this users saved beans", data.savedBeans);
+      console.log("this users saved beans", data.savedBeans.favourite);
       data.savedBeans.length > 0 && setFavouriteBeans(data.savedBeans);
       //   setError(null);
     } catch (err: any) {
       //   setData(null);
       //   setError(err);
+      if (err && !loggedIn) {
+        // console.log("redirect to login");
+        navigate(`/login`, { replace: true });
+      }
     } finally {
       //   setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchUsersSavedBeans();
+    !loggedIn && navigate(`/login`, { replace: true });
+    loggedIn && fetchUsersFavouriteBeans();
   }, []);
-  console.log("favouriteBeans", typeof favouriteBeans);
+  // console.log("favouriteBeans", typeof favouriteBeans);
 
   return (
     <div>
-      Explore your favourite saved coffee
+      Your favourite coffe:
       {favouriteBeans &&
-        favouriteBeans.map((el: any) => {
-          return (
-            <div key={el._id}>
-              <ExploreRow data={el.bean} />
-            </div>
-          );
-        })}
+        favouriteBeans
+          .filter((el) => el.favourite === true)
+          .map((el: any) => {
+            return (
+              <div key={el._id}>
+                {/* TODO: to create a custom one for saved beans as it uses the explore row*/}
+                <ExploreRow data={el.bean} />
+              </div>
+            );
+          })}
     </div>
   );
 };

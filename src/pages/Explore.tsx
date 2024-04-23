@@ -4,38 +4,13 @@ import ExploreRow from "../components/ExploreRow";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { notLoading, isLoading } from "../store/navBar/NavBarSlice";
+import { CoffeeType } from "../types/Coffee";
+import "./Explore.scss";
 
 type Props = {};
 
-type Coffee = {
-  _id: string;
-  name: string;
-  brand: string;
-  type: string;
-  origin: string;
-  roastLevel: string;
-  flavorNotes: string[];
-  aroma: string;
-  acidity: number;
-  body: number;
-  price: number;
-  ratingsAverage: number;
-  ratingsQuantity: number;
-  summary: string;
-  image: string;
-  locations: {
-    type: string;
-    coordinates: number[];
-    description: string;
-    _id: string;
-    id: string;
-  }[];
-  slug: string;
-  id: string;
-};
-
 const Explore: React.FC<Props> = (props) => {
-  const [data, setData] = useState<Coffee[] | null>(null);
+  const [data, setData] = useState<CoffeeType[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
   const { state } = useLocation();
@@ -85,7 +60,7 @@ const Explore: React.FC<Props> = (props) => {
     }
   }, [state]);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div>

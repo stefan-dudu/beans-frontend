@@ -40,7 +40,7 @@ const BeanCard = ({ data }: { data: Coffee }) => {
       />
       <div className="underPic">
         <div className="title">{data?.name}</div>
-        <p style={{ color: "lightgrey" }}>{data?.brand}</p>
+        <div style={{ color: "lightgrey" }}>{data?.brand}</div>
         <div className="ratingsAndNo">
           <StyledRating
             name="customized-color"

@@ -2,7 +2,7 @@ import { CoffeeType } from "./Coffee";
 export type FavouriteBeanListType = {
   bean: CoffeeType;
   createdAt: string;
-  favorite: boolean;
+  favourite: boolean;
   triedIt: boolean;
   user: string;
   _id: string;

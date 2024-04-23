@@ -32,13 +32,14 @@ const DetailedCoffeeBeans = (props: any) => {
   let { id } = useParams();
   const navigate = useNavigate();
   const userId = useSelector((state: RootState) => state.auth.id);
+  const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(isLoading());
     fetchDataForPosts();
-    fetchUsersRatingForBean();
-    fetchUsersSavedBean();
+    loggedIn && fetchUsersRatingForBean();
+    loggedIn && fetchUsersSavedBean();
   }, [id]);
 
   const fetchDataForPosts = async () => {
@@ -105,8 +106,6 @@ const DetailedCoffeeBeans = (props: any) => {
             bean: id,
             user: userId,
             favourite: true,
-            // roastLevel,
-            // type: checkedItems,
           }),
         }
       );
@@ -118,27 +117,12 @@ const DetailedCoffeeBeans = (props: any) => {
       const data = await response.json();
       console.log("Data from request:", data);
       setIsFavourite((prevCheck) => !prevCheck);
-      // if (data.results > 0) {
-      //   navigate("/explore", { state: data.data });
-      // }
-
-      // if (data.results === 0) {
-      //   setOpen(true);
-      //   setSeverity("warning");
-      //   setAlertMessage(
-      //     "No bean with this specifications found. Try another one!"
-      //   );
-      // }
-      // setData(data.data);
-      // setError(null);
     } catch (err: any) {
-      // console.error("Error fetching data:", err);
-      // setData(null);
-      // setError(err);
+      if (err && !loggedIn) {
+        // console.log("redirect to login");
+        navigate(`/login`, { replace: true });
+      }
     } finally {
-      // setLoading(false);
-      // dispatch(notLoading());
-      // navigate(0);
     }
   };
 
@@ -165,27 +149,12 @@ const DetailedCoffeeBeans = (props: any) => {
       const data = await response.json();
       console.log("Data from request:", data);
       setIsFavourite((prevCheck) => !prevCheck);
-      // if (data.results > 0) {
-      //   navigate("/explore", { state: data.data });
-      // }
-
-      // if (data.results === 0) {
-      //   setOpen(true);
-      //   setSeverity("warning");
-      //   setAlertMessage(
-      //     "No bean with this specifications found. Try another one!"
-      //   );
-      // }
-      // setData(data.data);
-      // setError(null);
     } catch (err: any) {
-      // console.error("Error fetching data:", err);
-      // setData(null);
-      // setError(err);
+      if (err && !loggedIn) {
+        // console.log("redirect to login");
+        navigate(`/login`, { replace: true });
+      }
     } finally {
-      // setLoading(false);
-      // dispatch(notLoading());
-      // navigate(0);
     }
   };
 
@@ -442,7 +411,8 @@ const DetailedCoffeeBeans = (props: any) => {
                 <div className="propWrapper">
                   <div className="propName">Flavour notes: </div>
                   <div className="flavorNotes">
-                    {data && data?.flavorNotes.map((el) => <div>{el}</div>)}
+                    {data &&
+                      data?.flavorNotes.map((el) => <div key={el}>{el}</div>)}
                   </div>
                 </div>
                 <WrittenReview
@@ -452,7 +422,7 @@ const DetailedCoffeeBeans = (props: any) => {
                 />
               </div>
               {data?.locations && (
-                <DetailedBeanMap location={data?.locations} />
+                <DetailedBeanMap location={data?.locations} key={data?._id} />
               )}
               {/* TODO: CTA */}
               {/* <div>Call to action: Add review</div> */}

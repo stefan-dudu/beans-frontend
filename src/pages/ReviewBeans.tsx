@@ -3,38 +3,12 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../store/store";
 import ExploreRow from "../components/ExploreRow";
+import { CoffeeType } from "../types/Coffee";
 
 type Props = {};
-interface Coffee {
-  _id: string;
-  name: string;
-  brand: string;
-  type: string;
-  slug: string;
-  origin: string;
-  roastLevel: string;
-  flavorNotes: string[];
-  aroma: string;
-  acidity: number;
-  body: number;
-  price: number;
-  ratingsAverage: number;
-  ratingsQuantity: number;
-  summary: string;
-  image: string;
-  locations: {
-    type: string;
-    coordinates: number[];
-    address: string;
-    description: string;
-    _id: string;
-    id: string;
-  }[];
-  id: string;
-}
 
 const ReviewBeans = (props: Props) => {
-  const [data, setData] = useState<Coffee[] | null>(null);
+  const [data, setData] = useState<CoffeeType[] | null>(null);
 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);

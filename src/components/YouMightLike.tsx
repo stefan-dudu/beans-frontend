@@ -7,35 +7,10 @@ import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import catchBeanBag from "../assets/catchBeanBag.jpg";
 import BeanCard from "./BeanCard";
-
-type Coffee = {
-  _id: string;
-  name: string;
-  brand: string;
-  origin: string;
-  roastLevel: string;
-  flavorNotes: string[];
-  aroma: string;
-  acidity: number;
-  body: number;
-  price: number;
-  ratingsAverage: number;
-  ratingsQuantity: number;
-  summary: string;
-  image: string;
-  locations: {
-    type: string;
-    coordinates: number[];
-    description: string;
-    _id: string;
-    id: string;
-  }[];
-  slug: string;
-  id: string;
-};
+import { CoffeeType } from "../types/Coffee";
 
 const YouMightLike = (props: any) => {
-  const [data, setData] = useState<Coffee[] | null>(null);
+  const [data, setData] = useState<CoffeeType[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 

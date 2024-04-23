@@ -2,38 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ExploreRow from "../components/ExploreRow";
 import TextField from "@mui/material/TextField";
+import { CoffeeType } from "../types/Coffee";
 type Props = {};
-
-type Coffee = {
-  _id: string;
-  name: string;
-  brand: string;
-  type: string;
-  origin: string;
-  roastLevel: string;
-  flavorNotes: string[];
-  aroma: string;
-  acidity: number;
-  body: number;
-  price: number;
-  ratingsAverage: number;
-  ratingsQuantity: number;
-  summary: string;
-  image: string;
-  locations: {
-    type: string;
-    coordinates: number[];
-    description: string;
-    _id: string;
-    id: string;
-  }[];
-  slug: string;
-  id: string;
-};
 
 const Search = (props: Props) => {
   const [searchTerm, setSearchTerm] = useState<string | null>(null);
-  const [searchResults, setSearchResults] = useState<Coffee[] | null>(null);
+  const [searchResults, setSearchResults] = useState<CoffeeType[] | null>(null);
   const [loading, setLoading] = useState(false);
   const { state } = useLocation();
 
