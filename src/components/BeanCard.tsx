@@ -21,7 +21,7 @@ const StyledRating = styled(Rating)({
     color: COLORS.darkGreen,
   },
   "& .MuiRating-iconHover": {
-    color: "#ff3d47",
+    color: COLORS.darkGreen,
   },
 });
 

@@ -43,8 +43,7 @@ function NavigationBar() {
           >
             <img
               src={logo}
-              width="40"
-              height="40"
+              style={{ width: "6vw", minWidth: "50px", maxWidth: "70px" }}
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
             />

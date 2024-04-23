@@ -31,7 +31,7 @@ const SavedBeans = (props: Props) => {
         throw new Error(`HTTP error: Status ${response.status}`);
       }
       const { data } = await response.json();
-      console.log("this users saved beans", data.savedBeans.favourite);
+      // console.log("this users saved beans", data.savedBeans.favourite);
       data.savedBeans.length > 0 && setFavouriteBeans(data.savedBeans);
       //   setError(null);
     } catch (err: any) {

@@ -6,6 +6,9 @@ import { RootState } from "../store/store";
 import Rating from "@mui/material/Rating";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { styled } from "@mui/material/styles";
+import LocalCafeIcon from "@mui/icons-material/LocalCafe";
+import { COLORS } from "../values/colors";
 
 interface RatingProps {
   maxStars: number;
@@ -121,16 +124,27 @@ const RateBean: React.FC<RatingProps> = ({ usersRating, ratingId }) => {
     setOpen(false);
   };
 
+  const StyledRating = styled(Rating)({
+    "& .MuiRating-iconFilled": {
+      color: COLORS.darkGreen,
+    },
+    "& .MuiRating-iconHover": {
+      color: COLORS.darkGreen,
+    },
+  });
+
   useEffect(() => {
     setValue(usersRating);
   }, [usersRating]);
 
   return (
     <div>
-      <Rating
+      <StyledRating
         name="simple-controlled"
         size="large"
         value={value}
+        icon={<LocalCafeIcon fontSize="inherit" />}
+        emptyIcon={<LocalCafeIcon fontSize="inherit" />}
         onChange={(event, newValue) => {
           if (newValue !== null && value !== null && value > 0) {
             // console.log("update func", newValue);

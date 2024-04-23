@@ -199,7 +199,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
                   emptyIcon={<LocalCafeIcon fontSize="inherit" />}
                 />
 
-                <div className="reviewsNo">{data?.ratingsQuantity} </div>
+                <div className="reviewsNo">{data?.ratingsAverage} </div>
               </div>
             </div>
             <IconButton

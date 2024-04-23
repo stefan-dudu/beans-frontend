@@ -9,6 +9,9 @@ import "./WrittenReview.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import Rating from "@mui/material/Rating";
+import { styled } from "@mui/material/styles";
+import { COLORS } from ".././values/colors";
+import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 
 type Props = {
   usersRating: number | null;
@@ -139,6 +142,15 @@ const WrittenReview = ({ usersRating, reviewText, ratingId }: Props) => {
     setReview(reviewText);
   }, [usersRating, reviewText]);
 
+  const StyledRating = styled(Rating)({
+    "& .MuiRating-iconFilled": {
+      color: COLORS.darkGreen,
+    },
+    "& .MuiRating-iconHover": {
+      color: COLORS.darkGreen,
+    },
+  });
+
   return (
     <div className="written-reviews-wrapper">
       {/* <h2>WrittenReview</h2> */}
@@ -149,9 +161,11 @@ const WrittenReview = ({ usersRating, reviewText, ratingId }: Props) => {
           </div>
         )}
 
-        <Rating
+        <StyledRating
           name="simple-controlled"
           size="large"
+          icon={<LocalCafeIcon fontSize="inherit" />}
+          emptyIcon={<LocalCafeIcon fontSize="inherit" />}
           value={ratingValue}
           onChange={(event, newValue) => {
             setRatingValue(newValue !== null ? newValue * 1 : 0);

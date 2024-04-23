@@ -313,6 +313,15 @@ const DetailedCoffeeBeans = (props: any) => {
     );
   };
 
+  const StyledRating = styled(Rating)({
+    "& .MuiRating-iconFilled": {
+      color: COLORS.darkGreen,
+    },
+    "& .MuiRating-iconHover": {
+      color: COLORS.darkGreen,
+    },
+  });
+
   return (
     <div>
       {loadingData ? (
@@ -368,12 +377,14 @@ const DetailedCoffeeBeans = (props: any) => {
                 <div className="brand">{data?.brand || "brand"}</div>
                 <div style={{ display: "flex" }} className="ratingWrapper">
                   {!!data?.ratingsAverage && (
-                    <Rating
+                    <StyledRating
                       name="half-rating-read"
                       // defaultValue={2.5}
                       precision={0.5}
                       value={data?.ratingsAverage}
                       size="large"
+                      icon={<LocalCafeIcon fontSize="inherit" />}
+                      emptyIcon={<LocalCafeIcon fontSize="inherit" />}
                       readOnly
                     />
                   )}

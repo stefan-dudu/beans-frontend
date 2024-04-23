@@ -211,21 +211,7 @@ const UserCreatesBean = (props: Props) => {
               />
             </div>
 
-            <div style={{ display: "flex" }} className="ratingWrapper">
-              {/* <p>Ratings in stars here pretty big</p> */}
-              {/* {data?.ratingsAverage && (
-                <Rating
-                  name="half-rating-read"
-                  // defaultValue={2.5}
-                  precision={0.5}
-                  value={data?.ratingsAverage}
-                  size="large"
-                  readOnly
-                />
-              )} */}
-              {/* {data?.ratingsAverage} */}
-              {/* <p>No of ratings: {data?.ratingsQuantity}</p> */}
-            </div>
+            <div style={{ display: "flex" }} className="ratingWrapper"></div>
 
             <Accordion style={{ width: "100%" }}>
               <AccordionSummary
