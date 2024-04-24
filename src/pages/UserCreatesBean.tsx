@@ -178,7 +178,7 @@ const UserCreatesBean = (props: Props) => {
 
     const fileExtension = file.name.split(".").pop();
 
-    const updatedFileName = `${process.env.REACT_APP_BUCKET_URL}beans/${brand
+    const updatedFileName = `https://baristretto-bucket.s3.eu-central-1.amazonaws.com/beans/${brand
       .toLowerCase()
       .replace(/\s+/g, "-")}-${name
       .toLowerCase()
