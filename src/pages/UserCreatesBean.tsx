@@ -211,7 +211,8 @@ const UserCreatesBean = (props: Props) => {
         .toLowerCase()
         .replace(/\s+/g, "-")}.${fileExtension}`;
       debugger;
-      upload && setPictureURL(updatedFileName); // Set pictureURL after successful upload
+      console.log("updatedFileName", updatedFileName);
+      upload && setPictureURL("test123"); // Set pictureURL after successful upload
       setUploading(false);
     } catch (error) {
       console.error(error);
@@ -221,6 +222,8 @@ const UserCreatesBean = (props: Props) => {
           (error instanceof Error ? error.message : "Unknown error")
       );
     }
+    console.log("S3_BUCKET_URL", S3_BUCKET_URL);
+    console.log("objectKey 2", objectKey);
   };
 
   return (
