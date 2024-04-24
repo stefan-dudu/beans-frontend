@@ -24,13 +24,18 @@
       gap: 1rem;
       align-items: baseline;
       .title {
-        font-size: 2rem;
+        font-size: 1.5rem;
         color: #1f3933;
         font-weight: 600;
       }
 
+      .brand {
+        font-size: 1.5rem;
+        color: #006241;
+      }
+
       .subtitle {
-        font-size: 1.7rem;
+        font-size: 1.3rem;
         color: #1f3933;
       }
     }
@@ -58,8 +63,9 @@
         }
 
         .subtitle {
-          font-size: 1.7rem;
           color: #1f3933;
+          font-size: 1.5rem;
+          font-weight: 600;
         }
       }
     }

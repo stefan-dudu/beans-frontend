@@ -76,8 +76,8 @@ const AddPinpoint: React.FC<AddPinpointProps> = ({ sendDataToParent }) => {
       const map = new mapboxgl.Map({
         container: mapContainer.current,
         style: "mapbox://styles/stefan01-dev/cle6x947u005b01nojysmi80b",
-        center: [-74.0060152, 40.7127281],
-        zoom: 5,
+        center: [-50.489519, -10.677559],
+        zoom: 3,
         maxZoom: 15,
       });
 

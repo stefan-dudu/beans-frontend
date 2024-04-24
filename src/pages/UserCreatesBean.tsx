@@ -1,4 +1,4 @@
-import React, { useState, SyntheticEvent } from "react";
+import React, { useState, SyntheticEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -31,6 +31,8 @@ const UserCreatesBean = (props: Props) => {
   const [processing, setProcessing] = useState("");
   const [qGrading, setQgrading] = useState("");
   const [altitude, setAltitude] = useState(0);
+  const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState<boolean>(false);
   const [coord, setCoord] = useState<Coordinates>({ lng: 0, lat: 0 });
 
   const [open, setOpen] = React.useState(false);
@@ -95,19 +97,6 @@ const UserCreatesBean = (props: Props) => {
 
   const submitHandler = () => {
     CreateBeanCall();
-    // console.log({
-    //   name,
-    //   brand,
-    //   origin,
-    //   type,
-    //   processing,
-    //   qgrading,
-    //   altitude,
-    //   locations: { coordinates: [coord.lng, coord.lat] },
-    // });
-    // setOpen(true);
-    // setSeverity("success");
-    // setAlertMessage("The new coffee bean has been sent to review");
   };
 
   const handleClose = (
@@ -117,7 +106,6 @@ const UserCreatesBean = (props: Props) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 
@@ -144,13 +132,32 @@ const UserCreatesBean = (props: Props) => {
     e.currentTarget.src = catchBeanBag;
   }
 
-  // console.log("dataFromChild", coord);
+  const allowedTypes: string[] = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/webp",
+    "image/avif",
+    "image/svg",
+    // Add more supported types as needed
+  ];
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile && allowedTypes.includes(selectedFile.type)) {
+      setFile(selectedFile);
+    } else if (selectedFile && !allowedTypes.includes(selectedFile.type)) {
+      alert("Only images are allowed.");
+    }
+  };
+
+  console.log("file", file);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4} className="imageBookmarkRating">
-          <div className="item">
+          {/* <div className="item">
             {
               <img
                 src={catchBeanBag}
@@ -161,9 +168,10 @@ const UserCreatesBean = (props: Props) => {
                 onError={addDefaultSrc}
               />
             }
-          </div>
+          </div> */}
+          <input type="file" required onChange={handleFileChange} />
           <Button
-            variant="outlined"
+            variant="contained"
             color="success"
             onClick={() => submitHandler()}
           >
