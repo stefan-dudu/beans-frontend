@@ -1,4 +1,4 @@
-import React, { useState, SyntheticEvent, ChangeEvent } from "react";
+import React, { useState, SyntheticEvent, ChangeEvent, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
@@ -114,14 +114,8 @@ const UserCreatesBean = (props: Props) => {
       setSeverity("error");
       setAlertMessage("Please add data to the required fields");
     } else {
-      try {
-        await uploadFile();
-        await CreateBeanCall();
-      } catch (error) {
-        // Handle any errors that occur during file upload or bean creation
-        console.error("Error during file upload or bean creation:", error);
-        // Optionally, set an error state or display an error message
-      }
+      await uploadFile();
+      await CreateBeanCall();
     }
   };
 
@@ -177,12 +171,19 @@ const UserCreatesBean = (props: Props) => {
       alert("Only images are allowed.");
     }
   };
+
+  const fileExtension = file && file.name.split(".").pop();
+
+  const updatedFileName = `${S3_BUCKET_URL}beans/${brand
+    .toLowerCase()
+    .replace(/\s+/g, "-")}-${name
+    .toLowerCase()
+    .replace(/\s+/g, "-")}.${fileExtension}`;
+
   const uploadFile = async () => {
     if (!file) return;
 
     setUploading(true);
-
-    const fileExtension = file.name.split(".").pop();
 
     const objectKey = `${brand.toLowerCase().replace(/\s+/g, "-")}-${name
       .toLowerCase()
@@ -204,15 +205,6 @@ const UserCreatesBean = (props: Props) => {
 
     try {
       const upload = await s3.putObject(params).promise();
-      console.log("test");
-      const updatedFileName = `${S3_BUCKET_URL}beans/${brand
-        .toLowerCase()
-        .replace(/\s+/g, "-")}-${name
-        .toLowerCase()
-        .replace(/\s+/g, "-")}.${fileExtension}`;
-      debugger;
-      console.log("updatedFileName", updatedFileName);
-      upload && setPictureURL("test123"); // Set pictureURL after successful upload
       setUploading(false);
     } catch (error) {
       console.error(error);
@@ -222,11 +214,11 @@ const UserCreatesBean = (props: Props) => {
           (error instanceof Error ? error.message : "Unknown error")
       );
     }
-    console.log("S3_BUCKET_URL", S3_BUCKET_URL);
-    console.log("objectKey 2", objectKey);
   };
 
-  console.log("pictureURL", pictureURL);
+  useEffect(() => {
+    setPictureURL(updatedFileName);
+  }, [file]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
