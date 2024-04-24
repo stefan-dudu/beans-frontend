@@ -190,8 +190,6 @@ const UserCreatesBean = (props: Props) => {
       .toLowerCase()
       .replace(/\s+/g, "-")}.${fileExtension}`;
 
-    setPictureURL(updatedFileName);
-
     const objectKey = `${brand.toLowerCase().replace(/\s+/g, "-")}-${name
       .toLowerCase()
       .replace(/\s+/g, "-")}.${fileExtension}`;
@@ -213,6 +211,7 @@ const UserCreatesBean = (props: Props) => {
     try {
       const upload = await s3.putObject(params).promise();
       setUploading(false);
+      upload && setPictureURL(updatedFileName);
     } catch (error) {
       console.error(error);
       setUploading(false);
