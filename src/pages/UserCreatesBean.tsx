@@ -158,6 +158,8 @@ const UserCreatesBean = (props: Props) => {
     "image/webp",
     "image/avif",
     "image/svg",
+    "image/heic",
+    "image/heif",
   ];
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
