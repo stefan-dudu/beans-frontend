@@ -8,6 +8,7 @@ import BeanSelector from "../components/BeanSelector";
 import BestBeans2023 from "../components/BestBeans2023";
 import YouMightLike from "../components/YouMightLike";
 import Discover from "../components/Discover";
+import CoffeeAnimation from "../components/CoffeeAnimation";
 
 type Props = {};
 
@@ -16,6 +17,7 @@ const Home = (props: Props) => {
   const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
   return (
     <div>
+      <CoffeeAnimation />
       <TopItems />
       <BeanSelector />
       <YouMightLike />
