@@ -390,32 +390,43 @@ const DetailedCoffeeBeans = (props: any) => {
                   )}
                   {!!data?.ratingsAverage && data?.ratingsAverage}
                 </div>
-                <div className="propWrapper">
-                  <div className="propName">Origin: </div>
-                  <div className="propValue">{data?.origin}</div>
-                  {/* flag maybe? */}
-                </div>
-                <div className="propWrapper">
-                  <div className="propName">Type: </div>
-                  <div className="propValue">{data?.type}</div>
-                </div>
-                <div className="propWrapper">
-                  <div className="propName">Roast level: </div>
-                  <div className="propValue">{data?.roastLevel}</div>
-                </div>
-                <div className="propWrapper">
-                  <div className="propName">Processing: </div>
-                  <div className="propValue">{data?.processing}</div>
-                </div>
-                {/*  */}
-                <div className="propWrapper">
-                  <div className="propName">QGrading: </div>
-                  <div className="propValue">{data?.qGrading}</div>
-                </div>
-                <div className="propWrapper">
-                  <div className="propName">Altitude:</div>
-                  <div className="propValue">{data?.altitude} m</div>
-                </div>
+                {data?.origin && (
+                  <div className="propWrapper">
+                    <div className="propName">Origin: </div>
+                    <div className="propValue">{data?.origin}</div>
+                    {/* flag maybe? */}
+                  </div>
+                )}
+                {data?.type && (
+                  <div className="propWrapper">
+                    <div className="propName">Type: </div>
+                    <div className="propValue">{data?.type}</div>
+                  </div>
+                )}
+                {data?.roastLevel && (
+                  <div className="propWrapper">
+                    <div className="propName">Roast level: </div>
+                    <div className="propValue">{data?.roastLevel}</div>
+                  </div>
+                )}
+                {data?.processing && (
+                  <div className="propWrapper">
+                    <div className="propName">Processing: </div>
+                    <div className="propValue">{data?.processing}</div>
+                  </div>
+                )}
+                {data?.qGrading && (
+                  <div className="propWrapper">
+                    <div className="propName">QGrading: </div>
+                    <div className="propValue">{data?.qGrading}</div>
+                  </div>
+                )}
+                {data?.altitude && (
+                  <div className="propWrapper">
+                    <div className="propName">Altitude:</div>
+                    <div className="propValue">{data?.altitude} m</div>
+                  </div>
+                )}
                 <Traits />
                 <div className="propWrapper">
                   <div className="propName">Flavour notes: </div>
