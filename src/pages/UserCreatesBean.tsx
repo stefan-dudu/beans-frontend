@@ -204,6 +204,8 @@ const UserCreatesBean = (props: Props) => {
       ContentType: `image/${fileExtension}`,
     };
 
+    console.log("params", params);
+
     try {
       const upload = await s3.putObject(params).promise();
       console.log("updatedFileName", updatedFileName);
