@@ -47,7 +47,8 @@ const UserCreatesBean = (props: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const S3_BUCKET = process.env.REACT_APP_BUCKET_NAME;
+  const S3_BUCKET_URL = process.env.REACT_APP_BUCKET_URL;
+  const S3_BUCKET_NAME = process.env.REACT_APP_BUCKET_NAME;
   const REGION = process.env.REACT_APP_REGION;
   const AccessKeyId = process.env.REACT_APP_AWS_ACCESS_KEY_ID;
   const SecretAccessKey = process.env.REACT_APP_AWS_SECRET_ACCESS_KEY;
@@ -177,7 +178,7 @@ const UserCreatesBean = (props: Props) => {
 
     const fileExtension = file.name.split(".").pop();
 
-    const updatedFileName = `${process.env.REACT_APP_BUCKET_URL}beans/${brand
+    const updatedFileName = `${S3_BUCKET_URL}beans/${brand
       .toLowerCase()
       .replace(/\s+/g, "-")}-${name
       .toLowerCase()
@@ -190,14 +191,14 @@ const UserCreatesBean = (props: Props) => {
       .replace(/\s+/g, "-")}.${fileExtension}`;
 
     const s3 = new S3({
-      params: { Bucket: S3_BUCKET },
+      params: { Bucket: S3_BUCKET_NAME },
       region: REGION,
       accessKeyId: AccessKeyId,
       secretAccessKey: SecretAccessKey,
     });
 
     const params: S3.PutObjectRequest = {
-      Bucket: S3_BUCKET!,
+      Bucket: S3_BUCKET_NAME!,
       Key: objectKey,
       Body: file,
       ContentType: `image/${fileExtension}`,
@@ -205,6 +206,7 @@ const UserCreatesBean = (props: Props) => {
 
     try {
       const upload = await s3.putObject(params).promise();
+      console.log("updatedFileName", updatedFileName);
       setUploading(false);
     } catch (error) {
       console.error(error);
