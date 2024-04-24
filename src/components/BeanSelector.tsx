@@ -169,8 +169,8 @@ const BeanSelector = (props: Props) => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={checkedItems.includes("arabica")}
-                  onChange={() => handleCheckboxChange("arabica")}
+                  checked={checkedItems.includes("Arabica")}
+                  onChange={() => handleCheckboxChange("Arabica")}
                   sx={{
                     color: COLORS.darkGreen,
                     "&.Mui-checked": {
@@ -184,8 +184,8 @@ const BeanSelector = (props: Props) => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={checkedItems.includes("robusta")}
-                  onChange={() => handleCheckboxChange("robusta")}
+                  checked={checkedItems.includes("Robusta")}
+                  onChange={() => handleCheckboxChange("Robusta")}
                   sx={{
                     color: COLORS.darkGreen,
                     "&.Mui-checked": {
@@ -199,8 +199,8 @@ const BeanSelector = (props: Props) => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={checkedItems.includes("blend")}
-                  onChange={() => handleCheckboxChange("blend")}
+                  checked={checkedItems.includes("Blend")}
+                  onChange={() => handleCheckboxChange("Blend")}
                   sx={{
                     color: COLORS.darkGreen,
                     "&.Mui-checked": {
