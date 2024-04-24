@@ -191,14 +191,14 @@ const UserCreatesBean = (props: Props) => {
       .replace(/\s+/g, "-")}.${fileExtension}`;
 
     const s3 = new S3({
-      params: { Bucket: S3_BUCKET_NAME },
-      region: REGION,
+      params: { Bucket: process.env.REACT_APP_BUCKET_NAME },
+      region: process.env.REACT_APP_REGION,
       accessKeyId: AccessKeyId,
       secretAccessKey: SecretAccessKey,
     });
 
     const params: S3.PutObjectRequest = {
-      Bucket: S3_BUCKET_NAME!,
+      Bucket: process.env.REACT_APP_BUCKET_NAME!,
       Key: objectKey,
       Body: file,
       ContentType: `image/${fileExtension}`,
