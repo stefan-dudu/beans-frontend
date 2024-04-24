@@ -184,12 +184,6 @@ const UserCreatesBean = (props: Props) => {
 
     const fileExtension = file.name.split(".").pop();
 
-    const updatedFileName = `${S3_BUCKET_URL}beans/${brand
-      .toLowerCase()
-      .replace(/\s+/g, "-")}-${name
-      .toLowerCase()
-      .replace(/\s+/g, "-")}.${fileExtension}`;
-
     const objectKey = `${brand.toLowerCase().replace(/\s+/g, "-")}-${name
       .toLowerCase()
       .replace(/\s+/g, "-")}.${fileExtension}`;
@@ -210,8 +204,13 @@ const UserCreatesBean = (props: Props) => {
 
     try {
       const upload = await s3.putObject(params).promise();
+      const updatedFileName = `${S3_BUCKET_URL}beans/${brand
+        .toLowerCase()
+        .replace(/\s+/g, "-")}-${name
+        .toLowerCase()
+        .replace(/\s+/g, "-")}.${fileExtension}`;
+      setPictureURL(updatedFileName); // Set pictureURL after successful upload
       setUploading(false);
-      upload && setPictureURL(updatedFileName);
     } catch (error) {
       console.error(error);
       setUploading(false);
