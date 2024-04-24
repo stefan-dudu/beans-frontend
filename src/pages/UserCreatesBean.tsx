@@ -226,6 +226,8 @@ const UserCreatesBean = (props: Props) => {
     console.log("objectKey 2", objectKey);
   };
 
+  console.log("pictureURL", pictureURL);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
