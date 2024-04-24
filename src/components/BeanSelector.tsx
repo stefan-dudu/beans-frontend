@@ -146,7 +146,9 @@ const BeanSelector = (props: Props) => {
   return (
     // Have a shodown this card for selector
     <div className="beanSelectorWrapper">
-      <h2 style={{ color: "#006241" }}>Find the perfect coffee for you</h2>
+      <h2 style={{ color: "#006241" }}>
+        Roast finder: Discover your ideal blend
+      </h2>
       <Box className="box">
         {/* Slider for selecting roast level */}
         <div className="roastLevel">
