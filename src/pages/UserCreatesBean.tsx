@@ -114,8 +114,14 @@ const UserCreatesBean = (props: Props) => {
       setSeverity("error");
       setAlertMessage("Please add data to the required fields");
     } else {
-      await uploadFile();
-      await CreateBeanCall();
+      try {
+        await uploadFile();
+        await CreateBeanCall();
+      } catch (error) {
+        // Handle any errors that occur during file upload or bean creation
+        console.error("Error during file upload or bean creation:", error);
+        // Optionally, set an error state or display an error message
+      }
     }
   };
 
@@ -178,7 +184,7 @@ const UserCreatesBean = (props: Props) => {
 
     const fileExtension = file.name.split(".").pop();
 
-    const updatedFileName = `https://baristretto-bucket.s3.eu-central-1.amazonaws.com/beans/${brand
+    const updatedFileName = `${S3_BUCKET_URL}beans/${brand
       .toLowerCase()
       .replace(/\s+/g, "-")}-${name
       .toLowerCase()
@@ -191,24 +197,21 @@ const UserCreatesBean = (props: Props) => {
       .replace(/\s+/g, "-")}.${fileExtension}`;
 
     const s3 = new S3({
-      params: { Bucket: process.env.REACT_APP_BUCKET_NAME },
-      region: process.env.REACT_APP_REGION,
+      params: { Bucket: S3_BUCKET_NAME },
+      region: REGION,
       accessKeyId: AccessKeyId,
       secretAccessKey: SecretAccessKey,
     });
 
     const params: S3.PutObjectRequest = {
-      Bucket: process.env.REACT_APP_BUCKET_NAME!,
+      Bucket: S3_BUCKET_NAME!,
       Key: objectKey,
       Body: file,
       ContentType: `image/${fileExtension}`,
     };
 
-    console.log("params", params);
-
     try {
       const upload = await s3.putObject(params).promise();
-      console.log("updatedFileName", updatedFileName);
       setUploading(false);
     } catch (error) {
       console.error(error);
