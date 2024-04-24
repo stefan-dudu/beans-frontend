@@ -1,12 +1,10 @@
 import React, { useState, SyntheticEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
-import Rating from "@mui/material/Rating";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -15,6 +13,10 @@ import Grid from "@mui/material/Grid";
 import catchBeanBag from "../assets/catchBeanBag.jpg";
 import AddPinpoint from "../components/map/AddPinpoint";
 import "./UserCreatesBean.scss";
+import S3 from "aws-sdk/clients/s3";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 type Props = {};
 
@@ -33,6 +35,7 @@ const UserCreatesBean = (props: Props) => {
   const [altitude, setAltitude] = useState(0);
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
+  const [pictureURL, setPictureURL] = useState("");
   const [coord, setCoord] = useState<Coordinates>({ lng: 0, lat: 0 });
 
   const [open, setOpen] = React.useState(false);
@@ -43,6 +46,23 @@ const UserCreatesBean = (props: Props) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const S3_BUCKET = process.env.REACT_APP_BUCKET_NAME;
+  const REGION = process.env.REACT_APP_REGION;
+  const AccessKeyId = process.env.REACT_APP_AWS_ACCESS_KEY_ID;
+  const SecretAccessKey = process.env.REACT_APP_AWS_SECRET_ACCESS_KEY;
+
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
 
   const CreateBeanCall = async () => {
     try {
@@ -61,13 +81,11 @@ const UserCreatesBean = (props: Props) => {
           qGrading,
           altitude,
           locations: { coordinates: [coord.lng, coord.lat] },
+          image: pictureURL,
         }),
       });
       const data = await response.json();
-      // enter you logic when the fetch is successful
-      // console.log("after post", data);
       if (data.status === "success") {
-        // alert("now is in review");
         setOpen(true);
         setSeverity("success");
         setAlertMessage("The new coffee bean has been sent to review");
@@ -85,18 +103,19 @@ const UserCreatesBean = (props: Props) => {
         );
       }
     } catch (error) {
-      // enter your logic for when there is an error (ex. error toast)
-
-      // setOpen(true);
-      // setSeverity("error");
-      // setAlertMessage("There was an issue adding this bean.");
-
       console.log(error);
     }
   };
 
-  const submitHandler = () => {
-    CreateBeanCall();
+  const submitHandler = async () => {
+    if (name === "" || brand === "" || origin === "") {
+      setOpen(true);
+      setSeverity("error");
+      setAlertMessage("Please add data to the required fields");
+    } else {
+      await uploadFile();
+      await CreateBeanCall();
+    }
   };
 
   const handleClose = (
@@ -109,7 +128,7 @@ const UserCreatesBean = (props: Props) => {
     setOpen(false);
   };
 
-  const currencies = [
+  const coffeeTypes = [
     {
       value: "Arabica",
       label: "Arabica",
@@ -139,7 +158,6 @@ const UserCreatesBean = (props: Props) => {
     "image/webp",
     "image/avif",
     "image/svg",
-    // Add more supported types as needed
   ];
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -150,26 +168,88 @@ const UserCreatesBean = (props: Props) => {
       alert("Only images are allowed.");
     }
   };
+  const uploadFile = async () => {
+    if (!file) return;
 
-  console.log("file", file);
+    setUploading(true);
+
+    const fileExtension = file.name.split(".").pop();
+
+    const updatedFileName = `${process.env.REACT_APP_BUCKET_URL}beans/${brand
+      .toLowerCase()
+      .replace(/\s+/g, "-")}-${name
+      .toLowerCase()
+      .replace(/\s+/g, "-")}.${fileExtension}`;
+
+    setPictureURL(updatedFileName);
+
+    const objectKey = `${brand.toLowerCase().replace(/\s+/g, "-")}-${name
+      .toLowerCase()
+      .replace(/\s+/g, "-")}.${fileExtension}`;
+
+    const s3 = new S3({
+      params: { Bucket: S3_BUCKET },
+      region: REGION,
+      accessKeyId: AccessKeyId,
+      secretAccessKey: SecretAccessKey,
+    });
+
+    const params: S3.PutObjectRequest = {
+      Bucket: S3_BUCKET!,
+      Key: objectKey,
+      Body: file,
+      ContentType: `image/${fileExtension}`,
+    };
+
+    try {
+      const upload = await s3.putObject(params).promise();
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+      alert(
+        "Error uploading file: " +
+          (error instanceof Error ? error.message : "Unknown error")
+      );
+    }
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4} className="imageBookmarkRating">
-          {/* <div className="item">
+          <div className="item">
             {
               <img
-                src={catchBeanBag}
+                src={
+                  file instanceof File
+                    ? URL.createObjectURL(file)
+                    : catchBeanBag
+                }
                 width="200"
                 height="200"
                 className="d-inline-block align-top"
-                alt="React Bootstrap logo"
+                alt="The coffee bean uploaded by the user"
                 onError={addDefaultSrc}
               />
             }
-          </div> */}
-          <input type="file" required onChange={handleFileChange} />
+          </div>
+          {/* <input type="file" required onChange={handleFileChange} /> */}
+
+          <Button
+            component="label"
+            role={undefined}
+            variant="outlined"
+            color="success"
+            tabIndex={-1}
+            startIcon={<CloudUploadIcon />}
+          >
+            Upload picture
+            <VisuallyHiddenInput
+              type="file"
+              onChange={(event) => handleFileChange(event)}
+            />
+          </Button>
           <Button
             variant="contained"
             color="success"
@@ -254,7 +334,7 @@ const UserCreatesBean = (props: Props) => {
                         setType(event.target.value);
                       }}
                     >
-                      {currencies.map((option) => (
+                      {coffeeTypes.map((option) => (
                         <option key={option.value} value={option.value}>
                           {option.label}
                         </option>
