@@ -12,6 +12,7 @@ export type CoffeeType = {
   aroma: string;
   acidity: number;
   body: number;
+  sweetness: number;
   price: number;
   ratingsAverage: number;
   ratingsQuantity: number;

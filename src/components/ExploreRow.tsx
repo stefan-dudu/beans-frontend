@@ -171,8 +171,10 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
                   <div className="propValue">Naturally washed</div>
                 </div> */}
                 <div className="producer">by: {data?.brand}</div>
-                <div className="info">{data?.type}</div>
-                <div className="info">{data?.roastLevel} roast</div>
+                {data?.type && <div className="info">{data?.type}</div>}
+                {data?.roastLevel && (
+                  <div className="info">{data?.roastLevel} roast</div>
+                )}
               </div>
               {/* <div className="flavs">
                 {data && data?.flavorNotes.map((el) => <div>{el}</div>)}

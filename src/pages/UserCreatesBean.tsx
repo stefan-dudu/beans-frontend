@@ -1,5 +1,5 @@
 import React, { useState, SyntheticEvent, ChangeEvent, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Snackbar from "@mui/material/Snackbar";
@@ -17,6 +17,12 @@ import S3 from "aws-sdk/clients/s3";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import LocalCafeIcon from "@mui/icons-material/LocalCafe";
+import Rating from "@mui/material/Rating";
+import { COLORS } from "../values/colors";
+import Autocomplete from "@mui/material/Autocomplete";
+import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
+import { RootState } from "../store/store";
 
 type Props = {};
 
@@ -33,6 +39,10 @@ const UserCreatesBean = (props: Props) => {
   const [processing, setProcessing] = useState("");
   const [qGrading, setQgrading] = useState("");
   const [altitude, setAltitude] = useState(0);
+  const [body, setBody] = useState(0);
+  const [acidity, setAcidity] = useState(0);
+  const [sweetness, setSweetness] = useState(0);
+  const [flavor, setFlavor] = useState<string[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
   const [pictureURL, setPictureURL] = useState("");
@@ -46,6 +56,10 @@ const UserCreatesBean = (props: Props) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const loadingData = useSelector(
+    (state: RootState) => state.navBar.loadingData
+  );
 
   const S3_BUCKET_URL = process.env.REACT_APP_BUCKET_URL;
   const S3_BUCKET_NAME = process.env.REACT_APP_BUCKET_NAME;
@@ -65,6 +79,24 @@ const UserCreatesBean = (props: Props) => {
     width: 1,
   });
 
+  const topFlavors = [
+    "Chocolate",
+    "Caramel",
+    "Nutty",
+    "Fruity",
+    "Earthy",
+    "Citrus",
+    "Vanilla",
+    "Spicy",
+    "Berry",
+    "Floral",
+    "Sweet",
+    "Smokey",
+    "Woody",
+    "Rich",
+    "Acidic",
+  ];
+
   const CreateBeanCall = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_URL}api/v1/beans`, {
@@ -81,6 +113,10 @@ const UserCreatesBean = (props: Props) => {
           processing,
           qGrading,
           altitude,
+          body,
+          acidity,
+          sweetness,
+          flavorNotes: flavor,
           locations: { coordinates: [coord.lng, coord.lat] },
           image: pictureURL,
         }),
@@ -91,9 +127,12 @@ const UserCreatesBean = (props: Props) => {
         setSeverity("success");
         setAlertMessage("The new coffee bean has been sent to review");
 
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
+        // setTimeout(() => {
+        //   // navigate("/");
+        //   console.log("would navigate");
+        // }, 2000);
+
+        !loadingData && navigate("/");
       }
 
       if (data.status === "error") {
@@ -182,8 +221,18 @@ const UserCreatesBean = (props: Props) => {
 
   const uploadFile = async () => {
     if (!file) return;
+    dispatch(isLoading());
+    // setUploading(true);
 
-    setUploading(true);
+    const fileExtension = file.name.split(".").pop();
+
+    const updatedFileName = `${process.env.REACT_APP_BUCKET_URL}beans/${brand
+      .toLowerCase()
+      .replace(/\s+/g, "-")}-${name
+      .toLowerCase()
+      .replace(/\s+/g, "-")}.${fileExtension}`;
+
+    setPictureURL(updatedFileName);
 
     const objectKey = `${brand.toLowerCase().replace(/\s+/g, "-")}-${name
       .toLowerCase()
@@ -206,8 +255,10 @@ const UserCreatesBean = (props: Props) => {
     try {
       const upload = await s3.putObject(params).promise();
       setUploading(false);
+      dispatch(notLoading());
     } catch (error) {
       console.error(error);
+      dispatch(notLoading());
       setUploading(false);
       alert(
         "Error uploading file: " +
@@ -219,6 +270,65 @@ const UserCreatesBean = (props: Props) => {
   useEffect(() => {
     setPictureURL(updatedFileName);
   }, [file]);
+
+  const Traits = () => {
+    const StyledRating = styled(Rating)({
+      "& .MuiRating-iconFilled": {
+        color: COLORS.darkGreen,
+      },
+    });
+    return (
+      <div className="traits">
+        <div className="propWrapper">
+          <div className="propName">Body: </div>
+          <div className="propValue">
+            <StyledRating
+              name="simple-controlled"
+              value={body}
+              icon={<LocalCafeIcon fontSize="inherit" />}
+              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+              onChange={(event, newValue) => {
+                newValue && setBody(newValue);
+              }}
+            />
+            {body}
+          </div>
+        </div>
+        <div className="propWrapper">
+          <div className="propName">Acidity: </div>
+
+          <div className="propValue">
+            <StyledRating
+              name="simple-controlled"
+              value={acidity}
+              icon={<LocalCafeIcon fontSize="inherit" />}
+              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+              onChange={(event, newValue) => {
+                newValue && setAcidity(newValue);
+              }}
+            />
+            {acidity}
+          </div>
+        </div>
+        <div className="propWrapper">
+          <div className="propName">Sweetness: </div>
+          {/* TODO: alternative or another one INTENSITY */}
+          <div className="propValue">
+            <StyledRating
+              name="simple-controlled"
+              value={sweetness}
+              icon={<LocalCafeIcon fontSize="inherit" />}
+              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+              onChange={(event, newValue) => {
+                newValue && setSweetness(newValue);
+              }}
+            />
+            {sweetness}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -250,7 +360,7 @@ const UserCreatesBean = (props: Props) => {
             tabIndex={-1}
             startIcon={<CloudUploadIcon />}
           >
-            Upload picture
+            Select picture
             <VisuallyHiddenInput
               type="file"
               onChange={(event) => handleFileChange(event)}
@@ -389,7 +499,26 @@ const UserCreatesBean = (props: Props) => {
                       }}
                     />
                   </div>
-                  {/* <Traits /> */}
+                  <Traits />
+                  <Autocomplete
+                    multiple
+                    fullWidth
+                    id="tags-standard"
+                    options={topFlavors}
+                    getOptionLabel={(option) => option}
+                    defaultValue={[topFlavors[2]]}
+                    onChange={(event, newValue) => {
+                      setFlavor(newValue);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="standard"
+                        label="Flavours"
+                        placeholder="Add flavour notes"
+                      />
+                    )}
+                  />
                   {/* <div className="subtitleTextFieldWrapper">
                     <div className="subtitle">Flavour notes: </div>
                     <TextField

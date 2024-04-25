@@ -301,12 +301,12 @@ const DetailedCoffeeBeans = (props: any) => {
             <StyledRating
               name="customized-color"
               readOnly
-              value={data?.ratingsAverage}
+              value={data?.sweetness}
               precision={0.1}
               icon={<LocalCafeIcon fontSize="inherit" />}
               emptyIcon={<LocalCafeIcon fontSize="inherit" />}
             />{" "}
-            {data?.ratingsAverage}
+            {data?.sweetness}
           </div>
         </div>
       </div>

@@ -107,6 +107,8 @@ const DynamicSearchBar: React.FC = () => {
   };
 
   const handleCreateMissingBean = () => {
+    setSearchTerm("");
+    dispatch(minimize());
     signedIn ? redirectToCreateBean() : redirectToLogin();
   };
 
