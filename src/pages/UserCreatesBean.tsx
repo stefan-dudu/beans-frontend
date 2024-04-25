@@ -23,6 +23,7 @@ import { COLORS } from "../values/colors";
 import Autocomplete from "@mui/material/Autocomplete";
 import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
 import { RootState } from "../store/store";
+import Slider from "@mui/material/Slider";
 
 type Props = {};
 
@@ -36,15 +37,15 @@ const UserCreatesBean = (props: Props) => {
   const [brand, setBrand] = useState("");
   const [origin, setOrigin] = useState("");
   const [type, setType] = useState("Arabica");
+  const [roastLevel, setRoastLevel] = useState("Medium");
   const [processing, setProcessing] = useState("");
   const [qGrading, setQgrading] = useState("");
   const [altitude, setAltitude] = useState(0);
   const [body, setBody] = useState(0);
   const [acidity, setAcidity] = useState(0);
   const [sweetness, setSweetness] = useState(0);
-  const [flavor, setFlavor] = useState<string[]>([]);
+  const [flavor, setFlavor] = useState<string[]>(["Nutty"]);
   const [file, setFile] = useState<File | null>(null);
-  const [uploading, setUploading] = useState<boolean>(false);
   const [pictureURL, setPictureURL] = useState("");
   const [coord, setCoord] = useState<Coordinates>({ lng: 0, lat: 0 });
 
@@ -97,6 +98,13 @@ const UserCreatesBean = (props: Props) => {
     "Acidic",
   ];
 
+  const marks = [
+    { value: 0, label: "Light" },
+    { value: 33, label: "Medium" },
+    { value: 66, label: "Medium-Dark" },
+    { value: 100, label: "Dark" },
+  ];
+
   const CreateBeanCall = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_URL}api/v1/beans`, {
@@ -110,6 +118,7 @@ const UserCreatesBean = (props: Props) => {
           brand,
           origin,
           type,
+          roastLevel,
           processing,
           qGrading,
           altitude,
@@ -127,12 +136,9 @@ const UserCreatesBean = (props: Props) => {
         setSeverity("success");
         setAlertMessage("The new coffee bean has been sent to review");
 
-        // setTimeout(() => {
-        //   // navigate("/");
-        //   console.log("would navigate");
-        // }, 2000);
-
-        !loadingData && navigate("/");
+        setTimeout(() => {
+          !loadingData && navigate("/");
+        }, 2000);
       }
 
       if (data.status === "error") {
@@ -144,6 +150,25 @@ const UserCreatesBean = (props: Props) => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleSliderChange = (event: Event, value: number | number[]) => {
+    switch (value) {
+      case 0:
+        setRoastLevel("Light");
+        break;
+      case 33:
+        setRoastLevel("Medium");
+        break;
+      case 66:
+        setRoastLevel("Medium-Dark");
+        break;
+      case 100:
+        setRoastLevel("Dark");
+        break;
+      default:
+        setRoastLevel("Medium");
     }
   };
 
@@ -222,7 +247,6 @@ const UserCreatesBean = (props: Props) => {
   const uploadFile = async () => {
     if (!file) return;
     dispatch(isLoading());
-    // setUploading(true);
 
     const fileExtension = file.name.split(".").pop();
 
@@ -254,12 +278,10 @@ const UserCreatesBean = (props: Props) => {
 
     try {
       const upload = await s3.putObject(params).promise();
-      setUploading(false);
       dispatch(notLoading());
     } catch (error) {
       console.error(error);
       dispatch(notLoading());
-      setUploading(false);
       alert(
         "Error uploading file: " +
           (error instanceof Error ? error.message : "Unknown error")
@@ -458,6 +480,33 @@ const UserCreatesBean = (props: Props) => {
                     </TextField>
                   </div>
                   <div className="subtitleTextFieldWrapper">
+                    <div className="subtitle">Altitude: </div>
+                    <TextField
+                      id="standard-basic"
+                      label="meters"
+                      variant="standard"
+                      // value={altitude}
+                      onChange={(
+                        event: React.ChangeEvent<HTMLInputElement>
+                      ) => {
+                        setAltitude(parseFloat(event.target.value));
+                      }}
+                    />
+                  </div>
+                  <div className="roast-slider">
+                    <div className="subtitle">Roast level: </div>
+                    <Slider
+                      className="slider"
+                      sx={{ width: "215px" }}
+                      aria-label="Roast Level"
+                      defaultValue={33}
+                      getAriaValueText={(value: number) => `${value}°C`}
+                      step={null}
+                      marks={marks}
+                      onChange={handleSliderChange}
+                    />
+                  </div>
+                  <div className="subtitleTextFieldWrapper">
                     <div className="subtitle">Processing: </div>
                     <TextField
                       id="standard-basic"
@@ -482,20 +531,6 @@ const UserCreatesBean = (props: Props) => {
                         event: React.ChangeEvent<HTMLInputElement>
                       ) => {
                         setQgrading(event.target.value);
-                      }}
-                    />
-                  </div>
-                  <div className="subtitleTextFieldWrapper">
-                    <div className="subtitle">Altitude: </div>
-                    <TextField
-                      id="standard-basic"
-                      label="meters"
-                      variant="standard"
-                      // value={altitude}
-                      onChange={(
-                        event: React.ChangeEvent<HTMLInputElement>
-                      ) => {
-                        setAltitude(parseFloat(event.target.value));
                       }}
                     />
                   </div>

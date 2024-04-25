@@ -17,6 +17,7 @@
     flex-direction: column;
     width: 100%;
     align-items: flex-start;
+    margin-left: 1rem;
 
     .titleTextFieldWrapper {
       display: flex;
@@ -66,6 +67,45 @@
           color: #1f3933;
           font-size: 1.5rem;
           font-weight: 600;
+        }
+      }
+
+      @media screen and (max-width: 576px) {
+        .roast-slider {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          align-items: baseline;
+          // background-color: pink;
+          width: 100%;
+
+          .subtitle {
+            color: #1f3933;
+            font-size: 1.5rem;
+            font-weight: 600;
+          }
+
+          .slider {
+            align-self: center;
+          }
+        }
+      }
+
+      @media screen and (min-width: 577px) {
+        .roast-slider {
+          display: flex;
+          flex-direction: row;
+          gap: 2rem;
+          align-items: baseline;
+          // background-color: lightblue;
+
+          .subtitle {
+            color: #1f3933;
+            font-size: 1.5rem;
+            font-weight: 600;
+          }
+          .slider {
+          }
         }
       }
     }
@@ -128,3 +168,12 @@
     }
   }
 }
+
+// @media screen and (max-width: 576px) {
+//   .roast-slider {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 1rem;
+//     align-items: baseline;
+//   }
+// }

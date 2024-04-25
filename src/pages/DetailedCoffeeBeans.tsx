@@ -423,20 +423,22 @@ const DetailedCoffeeBeans = (props: any) => {
                     <div className="propValue">{data?.qGrading}</div>
                   </div>
                 )}
-                {data?.altitude && (
+                {data && data?.altitude > 200 && (
                   <div className="propWrapper">
                     <div className="propName">Altitude:</div>
                     <div className="propValue">{data?.altitude} m</div>
                   </div>
                 )}
                 <Traits />
-                <div className="propWrapper">
-                  <div className="propName">Flavour notes: </div>
-                  <div className="flavorNotes">
-                    {data &&
-                      data?.flavorNotes.map((el) => <div key={el}>{el}</div>)}
+                {data && data?.flavorNotes.length > 0 && (
+                  <div className="propWrapper">
+                    <div className="propName">Flavour notes: </div>
+                    <div className="flavorNotes">
+                      {data &&
+                        data?.flavorNotes.map((el) => <div key={el}>{el}</div>)}
+                    </div>
                   </div>
-                </div>
+                )}
                 <WrittenReview
                   usersRating={value}
                   reviewText={reviewText}
