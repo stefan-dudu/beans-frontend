@@ -173,10 +173,10 @@ const UserCreatesBean = (props: Props) => {
   };
 
   const submitHandler = async () => {
-    if (name === "" || brand === "" || origin === "") {
+    if (name === "" || brand === "") {
       setOpen(true);
       setSeverity("error");
-      setAlertMessage("Please add data to the required fields");
+      setAlertMessage("Please add data to brand and name fields");
     } else {
       await uploadFile();
       await CreateBeanCall();
