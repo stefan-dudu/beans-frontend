@@ -1,58 +1,45 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
 import "./TopItems.scss";
 import Skeleton from "@mui/material/Skeleton";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import catchBeanBag from "../assets/catchBeanBag.jpg";
-import Rating from "@mui/material/Rating";
-import { styled } from "@mui/material/styles";
-import { COLORS } from ".././values/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import BeanCard from "./BeanCard";
 import { CoffeeType } from "../types/Coffee";
 
 const TopItems = (props: any) => {
   const [data, setData] = useState<CoffeeType[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
 
   const dispatch = useDispatch<AppDispatch>();
   const loadingData = useSelector(
     (state: RootState) => state.navBar.loadingData
   );
 
-  useEffect(() => {
-    const fetchDataForPosts = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_URL}api/v1/beans/top-7`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            // TODO: ESSENTIAL FOR jwt
-            credentials: "include",
-          }
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error: Status ${response.status}`);
+  const fetchDataForPosts = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}api/v1/beans/top-7`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // TODO: ESSENTIAL FOR jwt
+          credentials: "include",
         }
-        const { data } = await response.json();
-        setData(data.data);
-        setError(null);
-      } catch (err: any) {
-        setData(null);
-        setError(err);
-      } finally {
-        setLoading(false);
-        dispatch(notLoading());
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error: Status ${response.status}`);
       }
-    };
-    dispatch(isLoading());
+      const { data } = await response.json();
+      setData(data.data);
+    } catch (err: any) {
+      setData(null);
+    } finally {
+      dispatch(notLoading());
+    }
+  };
+
+  useEffect(() => {
     fetchDataForPosts();
   }, []);
 
@@ -75,16 +62,6 @@ const TopItems = (props: any) => {
 
     return <>{skeletons}</>;
   };
-
-  const StyledRating = styled(Rating)({
-    "& .MuiRating-iconFilled": {
-      // color: "#ff6d75",
-      color: COLORS.darkGreen,
-    },
-    "& .MuiRating-iconHover": {
-      color: "#ff3d47",
-    },
-  });
 
   return (
     <div className="top-items-wrapper">

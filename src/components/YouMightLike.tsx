@@ -1,11 +1,9 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
 import "./TopItems.scss";
 import Skeleton from "@mui/material/Skeleton";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import catchBeanBag from "../assets/catchBeanBag.jpg";
 import BeanCard from "./BeanCard";
 import { CoffeeType } from "../types/Coffee";
 
@@ -46,7 +44,6 @@ const YouMightLike = (props: any) => {
         dispatch(notLoading());
       }
     };
-    dispatch(isLoading());
     fetchDataForPosts();
   }, []);
 
@@ -66,7 +63,6 @@ const YouMightLike = (props: any) => {
         </div>
       );
     }
-
     return <>{skeletons}</>;
   };
 
@@ -75,7 +71,6 @@ const YouMightLike = (props: any) => {
       <h2
         style={{ padding: "1rem 0rem", marginLeft: "1rem", color: "#006241" }}
       >
-        {" "}
         You might like these
       </h2>
       <div className="topBeansContainer">

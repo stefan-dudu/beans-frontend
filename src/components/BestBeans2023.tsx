@@ -1,11 +1,10 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
 import "./TopItems.scss";
 import Skeleton from "@mui/material/Skeleton";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import catchBeanBag from "../assets/catchBeanBag.jpg";
 import BeanCard from "./BeanCard";
 import { CoffeeType } from "../types/Coffee";
 
@@ -46,7 +45,6 @@ const BestBeans2023 = (props: any) => {
         dispatch(notLoading());
       }
     };
-    dispatch(isLoading());
     fetchDataForPosts();
   }, []);
 
@@ -75,7 +73,6 @@ const BestBeans2023 = (props: any) => {
       <h2
         style={{ padding: "1rem 0rem", marginLeft: "1rem", color: "#006241" }}
       >
-        {" "}
         2023 Awards
       </h2>
       <div className="topBeansContainer">
