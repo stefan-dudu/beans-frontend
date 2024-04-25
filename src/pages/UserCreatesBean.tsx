@@ -291,7 +291,7 @@ const UserCreatesBean = (props: Props) => {
 
   useEffect(() => {
     setPictureURL(updatedFileName);
-  }, [file]);
+  }, [file, name, brand, origin]);
 
   const Traits = () => {
     const StyledRating = styled(Rating)({
@@ -401,6 +401,7 @@ const UserCreatesBean = (props: Props) => {
             <div className="titleTextFieldWrapper">
               <div className="title">Name: </div>
               <TextField
+                sx={{ width: "100%" }}
                 id="standard-basic"
                 label="coffee's name"
                 variant="standard"
@@ -414,6 +415,7 @@ const UserCreatesBean = (props: Props) => {
             <div className="titleTextFieldWrapper">
               <div className="brand">By: </div>
               <TextField
+                sx={{ width: "100%" }}
                 id="standard-basic"
                 label="name of the producer"
                 variant="standard"
@@ -427,6 +429,7 @@ const UserCreatesBean = (props: Props) => {
             <div className="titleTextFieldWrapper">
               <div className="brand">Origin: </div>
               <TextField
+                sx={{ width: "100%" }}
                 id="standard-basic"
                 label="region, country"
                 variant="standard"
@@ -439,7 +442,7 @@ const UserCreatesBean = (props: Props) => {
 
             <div style={{ display: "flex" }} className="ratingWrapper"></div>
 
-            <Accordion style={{ width: "100%" }}>
+            <Accordion style={{ width: "98%" }}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"

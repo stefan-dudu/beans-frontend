@@ -15,7 +15,7 @@
   .aboveMapCreateBean {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 98%;
     align-items: flex-start;
     margin-left: 1rem;
 
@@ -24,6 +24,9 @@
       flex-direction: row;
       gap: 1rem;
       align-items: baseline;
+      width: 90%;
+      max-width: 400px;
+      margin-bottom: 0.5rem;
       .title {
         font-size: 1.5rem;
         color: #1f3933;
