@@ -5,7 +5,7 @@ import "./CoffeeAnimation.scss"; // Import SCSS file for styling
 const CoffeeAnimation: React.FC = () => {
   const roast: string[] = ["Light", "Medium", "Dark"];
   const origins: string[] = [
-    "Brazila",
+    "Brasil",
     "Colombia",
     "Ethiopia",
     "Guatemala",

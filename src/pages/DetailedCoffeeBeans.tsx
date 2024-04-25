@@ -359,17 +359,19 @@ const DetailedCoffeeBeans = (props: any) => {
               >
                 {isFavourite ? "Favourite " : "Add to favourite"}
               </Button>
-              <RateBean
-                maxStars={5}
-                currentRating={data?.ratingsAverage}
-                usersRating={value}
-                ratingId={ratingId}
-              />{" "}
-              {value !== null && value === 0 ? (
-                <div style={{ color: "#006241" }}>Rate this coffee</div>
-              ) : (
-                <div>Rated</div>
-              )}
+              <div className="rating-and-CTA">
+                <RateBean
+                  maxStars={5}
+                  currentRating={data?.ratingsAverage}
+                  usersRating={value}
+                  ratingId={ratingId}
+                />
+                {value !== null && value === 0 ? (
+                  <div style={{ color: "#006241" }}>Rate this coffee</div>
+                ) : (
+                  <div>Rated</div>
+                )}
+              </div>
             </Grid>
             <Grid item xs={12} sm={8} className="restOfContent">
               <div className="aboveMap">
