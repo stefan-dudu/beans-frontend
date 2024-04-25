@@ -399,25 +399,11 @@ const UserCreatesBean = (props: Props) => {
         <Grid item xs={12} sm={8} className="restOfContent">
           <div className="aboveMapCreateBean">
             <div className="titleTextFieldWrapper">
-              <div className="title">Name: </div>
+              <div className="brand">Brand</div>
               <TextField
                 sx={{ width: "100%" }}
                 id="standard-basic"
-                label="coffee's name"
-                variant="standard"
-                value={name}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setName(event.target.value);
-                }}
-              />
-            </div>
-
-            <div className="titleTextFieldWrapper">
-              <div className="brand">By: </div>
-              <TextField
-                sx={{ width: "100%" }}
-                id="standard-basic"
-                label="name of the producer"
+                label="Name of the manufacturer"
                 variant="standard"
                 value={brand}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -427,11 +413,25 @@ const UserCreatesBean = (props: Props) => {
             </div>
 
             <div className="titleTextFieldWrapper">
+              <div className="brand">Variety: </div>
+              <TextField
+                sx={{ width: "100%" }}
+                id="standard-basic"
+                label="Coffee's name"
+                variant="standard"
+                value={name}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setName(event.target.value);
+                }}
+              />
+            </div>
+
+            <div className="titleTextFieldWrapper">
               <div className="brand">Origin: </div>
               <TextField
                 sx={{ width: "100%" }}
                 id="standard-basic"
-                label="region, country"
+                label="Country, Region"
                 variant="standard"
                 value={origin}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
