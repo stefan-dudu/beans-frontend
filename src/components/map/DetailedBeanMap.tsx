@@ -76,8 +76,6 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
           })
           .addControl(new mapboxgl.NavigationControl(), "top-left");
 
-      // Add zoom controls
-      map.addControl(new mapboxgl.NavigationControl(), "top-left");
       location &&
         location[0].description &&
         new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
