@@ -15,8 +15,6 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || "";
-
-    console.log("data", data);
     if (data) {
       const codes = data.map((el) =>
         wc([el.locations[0].coordinates[0], el.locations[0].coordinates[1]])
