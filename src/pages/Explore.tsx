@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ExploreRow from "../components/ExploreRow";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
@@ -8,6 +8,7 @@ import { CoffeeType } from "../types/Coffee";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import "./Explore.scss";
+import Button from "@mui/material/Button";
 
 type Props = {};
 
@@ -18,10 +19,13 @@ const Explore: React.FC<Props> = (props) => {
   const [filter, setFilter] = useState("Ratings average");
   const { state } = useLocation();
 
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const loadingData = useSelector(
     (state: RootState) => state.navBar.loadingData
   );
+
+  const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
 
   // TODO: Paginating, to decrease loading time
   const fetchAllBeans = async () => {
@@ -113,24 +117,40 @@ const Explore: React.FC<Props> = (props) => {
       <div>
         {/* TODO: have a filtering way for results */}
         {/* <h4>Filter btn</h4> */}
-        <TextField
-          id="outlined-select-currency"
-          className="sort-field"
-          select
-          label="Sort"
-          defaultValue="ratingsAverage"
-          helperText="Please select a value"
-          // value={filter}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setFilter(event.target.value);
-          }}
-        >
-          {filters.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
+        <div className="top-row">
+          <TextField
+            id="outlined-select-currency"
+            className="sort-field"
+            select
+            label="Sort"
+            defaultValue="ratingsAverage"
+            helperText="Please select a value"
+            // value={filter}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setFilter(event.target.value);
+            }}
+          >
+            {filters.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+
+          <Button
+            variant="outlined"
+            color="success"
+            onClick={() => {
+              if (signedIn) {
+                navigate(`/createbean`, { replace: true });
+              } else if (!signedIn) {
+                navigate(`/login`, { replace: true });
+              }
+            }}
+          >
+            Add coffee
+          </Button>
+        </div>
 
         {data &&
           data.map((el) => {

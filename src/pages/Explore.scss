@@ -1,4 +1,10 @@
 .explore-wrapper {
+  .top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rem 1rem;
+  }
   .sort-field {
     margin: 1rem 1rem 0rem;
   }
