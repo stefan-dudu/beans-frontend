@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@mapbox/mapbox-gl-geocoder": "^5.0.2",
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
     "@react-spring/web": "^9.7.3",
@@ -21,7 +22,7 @@
     "aws-sdk": "^2.1605.0",
     "bootstrap": "^5.3.3",
     "env-cmd": "^10.1.0",
-    "mapbox-gl": "^3.2.0",
+    "mapbox-gl": "^3.3.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
@@ -30,7 +31,7 @@
     "react-scripts": "^5.0.1",
     "sass": "^1.72.0",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "which-country": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -59,6 +60,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/mapbox__mapbox-gl-geocoder": "^5.0.0",
     "@types/mapbox-gl": "^3.1.0",
     "nodemon": "^3.1.0"
   }

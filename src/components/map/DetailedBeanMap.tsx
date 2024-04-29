@@ -48,12 +48,7 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
 
       // Add zoom controls
       map.addControl(new mapboxgl.NavigationControl(), "top-left");
-
-      // Add your custom markers and lines here
-      // Create a new marker.
       new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
-
-      // TODO: animation but at the moment not working right
 
       setTimeout(() => {
         map.flyTo({
@@ -62,15 +57,6 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
           essential: true, // this animation is considered essential with respect to prefers-reduced-motion
         });
       }, 1500);
-
-      // TODO: to add a bountry around the country to make it stand out
-
-      // new mapboxgl.Popup({ offset: 40 })
-      //   .setLngLat([lng, lat])
-      //   .setHTML(`<p style="color:black;">${description}</p>`)
-      //   .addTo(map);
-
-      // Clean up on unmount
 
       return () => map.remove();
     }

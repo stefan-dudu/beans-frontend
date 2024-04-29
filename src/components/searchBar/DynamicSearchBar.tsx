@@ -132,7 +132,7 @@ const DynamicSearchBar: React.FC = () => {
         searchResults.length === 0 ? (
         <div className="resultWrapper">
           <p className="loadingText" onClick={() => handleCreateMissingBean()}>
-            Create the missing one
+            Add new coffee!
           </p>
         </div>
       ) : (

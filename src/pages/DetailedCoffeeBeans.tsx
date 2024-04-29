@@ -340,6 +340,7 @@ const DetailedCoffeeBeans = (props: any) => {
                     className="d-inline-block align-top"
                     alt="React Bootstrap logo"
                     onError={addDefaultSrc}
+                    style={{ objectFit: "contain" }}
                   />
                 }
               </div>

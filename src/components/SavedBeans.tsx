@@ -50,11 +50,14 @@ const SavedBeans = (props: Props) => {
     !loggedIn && navigate(`/login`, { replace: true });
     loggedIn && fetchUsersFavouriteBeans();
   }, []);
-  // console.log("favouriteBeans", typeof favouriteBeans);
+  // console.log("favouriteBeans", favouriteBeans);
 
   return (
     <div>
-      Your favourite coffee:
+      {favouriteBeans
+        ? "Your favourite coffee: "
+        : "Save coffee and you will find it here for later"}
+
       {favouriteBeans &&
         favouriteBeans
           .filter((el) => el.favourite === true)

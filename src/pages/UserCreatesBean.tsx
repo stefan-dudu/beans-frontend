@@ -24,6 +24,9 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
 import { RootState } from "../store/store";
 import Slider from "@mui/material/Slider";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 type Props = {};
 
@@ -48,6 +51,8 @@ const UserCreatesBean = (props: Props) => {
   const [file, setFile] = useState<File | null>(null);
   const [pictureURL, setPictureURL] = useState("");
   const [coord, setCoord] = useState<Coordinates>({ lng: 0, lat: 0 });
+  const [checked, setChecked] = React.useState(false);
+  const [farmData, setFarmData] = useState("");
 
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = useState<
@@ -126,7 +131,10 @@ const UserCreatesBean = (props: Props) => {
           acidity,
           sweetness,
           flavorNotes: flavor,
-          locations: { coordinates: [coord.lng, coord.lat] },
+          locations: {
+            coordinates: [coord.lng, coord.lat],
+            description: farmData,
+          },
           image: pictureURL,
         }),
       });
@@ -288,6 +296,25 @@ const UserCreatesBean = (props: Props) => {
       );
     }
   };
+
+  const AddFarmData = () => {
+    return (
+      <div style={{ width: "100%" }}>
+        <FormGroup>
+          <FormControlLabel
+            control={<Checkbox />}
+            label="Add informations about the coffee origin"
+            checked={checked}
+            onChange={(event, newValue) => {
+              setChecked((prevCheck) => !prevCheck);
+            }}
+          />
+        </FormGroup>
+      </div>
+    );
+  };
+
+  console.log("farmData", farmData);
 
   useEffect(() => {
     setPictureURL(updatedFileName);
@@ -557,18 +584,25 @@ const UserCreatesBean = (props: Props) => {
                       />
                     )}
                   />
-                  {/* <div className="subtitleTextFieldWrapper">
-                    <div className="subtitle">Flavour notes: </div>
-                    <TextField
-                      id="standard-basic"
-                      label="select flavs"
-                      variant="standard"
-                    />
-                  </div> */}
                 </div>
               </AccordionDetails>
             </Accordion>
           </div>
+          <AddFarmData />
+          {checked && (
+            <TextField
+              id="outlined-multiline-static"
+              label="Coffee farm info"
+              fullWidth
+              multiline
+              rows={4}
+              placeholder="Here you can add addition information such as the coffee farm bean, farmer or any other valuable information. "
+              value={farmData}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setFarmData(event.target.value);
+              }}
+            />
+          )}
           <AddPinpoint sendDataToParent={handleDataFromChild} />
           <div className="snackbar">
             <Snackbar open={open} autoHideDuration={7000} onClose={handleClose}>

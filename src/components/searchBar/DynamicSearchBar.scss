@@ -20,8 +20,10 @@
 
   // loading text
   .loadingText {
-    color: black;
+    color: rgb(0, 98, 65);
+    font-weight: 500;
     margin: 0px 50px;
+    text-decoration: underline;
   }
 
   .SearchResultRow {

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import mapboxgl, { GeoJSONSourceRaw, MapMouseEvent } from "mapbox-gl";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 type Props = {};
 interface MovingObject {
@@ -31,53 +33,12 @@ const AddPinpoint: React.FC<AddPinpointProps> = ({ sendDataToParent }) => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || "";
 
     if (mapContainer.current) {
-      //   const map = new mapboxgl.Map({
-      //     container: mapContainer.current,
-      //     style: "mapbox://styles/stefan01-dev/cle6x947u005b01nojysmi80b",
-      //     center: [-74.0060152, 40.7127281],
-      //     zoom: 5,
-      //     maxZoom: 15,
-      //   });
-
-      //   // Add zoom controls
-      //   map.addControl(new mapboxgl.NavigationControl(), "top-left");
-
-      //   map.on("click", (event) => {
-      //     const features = map.queryRenderedFeatures(event.point, {
-      //       layers: ["chicago-parks"],
-      //     });
-
-      //     if (!features.length) {
-      //       return;
-      //     }
-
-      //     const feature = features[0];
-
-      //     const popup = new mapboxgl.Popup({ offset: [0, -15] })
-      //       .setLngLat((feature.geometry as any).coordinates) // Using type assertion
-      //       .setHTML(
-      //         `<h3>${feature.properties?.title || ""}</h3><p>${
-      //           feature.properties?.description || ""
-      //         }</p>`
-      //       )
-      //       .addTo(map);
-      //   });
-
-      //   // Add your custom markers and lines here
-
-      //   var map = new mapboxgl.Map({
-      //     container: "map",
-      //     style: "mapbox://styles/mapbox/streets-v11",
-      //     center: [-79.4512, 43.6568],
-      //     zoom: 13,
-      //   });
-
       //   add pinpoint
       const map = new mapboxgl.Map({
         container: mapContainer.current,
-        style: "mapbox://styles/stefan01-dev/cle6x947u005b01nojysmi80b",
+        style: "mapbox://styles/stefan01-dev/clvkrqjnj010h01o06dep6qix",
         center: [-50.489519, -10.677559],
-        zoom: 3,
+        zoom: 1,
         maxZoom: 15,
       });
 
@@ -90,33 +51,28 @@ const AddPinpoint: React.FC<AddPinpointProps> = ({ sendDataToParent }) => {
         sendDataToParent(coordinates);
       };
 
-      map.addControl(new mapboxgl.NavigationControl(), "top-left");
+      // map.addControl(new mapboxgl.NavigationControl(), "top-left");
       map.on("click", add_marker);
 
-      //   search
-      //   const map = new mapboxgl.Map({
-      //     container: "map",
-      //     style: "mapbox://styles/mapbox/streets-v12",
-      //     center: [-73.99209, 40.68933],
-      //     zoom: 8.8,
-      //   });
+      const geocoder = new MapboxGeocoder({
+        // Initialize the geocoder
+        accessToken: mapboxgl.accessToken, // Set the access token
+        mapboxgl: mapboxgl, // Set the mapbox-gl instance
+        marker: false, // Do not use the default marker
+      });
 
-      //   const searchJS = document.getElementById("search-js");
-      //   if (searchJS !== null) {
-      //     searchJS.onload = function () {
-      //       const searchBox = new MapboxSearchBox();
-      //       searchBox.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || "";
-      //       searchBox.options = {
-      //         types: "address,poi",
-      //         proximity: [-73.99209, 40.68933],
-      //       };
-      //       searchBox.marker = true;
-      //       searchBox.mapboxgl = mapboxgl;
-      //       map.addControl(searchBox);
-      //     };
-      //   } else {
-      //     console.error("searchJS element not found!");
-      //   }
+      // Add the geocoder to the map
+      map.addControl(geocoder);
+
+      map.on("load", () => {
+        map.addSource("single-point", {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: [],
+          },
+        });
+      });
 
       // Clean up on unmount
       return () => map.remove();
