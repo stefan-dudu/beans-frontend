@@ -1,0 +1,10 @@
+https://baristretto.com/
+https://baristretto.com/explore
+https://baristretto.com/locations
+https://baristretto.com/favourites
+https://baristretto.com/roasteries
+https://baristretto.com/createbean
+https://baristretto.com/signup
+https://baristretto.com/login
+https://baristretto.com/profile
+https://baristretto.com/coffee/:id

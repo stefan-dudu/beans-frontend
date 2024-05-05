@@ -20,6 +20,7 @@ import ReviewsComponent from "../components/ReviewsComponent";
 import { CoffeeType } from "../types/Coffee";
 import WrittenReview from "../components/WrittenReview";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Helmet } from "react-helmet-async";
 
 const DetailedCoffeeBeans = (props: any) => {
   const [data, setData] = useState<CoffeeType | null>(null);
@@ -322,8 +323,18 @@ const DetailedCoffeeBeans = (props: any) => {
     },
   });
 
+  // data && console.log(data);
+
   return (
     <div>
+      <Helmet>
+        <title>{`${data?.brand} ${data?.name}`}</title>
+        <meta
+          name="description"
+          content={`Discover more informations and reviews about this coffe. It's a ${data?.type} from ${data?.origin}, with a ${data?.roastLevel} roast level.`}
+        />
+        <link rel="canonical" href={`/coffee`} />
+      </Helmet>
       {loadingData ? (
         // {true ? (
         <SkeletonComponent />

@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 // import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import { HelmetProvider } from "react-helmet-async";
 // import { SpeedInsights } from "@vercel/speed-insights/react";
 // import { Analytics } from "@vercel/analytics/react";
 
@@ -16,11 +17,13 @@ root.render(
   <React.StrictMode>
     {/* <SpeedInsights />
     <Analytics /> */}
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </HelmetProvider>
   </React.StrictMode>
 );
 
