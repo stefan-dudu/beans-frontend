@@ -15,6 +15,11 @@ type Props = {};
 const Home = (props: Props) => {
   // console.log("process.env.", process.env.REACT_APP_NAME);
   const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
+  const loadingData = useSelector(
+    (state: RootState) => state.navBar.loadingData
+  );
+
+  console.log("loadingData", loadingData);
   return (
     <div>
       <CoffeeAnimation />

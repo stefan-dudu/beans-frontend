@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FavouriteBeanListType } from "../types/FavouriteBeans";
 import ExploreRow from "./ExploreRow";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
+import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
+import Skeleton from "@mui/material/Skeleton";
 
 type Props = {};
 
@@ -13,10 +15,15 @@ const SavedBeans = (props: Props) => {
   >(null);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
+  const loadingData = useSelector(
+    (state: RootState) => state.navBar.loadingData
+  );
 
   const fetchUsersFavouriteBeans = async () => {
     try {
+      dispatch(isLoading());
       const response = await fetch(
         `${process.env.REACT_APP_URL}api/v1/users/saved-beans`,
         {
@@ -42,7 +49,7 @@ const SavedBeans = (props: Props) => {
         navigate(`/login`, { replace: true });
       }
     } finally {
-      //   setLoading(false);
+      dispatch(notLoading());
     }
   };
 
@@ -52,11 +59,35 @@ const SavedBeans = (props: Props) => {
   }, []);
   // console.log("favouriteBeans", favouriteBeans);
 
+  const SkeletonComponent = () => {
+    const skeletons = [];
+
+    for (let i = 0; i < 10; i++) {
+      skeletons.push(
+        <div key={i} className="skeletonItem">
+          <Skeleton
+            animation="wave"
+            variant="rounded"
+            // width={200}
+            width={"100%"}
+            height={200}
+            className="skeleton-component"
+          />
+          <Skeleton animation="wave" variant="text" width={"100%"} />
+        </div>
+      );
+    }
+
+    return <>{skeletons}</>;
+  };
+
   return (
     <div>
       {favouriteBeans
         ? "Your favourite coffee: "
         : "Save coffee and you will find it here for later"}
+
+      {loadingData && <SkeletonComponent />}
 
       {favouriteBeans &&
         favouriteBeans

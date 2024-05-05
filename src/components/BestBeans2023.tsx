@@ -45,6 +45,7 @@ const BestBeans2023 = (props: any) => {
         dispatch(notLoading());
       }
     };
+    dispatch(isLoading());
     fetchDataForPosts();
   }, []);
 

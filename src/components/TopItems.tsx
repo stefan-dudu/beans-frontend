@@ -40,6 +40,7 @@ const TopItems = (props: any) => {
   };
 
   useEffect(() => {
+    dispatch(isLoading());
     fetchDataForPosts();
   }, []);
 
@@ -54,6 +55,7 @@ const TopItems = (props: any) => {
             variant="rounded"
             width={200}
             height={200}
+            className="skeleton-component"
           />
           <Skeleton animation="wave" variant="text" width={200} />
         </div>

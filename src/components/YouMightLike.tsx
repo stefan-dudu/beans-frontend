@@ -44,6 +44,7 @@ const YouMightLike = (props: any) => {
         dispatch(notLoading());
       }
     };
+    dispatch(isLoading());
     fetchDataForPosts();
   }, []);
 
@@ -58,6 +59,7 @@ const YouMightLike = (props: any) => {
             variant="rounded"
             width={200}
             height={200}
+            className="skeleton-component"
           />
           <Skeleton animation="wave" variant="text" width={200} />
         </div>

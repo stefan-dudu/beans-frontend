@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import "./Explore.scss";
 import Button from "@mui/material/Button";
+import Skeleton from "@mui/material/Skeleton";
 
 type Props = {};
 
@@ -112,6 +113,28 @@ const Explore: React.FC<Props> = (props) => {
     },
   ];
 
+  const SkeletonComponent = () => {
+    const skeletons = [];
+
+    for (let i = 0; i < 10; i++) {
+      skeletons.push(
+        <div key={i} className="skeletonItem">
+          <Skeleton
+            animation="wave"
+            variant="rounded"
+            // width={200}
+            width={"100%"}
+            height={200}
+            className="skeleton-component"
+          />
+          <Skeleton animation="wave" variant="text" width={"100%"} />
+        </div>
+      );
+    }
+
+    return <>{skeletons}</>;
+  };
+
   return (
     <div className="explore-wrapper">
       <div>
@@ -151,6 +174,7 @@ const Explore: React.FC<Props> = (props) => {
             Add coffee
           </Button>
         </div>
+        {loadingData && <SkeletonComponent />}
 
         {data &&
           data.map((el) => {
