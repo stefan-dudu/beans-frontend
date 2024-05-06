@@ -5,6 +5,7 @@ import { notLoading, isLoading } from "../store/navBar/NavBarSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import "./Locations.scss";
+import Skeleton from "@mui/material/Skeleton";
 
 type Props = {};
 
@@ -48,12 +49,34 @@ const Locations = (props: Props) => {
     fetchDataForPosts();
   }, []);
 
+  const SkeletonComponent = () => {
+    const skeletons = [];
+
+    for (let i = 0; i < 1; i++) {
+      skeletons.push(
+        <div key={i} className="skeletonItem">
+          <Skeleton
+            animation="wave"
+            variant="rounded"
+            // width={200}
+            width={"100%"}
+            height={500}
+            className="skeleton-component"
+          />
+        </div>
+      );
+    }
+
+    return <>{skeletons}</>;
+  };
+
   return (
     <div className="locationsWrapper">
       <div className="location-title">
         Coffee farms locations and informations, so you know where you coffee
         beans are comming from
       </div>
+      {loadingData && <SkeletonComponent />}
       {data && <LocationsMap data={data} />}
     </div>
   );
