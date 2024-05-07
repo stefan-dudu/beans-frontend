@@ -41,7 +41,9 @@ const ReviewCard = ({ data }: { data: ReviewType }) => {
               width="40"
               height="40"
               className="d-inline-block align-top"
-              alt="React Bootstrap logo"
+              alt="Uploaded img by the user of the coffee that he/she is adding"
+              loading="lazy"
+              title="Image uploaded by user"
             />
             <div className="name">{data?.user?.name}</div>
           </div>

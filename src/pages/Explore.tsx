@@ -10,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import "./Explore.scss";
 import Button from "@mui/material/Button";
 import Skeleton from "@mui/material/Skeleton";
+import { Helmet } from "react-helmet-async";
 
 type Props = {};
 
@@ -137,6 +138,14 @@ const Explore: React.FC<Props> = (props) => {
 
   return (
     <div className="explore-wrapper">
+      <Helmet>
+        <title>Baristretto: Explore a wide selection of coffee beans.</title>
+        <meta
+          name="description"
+          content="Browse our curated selection of coffee beans from around the globe. Sort by region, farm, or flavor profile to find your perfect brew. Join our community and discover the world of exceptional coffee."
+        />
+        <link rel="canonical" href={`/explore`} />
+      </Helmet>
       <div>
         {/* TODO: have a filtering way for results */}
         {/* <h4>Filter btn</h4> */}

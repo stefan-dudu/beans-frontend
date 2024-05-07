@@ -94,8 +94,10 @@ const DynamicSearchBar: React.FC = () => {
             // width="10rem"
             // height="10rem"
             // className="d-inline-block align-top"
-            alt="React Bootstrap logo"
+            alt="Pic of the coffee bean that is the result of search bar"
             onError={addDefaultSrc}
+            loading="lazy"
+            title="Image of the coffee bag"
           />
           <div className="rightSide">
             <p className="title">{item.name}</p>

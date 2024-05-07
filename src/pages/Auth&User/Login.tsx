@@ -76,7 +76,9 @@ const Login = () => {
           width="50"
           height="50"
           className="d-inline-block align-top"
-          alt="React Bootstrap logo"
+          alt="Our website logo"
+          loading="lazy"
+          title="Coffee reviews logo"
         />
         <TextField
           sx={{ m: 1, width: "25ch" }}

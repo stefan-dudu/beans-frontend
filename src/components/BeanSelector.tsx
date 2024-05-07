@@ -152,7 +152,7 @@ const BeanSelector = (props: Props) => {
       <Box className="box">
         {/* Slider for selecting roast level */}
         <div className="roastLevel">
-          <p>Roast level</p>
+          <h2>Roast level</h2>
           <Slider
             aria-label="Roast Level"
             defaultValue={33}
@@ -164,7 +164,7 @@ const BeanSelector = (props: Props) => {
         </div>
         <div className="type">
           {/* Checkboxes for selecting brands */}
-          <p>Type</p>
+          <h2>Type</h2>
           <FormGroup className="typeOptions">
             <FormControlLabel
               control={

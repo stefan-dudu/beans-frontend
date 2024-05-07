@@ -8,3 +8,4 @@ https://baristretto.com/signup
 https://baristretto.com/login
 https://baristretto.com/profile
 https://baristretto.com/coffee/:id
+https://baristretto.com/coffee/662a489288a523fae50d71df

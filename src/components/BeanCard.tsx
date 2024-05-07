@@ -35,12 +35,15 @@ const BeanCard = ({ data }: { data: Coffee }) => {
       <img
         className="image"
         src={data?.image || catchBeanBag}
-        alt="React Bootstrap logo"
+        srcSet={`${data?.image} 1x, ${data?.image} 2x`}
+        alt={`Coffee bean pic, it this case is  ${data?.brand} ${data?.name}`}
         onError={addDefaultSrc}
+        loading="lazy"
+        title={`${data?.brand} ${data?.name}`}
       />
       <div className="underPic">
-        <div className="title">{data?.name}</div>
-        <div style={{ color: "lightgrey" }}>{data?.brand}</div>
+        <h2 className="title">{data?.name}</h2>
+        <h3 className="brand">{data?.brand}</h3>
         <div className="ratingsAndNo">
           <StyledRating
             name="customized-color"
@@ -50,9 +53,9 @@ const BeanCard = ({ data }: { data: Coffee }) => {
             icon={<LocalCafeIcon fontSize="inherit" />}
             emptyIcon={<LocalCafeIcon fontSize="inherit" />}
           />
-          <div className="reviewsNo">{data?.ratingsQuantity}</div>
+          <h3 className="reviewsNo">{data?.ratingsQuantity}</h3>
         </div>
-        <div className="origin">{data?.origin}</div>
+        <h3 className="origin">{data?.origin}</h3>
       </div>
     </Link>
   );

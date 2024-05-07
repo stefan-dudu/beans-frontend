@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import "./Locations.scss";
 import Skeleton from "@mui/material/Skeleton";
+import { Helmet } from "react-helmet-async";
 
 type Props = {};
 
@@ -72,6 +73,14 @@ const Locations = (props: Props) => {
 
   return (
     <div className="locationsWrapper">
+      <Helmet>
+        <title>Baristretto: A glance of the sources of coffee beans.</title>
+        <meta
+          name="description"
+          content="Discover from which country, region, farm, and farmer your coffee is coming from, and find out more about the source of your coffee beans."
+        />
+        <link rel="canonical" href={`/locations`} />
+      </Helmet>
       <div className="location-title">
         Coffee farms locations and informations, so you know where you coffee
         beans are comming from

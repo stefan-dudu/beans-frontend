@@ -44,20 +44,30 @@
     margin-left: 10px;
     .title {
       font-size: 1.4rem;
+      font-weight: 400;
+    }
+
+    .brand {
+      color: lightgrey;
+      font-size: 1.5rem;
+      font-weight: 400;
     }
 
     .ratingsAndNo {
       display: flex;
       flex-direction: row;
       gap: 10px;
+
       .reviewsNo {
         font-size: 1rem;
         color: darkgrey;
+        font-weight: 400;
       }
     }
 
     .origin {
-      font-size: 1rem;
+      font-size: 1.2rem;
+      font-weight: 400;
     }
   }
 }

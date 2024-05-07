@@ -45,7 +45,9 @@ function NavigationBar() {
               src={logo}
               style={{ width: "6vw", minWidth: "50px", maxWidth: "70px" }}
               className="d-inline-block align-top"
-              alt="React Bootstrap logo"
+              alt="Coffee logo"
+              loading="lazy"
+              title="Coffee reviews logo"
             />
           </Nav.Link>
           <DynamicSearchBar />
@@ -58,14 +60,14 @@ function NavigationBar() {
                 to="/locations"
                 onClick={() => dispatch(minimize())}
               >
-                Map
+                <h3>Map</h3>
               </Nav.Link>
               <Nav.Link
                 as={NavLink}
                 to="/explore"
                 onClick={() => dispatch(minimize())}
               >
-                Explore
+                <h3>Explore</h3>
               </Nav.Link>
 
               {/* <Nav.Link
@@ -81,7 +83,7 @@ function NavigationBar() {
                 to="/favourites"
                 onClick={() => dispatch(minimize())}
               >
-                Favourites
+                <h3>Favourites</h3>
               </Nav.Link>
 
               {/* <Nav.Link
@@ -101,7 +103,7 @@ function NavigationBar() {
                 onClick={() => dispatch(minimize())}
                 style={{ color: "#006241" }}
               >
-                Sign up
+                <h3>Sign up</h3>
               </Nav.Link>
             </Nav>
           ) : (
@@ -111,7 +113,7 @@ function NavigationBar() {
                 to="/profile"
                 onClick={() => dispatch(minimize())}
               >
-                User profile
+                <h3>User profile</h3>
               </Nav.Link>
             </Nav>
           )}

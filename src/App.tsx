@@ -22,7 +22,7 @@ import ReviewBeans from "./pages/ReviewBeans";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import Cafes from "./pages/Cafes";
 import RoasteriesFarms from "./pages/RoasteriesFarms";
-import SavedBeans from "./components/SavedBeans";
+import SavedBeans from "./pages/SavedBeans";
 function App() {
   const loadingData = useSelector(
     (state: RootState) => state.navBar.loadingData
@@ -37,35 +37,39 @@ function App() {
 
   return (
     <div className="App-header">
-      <NavigationBar />
-      {loadingData && <LinearProgress color="success" />}
-      <div className="content">
-        <Routes>
-          <Route path="/" element={<Outlet />}>
-            {/* TODO: to checkout what routes need to be protected */}
-            <Route element={<PrivateRoutes />}>
-              {/* Restritcted to ADMINS */}
-              <Route path="/reviewBeans" element={<ReviewBeans />} />
+      <nav>
+        <NavigationBar />
+        {loadingData && <LinearProgress color="success" />}
+      </nav>
+      <main>
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<Outlet />}>
+              {/* TODO: to checkout what routes need to be protected */}
+              <Route element={<PrivateRoutes />}>
+                {/* Restritcted to ADMINS */}
+                <Route path="/reviewBeans" element={<ReviewBeans />} />
+              </Route>
+              <Route index element={<Home />} />
+              <Route path="/features" element={<Features />} />
+              <Route path="/locations" element={<Locations />} />
+              <Route path="/favourites" element={<SavedBeans />} />
+              <Route path="/roasteries" element={<RoasteriesFarms />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/explore" element={<Explore />} />
+              <Route path="/createbean" element={<UserCreatesBean />} />
+              {/* <Route path="/reviewBeans" element={<ReviewBeans />} /> */}
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/forgotpassword" element={<ForgotPassword />} />
+              <Route path="/profile" element={<UserProfile />} />
+              <Route path="/coffee/:id" element={<DetailedCoffeeBeans />} />
+              <Route path="*" element={<CatchPage />} />
             </Route>
-            <Route index element={<Home />} />
-            <Route path="/features" element={<Features />} />
-            <Route path="/locations" element={<Locations />} />
-            <Route path="/favourites" element={<SavedBeans />} />
-            <Route path="/roasteries" element={<RoasteriesFarms />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/explore" element={<Explore />} />
-            <Route path="/createbean" element={<UserCreatesBean />} />
-            {/* <Route path="/reviewBeans" element={<ReviewBeans />} /> */}
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgotpassword" element={<ForgotPassword />} />
-            <Route path="/profile" element={<UserProfile />} />
-            <Route path="/coffee/:id" element={<DetailedCoffeeBeans />} />
-            <Route path="*" element={<CatchPage />} />
-          </Route>
-        </Routes>
-      </div>
+          </Routes>
+        </div>
+      </main>
     </div>
   );
 }

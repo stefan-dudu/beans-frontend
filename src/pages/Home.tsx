@@ -9,6 +9,7 @@ import BestBeans2023 from "../components/BestBeans2023";
 import YouMightLike from "../components/YouMightLike";
 import Discover from "../components/Discover";
 import CoffeeAnimation from "../components/CoffeeAnimation";
+import { Helmet } from "react-helmet-async";
 
 type Props = {};
 
@@ -22,26 +23,47 @@ const Home = (props: Props) => {
   console.log("loadingData", loadingData);
   return (
     <div>
+      <Helmet>
+        <title>
+          Baristretto: Reviews and informations about your current and next
+          coffee
+        </title>
+        <meta
+          name="description"
+          content="Find out more about a specific coffee, such as its origin, the region, and the farm it's from. Leave reviews and contribute to the coffee community."
+        />
+        <link rel="canonical" href={`/`} />
+      </Helmet>
       <CoffeeAnimation />
-      <TopItems />
-      <BeanSelector />
-      <YouMightLike />
-      <Discover />
-      <BestBeans2023 />
+      <section>
+        <TopItems />
+      </section>
+      <section>
+        <BeanSelector />
+      </section>
+      <section>
+        <YouMightLike />
+      </section>
+      <section>
+        <Discover />
+      </section>
+      <section>
+        <BestBeans2023 />
+      </section>
       <div className="articles">
         <h2>Future article</h2>
         <p>
           Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
           Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
         </p>
-      </div>{" "}
+      </div>
       <div className="articles">
         <h2>Future article</h2>
         <p>
           Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
           Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
         </p>
-      </div>{" "}
+      </div>
     </div>
   );
 };

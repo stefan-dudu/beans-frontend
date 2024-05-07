@@ -22,8 +22,10 @@
       align-items: center;
       flex-wrap: nowrap;
       margin-right: 13px;
-      p {
-        margin-right: 5vw;
+      h2 {
+        margin-right: written-reviews-wrappervw;
+        font-size: 1.6rem;
+        font-weight: 400;
       }
     }
 
@@ -35,8 +37,10 @@
       flex-wrap: nowrap;
       gap: 2vw;
 
-      p {
+      h2 {
         margin-right: 5vw;
+        font-size: 1.6rem;
+        font-weight: 400;
       }
 
       .typeOptions {

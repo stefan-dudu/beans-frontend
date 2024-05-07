@@ -54,7 +54,7 @@ const TopItems = (props: any) => {
             animation="wave"
             variant="rounded"
             width={200}
-            height={200}
+            height={"93%"}
             className="skeleton-component"
           />
           <Skeleton animation="wave" variant="text" width={200} />
@@ -67,11 +67,11 @@ const TopItems = (props: any) => {
 
   return (
     <div className="top-items-wrapper">
-      <h2
+      <h1
         style={{ padding: "1rem 0rem", marginLeft: "1rem", color: "#006241" }}
       >
         Trending right now ...
-      </h2>
+      </h1>
       <div className="topBeansContainer">
         {loadingData && <SkeletonComponent />}
         {data && data?.map((el) => <BeanCard key={el.id} data={el} />)}

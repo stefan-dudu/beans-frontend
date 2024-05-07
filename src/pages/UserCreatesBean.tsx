@@ -396,6 +396,7 @@ const UserCreatesBean = (props: Props) => {
                 className="d-inline-block align-top"
                 alt="The coffee bean uploaded by the user"
                 onError={addDefaultSrc}
+                loading="lazy"
               />
             }
           </div>

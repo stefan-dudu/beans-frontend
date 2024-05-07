@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import userPic from "../../assets/user.png";
 import Button from "@mui/material/Button";
 import "./UserProfile.scss";
+import { Helmet } from "react-helmet-async";
 
 type User = {
   email: string;
@@ -83,12 +84,22 @@ const UserProfile: React.FC = () => {
 
   return (
     <div className="profile-wrapper">
+      <Helmet>
+        <title>Baristretto: Your profile</title>
+        <meta
+          name="description"
+          content="Here, you can save your favorite origin, brewing method, or current equipment, such as your coffee grinder or espresso machine."
+        />
+        <link rel="canonical" href={`/profile`} />
+      </Helmet>
       <img
         src={userPic}
         width="40"
         height="40"
         className="d-inline-block align-top"
-        alt="React Bootstrap logo"
+        alt="User profile pic"
+        loading="lazy"
+        title="user profile picture"
       />
       <div className="right-side">
         <div className="propWrapper">

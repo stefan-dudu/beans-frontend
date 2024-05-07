@@ -156,8 +156,10 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
             <img
               src={data?.image || catchBeanBag}
               className="d-inline-block align-top beanImage"
-              alt="React Bootstrap logo"
+              alt={`Coffee bean pic, it this case is  ${data?.brand} ${data?.name}`}
               onError={addDefaultSrc}
+              loading="lazy"
+              title={`${data?.brand} ${data?.name}`}
               // width={100}
               // height={100}
             />

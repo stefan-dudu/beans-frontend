@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FavouriteBeanListType } from "../types/FavouriteBeans";
-import ExploreRow from "./ExploreRow";
+import ExploreRow from "../components/ExploreRow";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
 import Skeleton from "@mui/material/Skeleton";
+import { Helmet } from "react-helmet-async";
 
 type Props = {};
 
@@ -83,6 +84,17 @@ const SavedBeans = (props: Props) => {
 
   return (
     <div>
+      <Helmet>
+        <title>
+          Baristretto: Save your favourite coffee or the one you want to try
+          next
+        </title>
+        <meta
+          name="description"
+          content="If you have a favorite coffee you want to save or a new one you're eager to try, you've come to the right place."
+        />
+        <link rel="canonical" href={`/favourites`} />
+      </Helmet>
       {favouriteBeans
         ? "Your favourite coffee: "
         : "Save coffee and you will find it here for later"}

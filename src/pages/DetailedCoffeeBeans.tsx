@@ -328,7 +328,9 @@ const DetailedCoffeeBeans = (props: any) => {
   return (
     <div>
       <Helmet>
-        <title>{`${data?.brand} ${data?.name}`}</title>
+        <title>
+          Baristretto: {`${data?.brand} ${data?.name}`} reviews and informations
+        </title>
         <meta
           name="description"
           content={`Discover more informations and reviews about this coffe. It's a ${data?.type} from ${data?.origin}, with a ${data?.roastLevel} roast level.`}
@@ -349,9 +351,11 @@ const DetailedCoffeeBeans = (props: any) => {
                     width="200"
                     height="200"
                     className="d-inline-block align-top"
-                    alt="React Bootstrap logo"
+                    alt={`Coffee bean pic, it this case is  ${data?.brand} ${data?.name}`}
                     onError={addDefaultSrc}
                     style={{ objectFit: "contain" }}
+                    loading="lazy"
+                    title={`${data?.brand} ${data?.name}`}
                   />
                 }
               </div>
