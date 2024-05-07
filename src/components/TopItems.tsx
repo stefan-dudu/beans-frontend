@@ -54,10 +54,15 @@ const TopItems = (props: any) => {
             animation="wave"
             variant="rounded"
             width={200}
-            height={"93%"}
+            height={"20rem"}
             className="skeleton-component"
           />
-          <Skeleton animation="wave" variant="text" width={200} />
+          <Skeleton
+            animation="wave"
+            variant="text"
+            width={200}
+            height={"3rem"}
+          />
         </div>
       );
     }
@@ -74,6 +79,7 @@ const TopItems = (props: any) => {
       </h1>
       <div className="topBeansContainer">
         {loadingData && <SkeletonComponent />}
+        {/* {true && <SkeletonComponent />} */}
         {data && data?.map((el) => <BeanCard key={el.id} data={el} />)}
       </div>
     </div>
