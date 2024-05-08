@@ -7,6 +7,16 @@
   flex-direction: column;
   gap: 1.3rem;
 
+  .skeleton-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 800px;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0rem 1rem;
+  }
+
   .title {
     font-size: 3.5rem; // Set font size to 4 rem for the title
     font-weight: bold; // Set font weight to bold for the title

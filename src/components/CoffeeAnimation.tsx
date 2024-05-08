@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/web";
-import "./CoffeeAnimation.scss"; // Import SCSS file for styling
+import "./CoffeeAnimation.scss";
+import Skeleton from "@mui/material/Skeleton";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const CoffeeAnimation: React.FC = () => {
   const roast: string[] = ["Light", "Medium", "Dark"];
@@ -17,6 +20,10 @@ const CoffeeAnimation: React.FC = () => {
   ];
   const [roastIndex, setRoastIndex] = useState<number>(0);
   const [originIndex, setOriginIndex] = useState<number>(0);
+
+  const loadingData = useSelector(
+    (state: RootState) => state.navBar.loadingData
+  );
 
   // Define spring animation for the scrolling text
   const roastProps = useSpring({
@@ -64,37 +71,63 @@ const CoffeeAnimation: React.FC = () => {
     }
   };
 
+  const SkeletonComponent = () => {
+    const skeletons = [];
+
+    for (let i = 0; i < 1; i++) {
+      skeletons.push(
+        <div key={i} className="skeleton-wrapper">
+          <Skeleton
+            animation="wave"
+            variant="rounded"
+            width={"90%"}
+            height={"4rem"}
+            className="skeleton-component"
+          />
+        </div>
+      );
+    }
+
+    return <>{skeletons}</>;
+  };
+
   return (
     <div className="coffee-container">
       <p className="title">Find your next coffee</p>
-      <div className="animated-row">
-        <animated.div
-          className="revolving-text"
-          style={{
-            ...roastProps,
-            backgroundColor: getBackgroundColor(roast[roastIndex]),
-            color: "#FFFFFF", // White font color
-            fontSize: "2rem",
-            fontWeight: "bold",
-            borderRadius: "15px",
-          }}
-        >
-          {roast[roastIndex]}
-        </animated.div>
+      {loadingData ? (
+        <SkeletonComponent />
+      ) : (
+        <>
+          <div className="animated-row">
+            <animated.div
+              className="revolving-text"
+              style={{
+                ...roastProps,
+                backgroundColor: getBackgroundColor(roast[roastIndex]),
+                color: "#FFFFFF", // White font color
+                fontSize: "2rem",
+                fontWeight: "bold",
+                borderRadius: "15px",
+              }}
+            >
+              {roast[roastIndex]}
+            </animated.div>
 
-        <animated.div
-          className="revolving-text"
-          style={{
-            ...originProps,
-            backgroundColor: "#FFFFFF", // White background color for origin
-            color: "#1F3933", // Black font color for origin
-            fontSize: "2rem",
-            fontWeight: "bold",
-          }}
-        >
-          {origins[originIndex]}
-        </animated.div>
-      </div>
+            <animated.div
+              className="revolving-text"
+              style={{
+                ...originProps,
+                backgroundColor: "#FFFFFF", // White background color for origin
+                color: "#1F3933", // Black font color for origin
+                fontSize: "2rem",
+                fontWeight: "bold",
+              }}
+            >
+              {origins[originIndex]}
+            </animated.div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
