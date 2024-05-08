@@ -20,7 +20,6 @@ const Home = (props: Props) => {
     (state: RootState) => state.navBar.loadingData
   );
 
-  console.log("loadingData", loadingData);
   return (
     <div>
       <Helmet>

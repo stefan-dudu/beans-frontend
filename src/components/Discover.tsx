@@ -18,7 +18,7 @@ const Discover = (props: Props) => {
           className="d-inline-block"
           alt="A vietnamese coffee farmer"
           onError={addDefaultSrc}
-          style={{ maxWidth: "30%" }}
+          style={{ width: "24vw" }}
           loading="lazy"
           title="Image of a coffee farmer"
         />

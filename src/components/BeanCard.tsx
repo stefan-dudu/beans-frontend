@@ -39,6 +39,7 @@ const BeanCard = ({ data }: { data: Coffee }) => {
         alt={`Coffee bean pic, it this case is  ${data?.brand} ${data?.name}`}
         onError={addDefaultSrc}
         loading="lazy"
+        fetchpriority="high"
         title={`${data?.brand} ${data?.name}`}
       />
       <div className="underPic">

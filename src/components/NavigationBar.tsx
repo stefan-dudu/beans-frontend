@@ -43,10 +43,11 @@ function NavigationBar() {
           >
             <img
               src={logo}
-              style={{ width: "6vw", minWidth: "50px", maxWidth: "70px" }}
+              style={{ width: "55px" }}
               className="d-inline-block align-top"
               alt="Coffee logo"
-              loading="lazy"
+              // loading="lazy"
+              fetchpriority="high"
               title="Coffee reviews logo"
             />
           </Nav.Link>

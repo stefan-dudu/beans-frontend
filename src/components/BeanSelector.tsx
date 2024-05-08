@@ -42,8 +42,8 @@ const BeanSelector = (props: Props) => {
   // Marks for the slider
   const marks = [
     { value: 0, label: "Light" },
-    { value: 33, label: "Medium" },
-    { value: 66, label: "Medium-Dark" },
+    { value: 50, label: "Medium" },
+    // { value: 66, label: "Medium-Dark" },
     { value: 100, label: "Dark" },
   ];
 
@@ -100,12 +100,12 @@ const BeanSelector = (props: Props) => {
       case 0:
         setRoastLevel("Light");
         break;
-      case 33:
+      case 50:
         setRoastLevel("Medium");
         break;
-      case 66:
-        setRoastLevel("Medium-Dark");
-        break;
+      // case 66:
+      //   setRoastLevel("Medium-Dark");
+      //   break;
       case 100:
         setRoastLevel("Dark");
         break;
@@ -155,7 +155,7 @@ const BeanSelector = (props: Props) => {
           <h2>Roast level</h2>
           <Slider
             aria-label="Roast Level"
-            defaultValue={33}
+            defaultValue={50}
             getAriaValueText={(value: number) => `${value}°C`}
             step={null}
             marks={marks}
