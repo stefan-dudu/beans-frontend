@@ -5,7 +5,7 @@ import "./DynamicSearchBar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { minimize } from "../../store/navBar/NavBarSlice";
-import catchBeanBag from "../../assets/catchBeanBag.jpg";
+import catchBeanBag from "../../assets/catchBeanBag.webp";
 import TextField from "@mui/material/TextField";
 
 import SearchIcon from "@mui/icons-material/Search";

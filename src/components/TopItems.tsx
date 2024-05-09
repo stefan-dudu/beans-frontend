@@ -47,7 +47,7 @@ const TopItems = (props: any) => {
   const SkeletonComponent = () => {
     const skeletons = [];
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 9; i++) {
       skeletons.push(
         <div key={i} className="skeletonItem">
           <Skeleton

@@ -3,7 +3,7 @@ import { ReviewType } from "../types/Review";
 import "./ReviewCard.scss";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import logo from "../assets/logo2.png";
+import logo from "../assets/logo2.webp";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import { COLORS } from "../values/colors";
 import { styled } from "@mui/material/styles";

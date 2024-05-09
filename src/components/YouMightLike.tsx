@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
 import "./TopItems.scss";
 import Skeleton from "@mui/material/Skeleton";
@@ -6,11 +6,15 @@ import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import BeanCard from "./BeanCard";
 import { CoffeeType } from "../types/Coffee";
+import useIntersectionObserver from "../utils/useIntersectionObserver";
 
 const YouMightLike = (props: any) => {
   const [data, setData] = useState<CoffeeType[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isVisible = useIntersectionObserver(containerRef);
+  const hasFetchedData = useRef<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
   const loadingData = useSelector(
@@ -44,14 +48,17 @@ const YouMightLike = (props: any) => {
         dispatch(notLoading());
       }
     };
-    dispatch(isLoading());
-    fetchDataForPosts();
-  }, []);
+    if (isVisible && !hasFetchedData.current) {
+      // dispatch(isLoading());
+      fetchDataForPosts();
+      hasFetchedData.current = true; // Set to true after the first fetch
+    }
+  }, [isVisible, dispatch]);
 
   const SkeletonComponent = () => {
     const skeletons = [];
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 2; i++) {
       skeletons.push(
         <div key={i} className="skeletonItem">
           <Skeleton
@@ -69,7 +76,7 @@ const YouMightLike = (props: any) => {
   };
 
   return (
-    <div style={{ marginBottom: "2rem", marginTop: "1rem" }}>
+    <div style={{ marginBottom: "2rem", marginTop: "1rem" }} ref={containerRef}>
       <h2
         style={{ padding: "1rem 0rem", marginLeft: "1rem", color: "#006241" }}
       >

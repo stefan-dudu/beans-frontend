@@ -1,7 +1,7 @@
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ExploreRow.scss";
-import catchBeanBag from "../assets/catchBeanBag.jpg";
+import catchBeanBag from "../assets/catchBeanBag.webp";
 import Rating from "@mui/material/Rating";
 import { styled } from "@mui/material/styles";
 import { COLORS } from ".././values/colors";

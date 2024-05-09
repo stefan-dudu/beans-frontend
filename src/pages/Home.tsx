@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import TopItems from "../components/TopItems";
 import "./Home.scss";
 import DynamicSearchBar from "../components/searchBar/DynamicSearchBar";
@@ -20,6 +20,10 @@ const Home = (props: Props) => {
     (state: RootState) => state.navBar.loadingData
   );
 
+  const Discover = lazy(() => import("../components/Discover"));
+  const BestBeans2023 = lazy(() => import("../components/BestBeans2023"));
+  const YouMightLike = lazy(() => import("../components/YouMightLike"));
+
   return (
     <div>
       <Helmet>
@@ -40,29 +44,17 @@ const Home = (props: Props) => {
       <section>
         <BeanSelector />
       </section>
-      <section>
-        <YouMightLike />
-      </section>
-      <section>
-        <Discover />
-      </section>
-      <section>
-        <BestBeans2023 />
-      </section>
-      <div className="articles">
-        <h2>Future article</h2>
-        <p>
-          Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
-          Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
-        </p>
-      </div>
-      <div className="articles">
-        <h2>Future article</h2>
-        <p>
-          Aenean tincidunt quis sem nec luctus. Donec non interdum eros.
-          Phasellus facilisis facilisis eros, eu venenatis erat eleifend eget
-        </p>
-      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <section>
+          <YouMightLike />
+        </section>
+        <section>
+          <Discover />
+        </section>
+        <section>
+          <BestBeans2023 />
+        </section>
+      </Suspense>
     </div>
   );
 };

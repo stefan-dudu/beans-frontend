@@ -10,7 +10,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Grid";
-import catchBeanBag from "../assets/catchBeanBag.jpg";
+import catchBeanBag from "../assets/catchBeanBag.webp";
 import AddPinpoint from "../components/map/AddPinpoint";
 import "./UserCreatesBean.scss";
 import S3 from "aws-sdk/clients/s3";

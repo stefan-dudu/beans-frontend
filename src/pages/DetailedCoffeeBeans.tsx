@@ -7,7 +7,7 @@ import Rating from "@mui/material/Rating";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
-import catchBeanBag from "../assets/catchBeanBag.jpg";
+import catchBeanBag from "../assets/catchBeanBag.webp";
 import { COLORS } from "../values/colors";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import "./DetailedCoffeeBeans.scss";

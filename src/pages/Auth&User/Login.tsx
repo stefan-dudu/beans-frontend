@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { login } from "../../store/auth/authSlice";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/logo2.png";
+import logo from "../../assets/logo2.webp";
 
 import "./Login.scss";
 

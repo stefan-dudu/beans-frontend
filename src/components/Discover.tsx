@@ -1,6 +1,6 @@
 import React, { SyntheticEvent } from "react";
 import farmer from "../assets/farmer.avif";
-import catchBeanBag from "../assets/catchBeanBag.jpg";
+import catchBeanBag from "../assets/catchBeanBag.webp";
 import Button from "@mui/material/Button";
 import "./Discover.scss";
 

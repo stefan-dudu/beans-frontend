@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { login } from "../../store/auth/authSlice";
 import "./SignUp.scss";
-import logo from "../../assets/logo2.png";
+import logo from "../../assets/logo2.webp";
 
 type Props = {};
 
