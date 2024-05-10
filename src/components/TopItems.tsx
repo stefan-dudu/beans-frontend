@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import BeanCard from "./BeanCard";
 import { CoffeeType } from "../types/Coffee";
+import CoffeeAnimation from "./CoffeeAnimation";
 
 const TopItems = (props: any) => {
   const [data, setData] = useState<CoffeeType[] | null>(null);
@@ -72,6 +73,7 @@ const TopItems = (props: any) => {
 
   return (
     <div className="top-items-wrapper">
+      {<CoffeeAnimation />}
       <h1
         style={{ padding: "1rem 0rem", marginLeft: "1rem", color: "#006241" }}
       >

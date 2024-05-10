@@ -66,7 +66,7 @@ const BestBeans2023 = (props: any) => {
             animation="wave"
             variant="rounded"
             width={200}
-            height={200}
+            height={"20rem"}
           />
           <Skeleton animation="wave" variant="text" width={200} />
         </div>
@@ -84,8 +84,11 @@ const BestBeans2023 = (props: any) => {
         2023 Awards
       </h2>
       <div className="topBeansContainer">
-        {loadingData && <SkeletonComponent />}
-        {data && data?.map((el) => <BeanCard key={el.id} data={el} />)}
+        {loadingData || loading ? (
+          <SkeletonComponent />
+        ) : (
+          data && data?.map((el) => <BeanCard key={el.id} data={el} />)
+        )}
       </div>
     </div>
   );

@@ -51,7 +51,7 @@ const BeanCard = ({ data }: { data: Coffee }) => {
       <img
         className="image"
         src={imageSrc || catchBeanBag}
-        srcSet={imageSrc ? `${imageSrc} 1x, ${imageSrc} 2x` : ""}
+        // srcSet={imageSrc ? `${imageSrc} 1x, ${imageSrc} 2x` : ""}
         alt={`Coffee bean pic, it this case is  ${data.brand} ${data.name}`}
         onError={addDefaultSrc}
         loading="lazy"

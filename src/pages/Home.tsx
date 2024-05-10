@@ -20,9 +20,9 @@ const Home = (props: Props) => {
     (state: RootState) => state.navBar.loadingData
   );
 
-  const Discover = lazy(() => import("../components/Discover"));
-  const BestBeans2023 = lazy(() => import("../components/BestBeans2023"));
-  const YouMightLike = lazy(() => import("../components/YouMightLike"));
+  // const Discover = lazy(() => import("../components/Discover"));
+  // const BestBeans2023 = lazy(() => import("../components/BestBeans2023"));
+  // const YouMightLike = lazy(() => import("../components/YouMightLike"));
 
   return (
     <div>
@@ -37,14 +37,13 @@ const Home = (props: Props) => {
         />
         <link rel="canonical" href={`/`} />
       </Helmet>
-      <CoffeeAnimation />
       <section>
         <TopItems />
       </section>
-      <section>
-        <BeanSelector />
-      </section>
       <Suspense fallback={<div>Loading...</div>}>
+        <section>
+          <BeanSelector />
+        </section>
         <section>
           <YouMightLike />
         </section>

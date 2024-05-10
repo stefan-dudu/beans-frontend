@@ -43,7 +43,7 @@ function NavigationBar() {
           >
             <img
               src={logo}
-              style={{ width: "55px" }}
+              style={{ width: "55px", height: "55px" }}
               className="d-inline-block align-top"
               alt="Coffee logo"
               // loading="lazy"

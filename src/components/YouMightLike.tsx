@@ -51,7 +51,7 @@ const YouMightLike = (props: any) => {
     if (isVisible && !hasFetchedData.current) {
       // dispatch(isLoading());
       fetchDataForPosts();
-      hasFetchedData.current = true; // Set to true after the first fetch
+      hasFetchedData.current = true;
     }
   }, [isVisible, dispatch]);
 
@@ -65,8 +65,7 @@ const YouMightLike = (props: any) => {
             animation="wave"
             variant="rounded"
             width={200}
-            height={200}
-            className="skeleton-component"
+            height={"20rem"}
           />
           <Skeleton animation="wave" variant="text" width={200} />
         </div>
@@ -83,8 +82,11 @@ const YouMightLike = (props: any) => {
         You might like these
       </h2>
       <div className="topBeansContainer">
-        {loadingData && <SkeletonComponent />}
-        {data && data?.map((el) => <BeanCard key={el.id} data={el} />)}
+        {loadingData || loading ? (
+          <SkeletonComponent />
+        ) : (
+          data && data.map((el) => <BeanCard key={el.id} data={el} />)
+        )}
       </div>
     </div>
   );
