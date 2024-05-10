@@ -27,13 +27,10 @@ const Home = (props: Props) => {
   return (
     <div>
       <Helmet>
-        <title>
-          Baristretto: Reviews and informations about your current and next
-          coffee
-        </title>
+        <title>Baristretto: Coffee reviews and informations</title>
         <meta
           name="description"
-          content="Find out more about a specific coffee, such as its origin, the region, and the farm it's from. Leave reviews and contribute to the coffee community."
+          content="Discover the art of coffee at Baristretto. Explore expert reviews, learn about different brews, and find top coffee spots near you on our interactive maps. Start your coffee journey today"
         />
         <link rel="canonical" href={`/`} />
       </Helmet>

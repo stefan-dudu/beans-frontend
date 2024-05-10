@@ -328,12 +328,10 @@ const DetailedCoffeeBeans = (props: any) => {
   return (
     <div>
       <Helmet>
-        <title>
-          Baristretto: {`${data?.brand} ${data?.name}`} reviews and informations
-        </title>
+        <title>{`${data?.brand} ${data?.name}`} reviews and informations</title>
         <meta
           name="description"
-          content={`Discover more informations and reviews about this coffe. It's a ${data?.type} from ${data?.origin}, with a ${data?.roastLevel} roast level.`}
+          content={`Discover more informations and reviews about this coffe. It's a ${data?.type} from ${data?.origin}, with a ${data?.roastLevel} roast level. Brew coffee your way: Espresso, French press, pour-over, cold brew - Find your perfect cup!`}
         />
         <link rel="canonical" href={`/coffee`} />
       </Helmet>
