@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AppDispatch } from "../store/store";
 import ExploreRow from "../components/ExploreRow";
 import { CoffeeType } from "../types/Coffee";
 
@@ -10,11 +8,7 @@ type Props = {};
 const ReviewBeans = (props: Props) => {
   const [data, setData] = useState<CoffeeType[] | null>(null);
 
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
-
   useEffect(() => {}, []);
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,12 +30,9 @@ const ReviewBeans = (props: Props) => {
         const { data } = await response.json();
         // console.log("in review data", data.data);
         setData(data.data);
-        setError(null);
       } catch (err: any) {
         // setData(null);
-        setError(err);
       } finally {
-        setLoading(false);
       }
     };
 

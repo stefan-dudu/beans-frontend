@@ -285,7 +285,6 @@ const UserCreatesBean = (props: Props) => {
     };
 
     try {
-      const upload = await s3.putObject(params).promise();
       dispatch(notLoading());
     } catch (error) {
       console.error(error);

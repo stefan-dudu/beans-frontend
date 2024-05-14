@@ -1,10 +1,8 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Routes, Route, Outlet, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Routes, Route, Outlet } from "react-router-dom";
 import "./App.scss";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { AppDispatch, RootState } from "./store/store";
-import { decrement, incrementByValue } from "./store/counter/counterSlice";
+import { RootState } from "./store/store";
 import UserProfile from "./pages/Auth&User/UserProfile";
 import NavigationBar from "./components/NavigationBar";
 import Home from "./pages/Home";
@@ -20,8 +18,7 @@ import ForgotPassword from "./pages/Auth&User/ForgotPassword";
 import UserCreatesBean from "./pages/UserCreatesBean";
 import ReviewBeans from "./pages/ReviewBeans";
 import PrivateRoutes from "./utils/PrivateRoutes";
-import Cafes from "./pages/Cafes";
-import RoasteriesFarms from "./pages/RoasteriesFarms";
+import CoffeeFarms from "./pages/CoffeeFarms";
 import SavedBeans from "./pages/SavedBeans";
 function App() {
   const loadingData = useSelector(
@@ -54,12 +51,11 @@ function App() {
               <Route path="/features" element={<Features />} />
               <Route path="/locations" element={<Locations />} />
               <Route path="/favourites" element={<SavedBeans />} />
-              <Route path="/roasteries" element={<RoasteriesFarms />} />
+              <Route path="/farms/:name" element={<CoffeeFarms />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/search" element={<Search />} />
               <Route path="/explore" element={<Explore />} />
               <Route path="/createbean" element={<UserCreatesBean />} />
-              {/* <Route path="/reviewBeans" element={<ReviewBeans />} /> */}
               <Route path="/signup" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />

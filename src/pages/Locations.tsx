@@ -12,8 +12,6 @@ type Props = {};
 
 const Locations = (props: Props) => {
   const [data, setData] = useState<CoffeeType[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
 
   const dispatch = useDispatch<AppDispatch>();
   const loadingData = useSelector(
@@ -37,12 +35,9 @@ const Locations = (props: Props) => {
         }
         const { data } = await response.json();
         setData(data.data);
-        setError(null);
       } catch (err: any) {
         setData(null);
-        setError(err);
       } finally {
-        setLoading(false);
         dispatch(notLoading());
       }
     };

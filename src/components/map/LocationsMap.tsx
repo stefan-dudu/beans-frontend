@@ -1,17 +1,33 @@
 // src/components/MapComponent.tsx
 import React, { useEffect, useRef, useState } from "react";
-import mapboxgl, { GeoJSONSourceRaw, MapMouseEvent } from "mapbox-gl";
+import { Link } from "react-router-dom";
+import mapboxgl from "mapbox-gl";
 import { CoffeeType } from "../../types/Coffee";
+import ReactDOMServer from "react-dom/server";
 var wc = require("which-country");
 
 type LocationsMapProps = {
   data: CoffeeType[] | null; // Define data prop with the appropriate type
 };
 
+type PopupContentProps = {
+  slug: string;
+  name: string;
+};
+
 const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
   const [countryCode, setCountryCode] = useState<string[]>([]);
 
   const mapContainer = useRef<HTMLDivElement>(null);
+  const PopupContent: React.FC<PopupContentProps> = ({ slug, name }) => {
+    return (
+      <div style={{ marginTop: "10px" }}>
+        <Link to={`/farms/${slug}`}>
+          Click here to find out more about {name}
+        </Link>
+      </div>
+    );
+  };
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || "";
@@ -66,25 +82,36 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
         data
           .filter((el) => el.locations[0].description)
           .forEach((el) => {
+            // const popupContentString = ReactDOMServer.renderToString(
+            //   <PopupContent slug={el.slug} name={el.name} />
+            // );
+
             const popup = new mapboxgl.Popup({
               offset: 30,
             })
               .setLngLat([
-                el.locations[0].coordinates[0],
-                el.locations[0].coordinates[1],
+                el?.locations[0].coordinates[0],
+                el?.locations[0].coordinates[1],
               ])
-              .setHTML(
-                `<div style=margin-top:10px>${el.name} by ${el.brand}. Location: ${el.locations[0].description}</div>`
-              )
               // .setHTML(
-              //   `<div style=margin-top:10px>${el.name} by ${el.brand}.</div>`
+              //   `<div style=margin-top:10px>${el.name} by ${el.brand}. Location: ${el.locations[0].description}</div>`
               // )
-              .addTo(map);
+              // .setHTML(
+              //   `<a href="https://www.baristretto.com/farms/${el.slug}" style=margin-top:10px>${el.name} by ${el.brand}. Location: ${el.locations[0].description}</a>`
+              // )
+
+              // TODO: URL based on env
+              .setHTML(
+                `<a href="${process.env.REACT_APP_FE_URL}farms/${el.slug}" style=margin-top:10px>
+                Click here to find out more about ${el.name}
+              </a>`
+              );
+            // .setHTML(popupContentString);
 
             new mapboxgl.Marker()
               .setLngLat([
-                el.locations[0].coordinates[0],
-                el.locations[0].coordinates[1],
+                el?.locations[0].coordinates[0],
+                el?.locations[0].coordinates[1],
               ])
               .setPopup(popup)
               .addTo(map);
@@ -94,12 +121,13 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
 
       setTimeout(() => {
         if (data && data.length > 0) {
-          const randomIndex = Math.floor(Math.random() * data.length);
-          const randomLocation = data[randomIndex].locations[0];
+          const dataWithPins = data.filter((el) => el.locations[0].description);
+          const randomIndex = Math.floor(Math.random() * dataWithPins.length);
+          const randomLocation = dataWithPins[randomIndex]?.locations[0];
           map.flyTo({
             center: [
-              randomLocation.coordinates[0],
-              randomLocation.coordinates[1],
+              randomLocation?.coordinates[0],
+              randomLocation?.coordinates[1],
             ],
             zoom: 2,
             essential: true, // this animation is considered essential with respect to prefers-reduced-motion
@@ -109,7 +137,7 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
 
       return () => map.remove();
     }
-  }, [countryCode]);
+  }, [countryCode, data]);
 
   return (
     <div
