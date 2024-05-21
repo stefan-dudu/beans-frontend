@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import DOMPurify from "dompurify";
+import he from "he"; // Import he library to decode HTML entities
 
 type Props = {};
 
 const CoffeeFarms = (props: Props) => {
-  const [text, setText] = React.useState<string | null>("");
+  const [text, setText] = useState<string | null>("");
+  const [sanitizedHtml, setSanitizedHtml] = useState<string>("");
 
   let { name } = useParams();
 
@@ -24,10 +27,10 @@ const CoffeeFarms = (props: Props) => {
         throw new Error(`HTTP error: Status ${response.status}`);
       }
       const { data } = await response.json();
-      console.log("data", data?.data[0].description);
+      // console.log("data", data?.data[0].description);
       setText(data?.data[0].description);
-      // setData(data.data);
     } catch (err: any) {
+      console.error("Error fetching farm data:", err);
     } finally {
       // setLoading(false);
       // dispatch(notLoading());
@@ -35,15 +38,26 @@ const CoffeeFarms = (props: Props) => {
   };
 
   useEffect(() => {
-    // console.log("slug", name);
     fetchFarmData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);
+
+  useEffect(() => {
+    if (text) {
+      const decodedHtml = he.decode(text);
+      const sanitizedString = DOMPurify.sanitize(decodedHtml);
+      setSanitizedHtml(sanitizedString);
+    }
+  }, [text]);
 
   return (
     <div>
       <h1>Roasteries & Farms</h1>
       <h2>For future implementation</h2>
-      <div style={{ color: "green" }}>{text}</div>
+      <div
+        style={{ color: "green" }}
+        dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+      />
     </div>
   );
 };

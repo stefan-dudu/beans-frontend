@@ -12,6 +12,11 @@
   flex-wrap: wrap;
   padding-top: 1rem !important;
 
+  .ck-editor__editable {
+    min-height: 150px;
+    color: black;
+  }
+
   .aboveMapCreateBean {
     display: flex;
     flex-direction: column;

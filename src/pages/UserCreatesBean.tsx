@@ -27,6 +27,9 @@ import Slider from "@mui/material/Slider";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import AWS from "aws-sdk";
 
 type Props = {};
 
@@ -52,7 +55,7 @@ const UserCreatesBean = (props: Props) => {
   const [pictureURL, setPictureURL] = useState("");
   const [coord, setCoord] = useState<Coordinates>({ lng: 0, lat: 0 });
   const [checked, setChecked] = React.useState(false);
-  const [farmData, setFarmData] = useState("");
+  const [farmData, setFarmData] = useState<string>("");
 
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = useState<
@@ -67,11 +70,11 @@ const UserCreatesBean = (props: Props) => {
     (state: RootState) => state.navBar.loadingData
   );
 
-  const S3_BUCKET_URL = process.env.REACT_APP_BUCKET_URL;
-  const S3_BUCKET_NAME = process.env.REACT_APP_BUCKET_NAME;
-  const REGION = process.env.REACT_APP_REGION;
-  const AccessKeyId = process.env.REACT_APP_AWS_ACCESS_KEY_ID;
-  const SecretAccessKey = process.env.REACT_APP_AWS_SECRET_ACCESS_KEY;
+  const S3_BUCKET_URL = process.env.REACT_APP_BUCKET_URL as string;
+  const S3_BUCKET_NAME = process.env.REACT_APP_BUCKET_NAME as string;
+  const REGION = process.env.REACT_APP_REGION as string;
+  const AccessKeyId = process.env.REACT_APP_AWS_ACCESS_KEY_ID as string;
+  const SecretAccessKey = process.env.REACT_APP_AWS_SECRET_ACCESS_KEY as string;
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -270,13 +273,14 @@ const UserCreatesBean = (props: Props) => {
       .toLowerCase()
       .replace(/\s+/g, "-")}.${fileExtension}`;
 
-    const s3 = new S3({
+    new S3({
       params: { Bucket: S3_BUCKET_NAME },
       region: REGION,
       accessKeyId: AccessKeyId,
       secretAccessKey: SecretAccessKey,
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const params: S3.PutObjectRequest = {
       Bucket: S3_BUCKET_NAME!,
       Key: objectKey,
@@ -296,6 +300,71 @@ const UserCreatesBean = (props: Props) => {
     }
   };
 
+  // Add image for articles
+
+  class MyUploadAdapter {
+    loader: any;
+
+    constructor(loader: any) {
+      this.loader = loader;
+    }
+
+    upload() {
+      return this.loader.file.then(
+        (file: File) =>
+          new Promise((resolve, reject) => {
+            // Initialize AWS S3 upload logic here
+            const S3_BUCKET = process.env
+              .REACT_APP_BUCKET_NAME_ARTICLES as string;
+
+            AWS.config.update({
+              accessKeyId: AccessKeyId,
+              secretAccessKey: SecretAccessKey,
+              region: REGION,
+            });
+
+            const s3 = new AWS.S3({
+              params: {
+                Bucket: S3_BUCKET,
+              },
+            });
+
+            const uploadParams = {
+              Bucket: S3_BUCKET,
+              Key: `${file.name}`,
+              Body: file,
+              ContentType: file.type,
+            };
+
+            s3.upload(
+              uploadParams,
+              (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
+                if (err) {
+                  reject(err);
+                } else {
+                  resolve({
+                    default: data.Location, // URL of the uploaded image
+                  });
+                }
+              }
+            );
+          })
+      );
+    }
+
+    abort() {
+      // Handle aborting the upload process
+    }
+  }
+
+  function MyCustomUploadAdapterPlugin(editor: any) {
+    editor.plugins.get("FileRepository").createUploadAdapter = (
+      loader: any
+    ) => {
+      return new MyUploadAdapter(loader);
+    };
+  }
+
   const AddFarmData = () => {
     return (
       <div style={{ width: "100%" }}>
@@ -313,10 +382,9 @@ const UserCreatesBean = (props: Props) => {
     );
   };
 
-  console.log("farmData", farmData);
-
   useEffect(() => {
     setPictureURL(updatedFileName);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file, name, brand, origin]);
 
   const Traits = () => {
@@ -325,6 +393,7 @@ const UserCreatesBean = (props: Props) => {
         color: COLORS.darkGreen,
       },
     });
+
     return (
       <div className="traits">
         <div className="propWrapper">
@@ -590,18 +659,21 @@ const UserCreatesBean = (props: Props) => {
           </div>
           <AddFarmData />
           {checked && (
-            <TextField
-              id="outlined-multiline-static"
-              label="Coffee farm info"
-              fullWidth
-              multiline
-              rows={4}
-              placeholder="Here you can add addition information such as the coffee farm bean, farmer or any other valuable information. "
-              value={farmData}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setFarmData(event.target.value);
-              }}
-            />
+            <div className="editorWr" style={{ width: "100%" }}>
+              <CKEditor
+                editor={ClassicEditor}
+                data={farmData}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  setFarmData(data);
+                }}
+                config={{
+                  placeholder:
+                    "Tell us more about the origin of the coffee such as the region, coffee farm, farmer, etc.",
+                  extraPlugins: [MyCustomUploadAdapterPlugin],
+                }}
+              />
+            </div>
           )}
           <AddPinpoint sendDataToParent={handleDataFromChild} />
           <div className="snackbar">
