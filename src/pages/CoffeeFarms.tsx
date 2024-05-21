@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
-import he from "he"; // Import he library to decode HTML entities
+import he from "he";
+import "./CoffeeFarms.scss";
 
 type Props = {};
 
@@ -52,11 +53,10 @@ const CoffeeFarms = (props: Props) => {
 
   return (
     <div>
-      <h1>Roasteries & Farms</h1>
-      <h2>For future implementation</h2>
       <div
-        style={{ color: "green" }}
+        style={{ color: "black" }}
         dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+        className="article-content"
       />
     </div>
   );
