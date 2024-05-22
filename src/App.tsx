@@ -20,6 +20,10 @@ import ReviewBeans from "./pages/ReviewBeans";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import CoffeeFarms from "./pages/CoffeeFarms";
 import SavedBeans from "./pages/SavedBeans";
+import Footer from "./pages/Footer";
+import Contact from "./pages/Footer/Contact";
+import AboutUs from "./pages/Footer/AboutUs";
+import NextFeatures from "./pages/Footer/NextFeatures";
 function App() {
   const loadingData = useSelector(
     (state: RootState) => state.navBar.loadingData
@@ -34,10 +38,12 @@ function App() {
 
   return (
     <div className="App-header">
-      <nav>
-        <NavigationBar />
-        {loadingData && <LinearProgress color="success" />}
-      </nav>
+      <header>
+        <nav>
+          <NavigationBar />
+          {loadingData && <LinearProgress color="success" />}
+        </nav>
+      </header>
       <main>
         <div className="content">
           <Routes>
@@ -61,11 +67,17 @@ function App() {
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/profile" element={<UserProfile />} />
               <Route path="/coffee/:id" element={<DetailedCoffeeBeans />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/about-us" element={<AboutUs />} />
+              <Route path="/next-features" element={<NextFeatures />} />
               <Route path="*" element={<CatchPage />} />
             </Route>
           </Routes>
         </div>
       </main>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }
