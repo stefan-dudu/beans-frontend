@@ -102,7 +102,7 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
 
               // TODO: URL based on env
               .setHTML(
-                `<a href="${process.env.REACT_APP_FE_URL}farms/${el.slug}" style=margin-top:10px>
+                `<a href="/farms/${el.slug}" style=margin-top:10px>
                 Click here to find out more about ${el.name}
               </a>`
               );
