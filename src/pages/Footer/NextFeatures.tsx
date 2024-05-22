@@ -14,6 +14,7 @@ const NextFeatures = (props: Props) => {
     <div style={{ padding: "2rem" }}>
       <div>List of next features: </div>
       <ul>
+        <li>User profile page improvements</li>
         <li>Improve maps page to highlight the coffee farms feature</li>
         <li>Page with coffee farms</li>
         <li>
