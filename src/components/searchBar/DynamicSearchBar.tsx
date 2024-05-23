@@ -1,6 +1,5 @@
 import React, { SyntheticEvent, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Form from "react-bootstrap/Form";
 import "./DynamicSearchBar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
@@ -26,7 +25,6 @@ const DynamicSearchBar: React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
-  const isExpanded = useSelector((state: RootState) => state.navBar.expanded);
 
   const navigate = useNavigate();
 
@@ -61,7 +59,7 @@ const DynamicSearchBar: React.FC = () => {
   };
 
   const redirectToCreateBean = () => {
-    navigate(`/createbean`, { replace: true });
+    navigate(`/createbean`);
     setSearchTerm("");
   };
 

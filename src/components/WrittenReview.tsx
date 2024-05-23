@@ -34,7 +34,7 @@ const WrittenReview = ({ usersRating, reviewText, ratingId }: Props) => {
   const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
 
   const redirectToLogin = () => {
-    navigate(`/login`, { replace: true });
+    navigate(`/login`);
   };
 
   const PostReview = async () => {

@@ -20,8 +20,8 @@ type Props = {
 };
 
 const ExploreRow: React.FC<Props> = ({ data }) => {
-  const [isFavourite, setIsFavourite] = React.useState<boolean>(false);
-  const [favouriteId, setFavouriteId] = React.useState<string | null>("");
+  const [isFavourite, setIsFavourite] = useState<boolean>(false);
+  const [favouriteId, setFavouriteId] = useState<string | null>("");
 
   const navigate = useNavigate();
   const userId = useSelector((state: RootState) => state.auth.id);
@@ -75,7 +75,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
       console.log("test err", err);
       if (err && !loggedIn) {
         // console.log("redirect to login");
-        navigate(`/login`, { replace: true });
+        navigate(`/login`);
       }
     } finally {
     }

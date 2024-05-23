@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import ExploreRow from "../components/ExploreRow";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,8 +16,6 @@ type Props = {};
 
 const Explore: React.FC<Props> = (props) => {
   const [data, setData] = useState<CoffeeType[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
   const [filter, setFilter] = useState("Ratings average");
   const { state } = useLocation();
 
@@ -48,13 +46,10 @@ const Explore: React.FC<Props> = (props) => {
       }
       const { data } = await response.json();
       setData(data.data);
-      setError(null);
     } catch (err: any) {
       setData(null);
-      setError(err);
     } finally {
       dispatch(notLoading());
-      setLoading(false);
     }
   };
 
@@ -174,7 +169,7 @@ const Explore: React.FC<Props> = (props) => {
             color="success"
             onClick={() => {
               if (signedIn) {
-                navigate(`/createbean`, { replace: true });
+                navigate(`/createbean`);
               } else if (!signedIn) {
                 navigate(`/login`, { replace: true });
               }

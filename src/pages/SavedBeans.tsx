@@ -47,7 +47,7 @@ const SavedBeans = (props: Props) => {
       //   setError(err);
       if (err && !loggedIn) {
         // console.log("redirect to login");
-        navigate(`/login`, { replace: true });
+        navigate(`/login`);
       }
     } finally {
       dispatch(notLoading());
@@ -55,7 +55,7 @@ const SavedBeans = (props: Props) => {
   };
 
   useEffect(() => {
-    !loggedIn && navigate(`/login`, { replace: true });
+    !loggedIn && navigate(`/login`);
     loggedIn && fetchUsersFavouriteBeans();
   }, []);
   // console.log("favouriteBeans", favouriteBeans);

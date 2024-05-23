@@ -29,7 +29,6 @@ const DetailedCoffeeBeans = (props: any) => {
   const [ratingId, setRatingId] = React.useState<string | null>("");
   const [isFavourite, setIsFavourite] = React.useState<boolean>(false);
   const [favouriteId, setFavouriteId] = React.useState<string | null>("");
-  const [loading, setLoading] = useState<boolean>(true);
   let { id } = useParams();
   const navigate = useNavigate();
   const userId = useSelector((state: RootState) => state.auth.id);
@@ -62,7 +61,6 @@ const DetailedCoffeeBeans = (props: any) => {
       setData(data.data);
     } catch (err: any) {
     } finally {
-      setLoading(false);
       dispatch(notLoading());
     }
   };
@@ -121,7 +119,7 @@ const DetailedCoffeeBeans = (props: any) => {
     } catch (err: any) {
       if (err && !loggedIn) {
         // console.log("redirect to login");
-        navigate(`/login`, { replace: true });
+        navigate(`/login`);
       }
     } finally {
     }
@@ -153,7 +151,7 @@ const DetailedCoffeeBeans = (props: any) => {
     } catch (err: any) {
       if (err && !loggedIn) {
         // console.log("redirect to login");
-        navigate(`/login`, { replace: true });
+        navigate(`/login`);
       }
     } finally {
     }

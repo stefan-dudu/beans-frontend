@@ -1,5 +1,5 @@
 // Login.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -14,14 +14,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
 
   const loginCall = async () => {
     try {
@@ -52,7 +44,7 @@ const Login = () => {
         );
 
         localStorage.setItem("token", data.token); // Store token in local storage
-        navigate("/");
+        navigate(-1);
       }
     } catch (error) {
       // enter your logic for when there is an error (ex. error toast)
@@ -63,6 +55,10 @@ const Login = () => {
   const SubmitHandler = () => {
     loginCall();
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="pageWrapper ">

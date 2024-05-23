@@ -31,7 +31,7 @@ const RateBean: React.FC<RatingProps> = ({ usersRating, ratingId }) => {
   let { id } = useParams();
 
   const redirectToLogin = () => {
-    navigate(`/login`, { replace: true });
+    navigate(`/login`);
   };
   const handleStarClick = (starIndex: number) => {
     signedIn ? PostRating(starIndex + 1) : redirectToLogin();
