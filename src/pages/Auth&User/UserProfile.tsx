@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/auth/authSlice";
-import { AppDispatch } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import { LogoutFn } from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
 import userPic from "../../assets/user.png";
@@ -18,8 +18,8 @@ type User = {
 
 const UserProfile: React.FC = () => {
   const [data, setData] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
+
+  const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
 
   useEffect(() => {}, []);
   const dispatch = useDispatch<AppDispatch>();
@@ -43,12 +43,13 @@ const UserProfile: React.FC = () => {
         }
         const { data } = await response.json();
         setData(data.data);
-        setError(null);
       } catch (err: any) {
+        if (err && !loggedIn) {
+          // console.log("redirect to login");
+          navigate(`/login`);
+        }
         setData(null);
-        setError(err);
       } finally {
-        setLoading(false);
       }
     };
 
@@ -73,12 +74,9 @@ const UserProfile: React.FC = () => {
       const { data } = await response.json();
       // console.log("in review data", data.data);
       // setData(data.data);
-      setError(null);
     } catch (err: any) {
       // setData(null);
-      setError(err);
     } finally {
-      setLoading(false);
     }
   };
 
