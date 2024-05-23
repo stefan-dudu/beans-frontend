@@ -10,8 +10,10 @@ const Footer = (props: Props) => {
   const LeftComponent = () => {
     return (
       <div className="first-row-component">
-        <h3>Baristretto</h3>
-        <h4>Honest coffee reviews & more...</h4>
+        <div style={{ color: "darkgreen" }}>Baristretto</div>
+        <div style={{ textAlign: "center" }}>
+          Honest coffee reviews & more...
+        </div>
       </div>
     );
   };
@@ -20,9 +22,11 @@ const Footer = (props: Props) => {
     return (
       <div className="first-row-component">
         <h3 style={{ color: "darkgreen" }}>Links</h3>
-        <Link to="/contact">Contact</Link>
-        <Link to="/about-us">Story</Link>
-        <Link to="/next-features">Next features</Link>
+        <div className="links-container">
+          <Link to="/contact">Contact</Link>
+          <Link to="/about-us">Story</Link>
+          <Link to="/next-features">Next features</Link>
+        </div>
       </div>
     );
   };
@@ -51,8 +55,8 @@ const Footer = (props: Props) => {
   const BottomLeft = () => {
     return (
       <div>
-        <h4>Copyright © 2024 Baristretto.</h4>
-        <h4>All rights reserved Baristretto.</h4>
+        <div className="bottom-left">Copyright © 2024 Baristretto.</div>
+        <div className="bottom-left">All rights reserved Baristretto.</div>
       </div>
     );
   };

@@ -24,6 +24,7 @@ import Footer from "./pages/Footer";
 import Contact from "./pages/Footer/Contact";
 import AboutUs from "./pages/Footer/AboutUs";
 import NextFeatures from "./pages/Footer/NextFeatures";
+import CatchPage from "./pages/CatchPage";
 function App() {
   const loadingData = useSelector(
     (state: RootState) => state.navBar.loadingData
@@ -31,9 +32,6 @@ function App() {
 
   const Pricing = () => {
     return <h2>Pricing</h2>;
-  };
-  const CatchPage = () => {
-    return <h2>CatchPage</h2>;
   };
 
   return (
