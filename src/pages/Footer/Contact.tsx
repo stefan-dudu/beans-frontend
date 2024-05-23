@@ -11,10 +11,9 @@ const Contact = (props: Props) => {
     <div style={{ padding: "2rem" }}>
       Hey there, <br />
       <br />
-      This project is a solo project, so I'd really appreciate your thoughts and
-      feedback on it.
-      <br /> Feel free to drop me an email with your thoughts at{" "}
-      <a href="mailto:stefan01.dev@gmail.com">stefan01.dev@gmail.com</a>.
+      This website is a solo project, so I'd greatly appreciate your thoughts
+      and feedback. <br /> Feel free to drop me an email with your suggestions
+      at <a href="mailto:stefan01.dev@gmail.com">stefan01.dev@gmail.com</a>.
       <br />
       <br />
       Cheers,

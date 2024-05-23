@@ -31,10 +31,10 @@ const Footer = (props: Props) => {
     return (
       <div className="first-row-component">
         <div className="description-text">
-          Welcome to Baristretto, your go-to destination for detailed and honest
-          coffee reviews. Discover your next favorite brew with insights from a
-          passionate solo developer. Have questions or want to chat? Feel free
-          to email me anytime
+          Welcome to Baristretto, where you can find detailed and honest coffee
+          reviews. Discover your next favorite brew with insights from a
+          passionate developer. Have questions or want to chat? Feel free to
+          email me anytime
           <a
             href="mailto:stefan01.dev@gmail.com"
             style={{ color: "darkgreen" }}

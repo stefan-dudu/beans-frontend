@@ -1,33 +1,17 @@
 // src/components/MapComponent.tsx
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
 import { CoffeeType } from "../../types/Coffee";
-import ReactDOMServer from "react-dom/server";
 var wc = require("which-country");
 
 type LocationsMapProps = {
   data: CoffeeType[] | null; // Define data prop with the appropriate type
 };
 
-type PopupContentProps = {
-  slug: string;
-  name: string;
-};
-
 const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
   const [countryCode, setCountryCode] = useState<string[]>([]);
 
   const mapContainer = useRef<HTMLDivElement>(null);
-  const PopupContent: React.FC<PopupContentProps> = ({ slug, name }) => {
-    return (
-      <div style={{ marginTop: "10px" }}>
-        <Link to={`/farms/${slug}`}>
-          Click here to find out more about {name}
-        </Link>
-      </div>
-    );
-  };
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || "";
