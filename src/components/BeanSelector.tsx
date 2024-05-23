@@ -43,7 +43,6 @@ const BeanSelector = (props: Props) => {
   const marks = [
     { value: 0, label: "Light" },
     { value: 50, label: "Medium" },
-    // { value: 66, label: "Medium-Dark" },
     { value: 100, label: "Dark" },
   ];
 
@@ -103,9 +102,6 @@ const BeanSelector = (props: Props) => {
       case 50:
         setRoastLevel("Medium");
         break;
-      // case 66:
-      //   setRoastLevel("Medium-Dark");
-      //   break;
       case 100:
         setRoastLevel("Dark");
         break;
