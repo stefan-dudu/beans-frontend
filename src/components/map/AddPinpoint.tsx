@@ -1,26 +1,7 @@
-import React, { useEffect, useRef } from "react";
-import mapboxgl, { GeoJSONSourceRaw, MapMouseEvent } from "mapbox-gl";
+import React, { useEffect, useRef, useState } from "react";
+import mapboxgl, { MapMouseEvent } from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
-
-type Props = {};
-interface MovingObject {
-  id: number;
-  name: string;
-  coordinates: number[];
-}
-
-interface Location {
-  type: string;
-  coordinates: number[];
-  description: string;
-  _id: string;
-  id: string;
-}
-
-interface DetailedBeanMapProps {
-  location: Location[] | undefined;
-}
 
 interface AddPinpointProps {
   sendDataToParent: (data: any) => void;
@@ -28,12 +9,45 @@ interface AddPinpointProps {
 
 const AddPinpoint: React.FC<AddPinpointProps> = ({ sendDataToParent }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
+  const [pins, setPins] = useState<number[][]>([]);
+  const markersRef = useRef<mapboxgl.Marker[]>([]);
+
+  const clearMarkers = () => {
+    if (markersRef.current) {
+      markersRef.current.forEach((marker) => marker.remove());
+      markersRef.current = [];
+    }
+    setPins([]);
+  };
+
+  class CustomControl implements mapboxgl.IControl {
+    private map?: mapboxgl.Map;
+    private container?: HTMLElement;
+    onAdd(map: mapboxgl.Map) {
+      this.map = map;
+      this.container = document.createElement("div");
+      this.container.className = "mapboxgl-ctrl";
+      this.container.textContent = "Clear pins";
+      this.container.style.padding = "5px";
+      this.container.style.backgroundColor = "#fff";
+      this.container.style.borderRadius = "5px";
+      this.container.style.cursor = "pointer";
+      this.container.onclick = clearMarkers;
+      return this.container;
+    }
+
+    onRemove() {
+      if (this.container?.parentNode) {
+        this.container.parentNode.removeChild(this.container);
+      }
+      this.map = undefined;
+    }
+  }
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || "";
 
     if (mapContainer.current) {
-      //   add pinpoint
       const map = new mapboxgl.Map({
         container: mapContainer.current,
         style: "mapbox://styles/stefan01-dev/clvkrqjnj010h01o06dep6qix",
@@ -42,27 +56,29 @@ const AddPinpoint: React.FC<AddPinpointProps> = ({ sendDataToParent }) => {
         maxZoom: 15,
       });
 
-      var marker = new mapboxgl.Marker();
-
-      const add_marker = (event: MapMouseEvent) => {
-        var coordinates = event.lngLat;
-        // console.log("Lng:", coordinates.lng, "Lat:", coordinates.lat);
-        marker.setLngLat(coordinates).addTo(map);
-        sendDataToParent(coordinates);
-      };
-
-      // map.addControl(new mapboxgl.NavigationControl(), "top-left");
-      map.on("click", add_marker);
-
       const geocoder = new MapboxGeocoder({
-        // Initialize the geocoder
-        accessToken: mapboxgl.accessToken, // Set the access token
-        mapboxgl: mapboxgl, // Set the mapbox-gl instance
-        marker: false, // Do not use the default marker
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        marker: false,
       });
 
-      // Add the geocoder to the map
       map.addControl(geocoder);
+      map.addControl(new CustomControl(), "top-left");
+
+      const add_marker = (event: MapMouseEvent) => {
+        const coordinates = event.lngLat;
+        const newMarker = new mapboxgl.Marker()
+          .setLngLat([coordinates.lng, coordinates.lat])
+          .addTo(map);
+
+        markersRef.current.push(newMarker);
+        setPins((prevPins) => [
+          ...prevPins,
+          [coordinates.lng, coordinates.lat],
+        ]);
+      };
+
+      map.on("click", add_marker);
 
       map.on("load", () => {
         map.addSource("single-point", {
@@ -79,6 +95,12 @@ const AddPinpoint: React.FC<AddPinpointProps> = ({ sendDataToParent }) => {
     }
   }, []);
 
+  useEffect(() => {
+    // console.log("sending data to parent");
+    // console.log("pins", pins);
+    sendDataToParent(pins);
+  }, [pins]);
+
   return (
     <div
       className="mapAddPinpoint"
@@ -88,9 +110,6 @@ const AddPinpoint: React.FC<AddPinpointProps> = ({ sendDataToParent }) => {
         ref={mapContainer}
         style={{
           position: "relative",
-          // width: "80vw",
-          // height: "50%",
-          //   minWidth: "65vw",
           width: "100%",
           height: "50vh",
         }}

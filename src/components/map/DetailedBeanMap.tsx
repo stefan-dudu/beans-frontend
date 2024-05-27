@@ -1,17 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import mapboxgl, { GeoJSONSourceRaw } from "mapbox-gl";
+import mapboxgl from "mapbox-gl";
 import "./DetailedBeanMap.scss";
 var wc = require("which-country");
 
-interface MovingObject {
-  id: number;
-  name: string;
-  coordinates: number[];
-}
-
 interface Location {
   type: string;
-  coordinates: number[];
+  coordinates: number[][] | number[];
   description: string;
   _id: string;
   id: string;
@@ -23,17 +17,36 @@ interface DetailedBeanMapProps {
 
 const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const [countryCode, setCountryCode] = useState<string>("");
+  const [countryCodes, setCountryCodes] = useState<string[]>([]);
 
-  const lng = (location && location[0]?.coordinates[0]) || -74.0060152;
-  const lat = (location && location[0]?.coordinates[1]) || 40.7127281;
-  const description = (location && location[0]?.description) || "description";
+  // console.log("1st location ", location && location[0].coordinates[0]);
+  // console.log("countryCodes", countryCodes);
 
   useEffect(() => {
-    if (location) {
-      const code = wc([location[0].coordinates[0], location[0].coordinates[1]]);
-      console.log("code", code);
-      setCountryCode(code);
+    if (location && location.length > 0) {
+      const codes: string[] = [];
+
+      location.forEach((loc) => {
+        const { coordinates } = loc;
+
+        if (Array.isArray(coordinates[0])) {
+          // coordinates is number[][]
+          (coordinates as number[][]).forEach((coord) => {
+            const code = wc([coord[0], coord[1]]);
+            if (code) {
+              codes.push(code);
+            }
+          });
+        } else if (Array.isArray(coordinates)) {
+          // coordinates is number[]
+          const code = wc([coordinates[0], coordinates[1]]);
+          if (code) {
+            codes.push(code);
+          }
+        }
+      });
+
+      setCountryCodes(codes);
     }
   }, [location]);
 
@@ -43,46 +56,59 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
       const map = new mapboxgl.Map({
         container: mapContainer.current,
         style: "mapbox://styles/stefan01-dev/cle6x947u005b01nojysmi80b",
-        center: [lng, lat],
+        center: [-74.0060152, 40.7127281], // Default center coordinates
         zoom: 1,
         maxZoom: 15,
-        // interactive: false,
-        // scrollZoom: false,
       });
 
-      const countryCodeFilter = ["in", "iso_3166_1_alpha_3", countryCode];
+      map.on("load", () => {
+        if (countryCodes.length > 0) {
+          map.addLayer({
+            id: "country-boundaries",
+            source: {
+              type: "vector",
+              url: "mapbox://mapbox.country-boundaries-v1",
+            },
+            "source-layer": "country_boundaries",
+            type: "fill",
+            paint: {
+              "fill-color": "#006241",
+              "fill-opacity": 0.2,
+            },
+          });
+          map.setFilter("country-boundaries", [
+            "in",
+            "iso_3166_1_alpha_3",
+            ...countryCodes,
+          ]);
+        }
+      });
 
-      countryCode &&
-        map
-          .on("load", function () {
-            map
-              .addLayer(
-                {
-                  id: "country-boundaries",
-                  source: {
-                    type: "vector",
-                    url: "mapbox://mapbox.country-boundaries-v1",
-                  },
-                  "source-layer": "country_boundaries",
-                  type: "fill",
-                  paint: {
-                    "fill-color": "#006241",
-                    "fill-opacity": 0.2,
-                  },
-                },
-                "country-label"
-              )
-              .setFilter("country-boundaries", countryCodeFilter);
-          })
-          .addControl(new mapboxgl.NavigationControl(), "top-left");
+      if (location && location[0].description) {
+        new mapboxgl.Marker().setLngLat([-74.0060152, 40.7127281]).addTo(map);
+      }
 
-      location &&
-        location[0].description &&
-        new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
+      let firstLocation: [number, number] = [-74.0060152, 40.7127281];
+      if (location && location[0] && location[0].coordinates) {
+        const coordinates = location[0].coordinates;
+        if (Array.isArray(coordinates[0])) {
+          // coordinates is number[][]
+          firstLocation = [
+            (coordinates as number[][])[0][0],
+            (coordinates as number[][])[0][1],
+          ];
+        } else if (Array.isArray(coordinates)) {
+          // coordinates is number[]
+          firstLocation = [
+            (coordinates as number[])[0],
+            (coordinates as number[])[1],
+          ];
+        }
+      }
 
       setTimeout(() => {
         map.flyTo({
-          center: [lng, lat],
+          center: firstLocation,
           zoom: 2,
           essential: true, // this animation is considered essential with respect to prefers-reduced-motion
         });
@@ -90,31 +116,9 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
 
       return () => map.remove();
     }
-  }, [countryCode]);
+  }, [countryCodes]);
 
-  // display: flex;
-  // position: absolute;
-  // width: 62%;
-  // height: 30%;
-  // bottom: 0px;
-  // top: 113vw;
-  // left: 20vw;
-
-  // console.log("location", location);
-
-  return location ? (
-    <div
-      ref={mapContainer}
-      // style={{
-      //   position: "absolute",
-      //   // width: "80vw",
-      //   // height: "50%",
-      //   minWidth: "50vw",
-      //   height: "30vh",
-      // }}
-      className="map"
-    />
-  ) : null;
+  return location ? <div ref={mapContainer} className="map" /> : null;
 };
 
 export default DetailedBeanMap;

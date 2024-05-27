@@ -33,10 +33,17 @@ import AWS from "aws-sdk";
 
 type Props = {};
 
-interface Coordinates {
-  lng: number;
-  lat: number;
-}
+// interface Coordinates {
+//   lng: number;
+//   lat: number;
+// }
+
+type Coordinates = [number, number][];
+
+const initialCoordinates: Coordinates = [
+  [-54.194742028056325, -4.601091829139477],
+  [-59.042290785139386, -1.5163516718773309],
+];
 
 const UserCreatesBean = (props: Props) => {
   const [name, setName] = useState("");
@@ -53,7 +60,7 @@ const UserCreatesBean = (props: Props) => {
   const [flavor, setFlavor] = useState<string[]>(["Nutty"]);
   const [file, setFile] = useState<File | null>(null);
   const [pictureURL, setPictureURL] = useState("");
-  const [coord, setCoord] = useState<Coordinates>({ lng: 0, lat: 0 });
+  const [coord, setCoord] = useState<Coordinates>(initialCoordinates);
   const [checked, setChecked] = React.useState(false);
   const [farmData, setFarmData] = useState<string>("");
 
@@ -134,12 +141,14 @@ const UserCreatesBean = (props: Props) => {
           sweetness,
           flavorNotes: flavor,
           locations: {
-            coordinates: [coord.lng, coord.lat],
+            coordinates: coord,
+            // coordinates: [[1,2], [3,4]],
             description: farmData,
           },
           image: pictureURL,
         }),
       });
+      // console.log("test data sent to BE", coord);
       const data = await response.json();
       if (data.status === "success") {
         setOpen(true);
@@ -216,7 +225,7 @@ const UserCreatesBean = (props: Props) => {
   ];
 
   function handleDataFromChild(data: any) {
-    setCoord({ lng: data.lng, lat: data.lat });
+    setCoord(data);
   }
 
   function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {

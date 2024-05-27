@@ -323,6 +323,8 @@ const DetailedCoffeeBeans = (props: any) => {
 
   // data && console.log(data);
 
+  console.log("data?.locations", data?.locations);
+
   return (
     <div>
       <Helmet>

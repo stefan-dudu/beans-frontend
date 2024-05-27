@@ -13,6 +13,8 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
 
   const mapContainer = useRef<HTMLDivElement>(null);
 
+  console.log("data", data);
+
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || "";
     if (data) {
