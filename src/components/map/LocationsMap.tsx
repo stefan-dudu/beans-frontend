@@ -1,4 +1,3 @@
-// src/components/MapComponent.tsx
 import React, { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import { CoffeeType } from "../../types/Coffee";
@@ -10,17 +9,43 @@ type LocationsMapProps = {
 
 const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
   const [countryCode, setCountryCode] = useState<string[]>([]);
-
   const mapContainer = useRef<HTMLDivElement>(null);
-
-  console.log("data", data);
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || "";
     if (data) {
-      const codes = data.map((el) =>
-        wc([el.locations[0].coordinates[0], el.locations[0].coordinates[1]])
-      );
+      const codes: string[] = [];
+
+      data.forEach((el) => {
+        el.locations.forEach((loc) => {
+          const { coordinates } = loc;
+
+          if (Array.isArray(coordinates)) {
+            if (Array.isArray(coordinates[0])) {
+              // coordinates is number[][]
+              (coordinates as unknown as number[][]).forEach((coord) => {
+                if (Array.isArray(coord) && coord.length === 2) {
+                  const code = wc([coord[0], coord[1]]);
+                  if (code) {
+                    codes.push(code);
+                  }
+                }
+              });
+            } else if (
+              coordinates.length === 2 &&
+              typeof coordinates[0] === "number" &&
+              typeof coordinates[1] === "number"
+            ) {
+              // coordinates is number[]
+              const code = wc([coordinates[0], coordinates[1]]);
+              if (code) {
+                codes.push(code);
+              }
+            }
+          }
+        });
+      });
+
       setCountryCode(codes);
     }
   }, [data]);
@@ -65,56 +90,83 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
         .addControl(new mapboxgl.NavigationControl(), "top-left");
 
       data &&
-        data
-          .filter((el) => el.locations[0].description)
-          .forEach((el) => {
-            // const popupContentString = ReactDOMServer.renderToString(
-            //   <PopupContent slug={el.slug} name={el.name} />
-            // );
+        data.forEach((el) => {
+          el.locations.forEach((loc) => {
+            if (loc.description) {
+              const coordinates = loc.coordinates;
+              let lngLat: [number, number] | null = null;
 
-            const popup = new mapboxgl.Popup({
-              offset: 30,
-            })
-              .setLngLat([
-                el?.locations[0].coordinates[0],
-                el?.locations[0].coordinates[1],
-              ])
-              // .setHTML(
-              //   `<div style=margin-top:10px>${el.name} by ${el.brand}. Location: ${el.locations[0].description}</div>`
-              // )
-              // .setHTML(
-              //   `<a href="https://www.baristretto.com/farms/${el.slug}" style=margin-top:10px>${el.name} by ${el.brand}. Location: ${el.locations[0].description}</a>`
-              // )
+              if (Array.isArray(coordinates[0])) {
+                // Nested coordinates
+                const coord = coordinates[0] as number[];
+                if (
+                  coord.length === 2 &&
+                  typeof coord[0] === "number" &&
+                  typeof coord[1] === "number"
+                ) {
+                  lngLat = [coord[0], coord[1]];
+                }
+              } else if (
+                coordinates.length === 2 &&
+                typeof coordinates[0] === "number" &&
+                typeof coordinates[1] === "number"
+              ) {
+                // Flat coordinates
+                lngLat = [coordinates[0], coordinates[1]];
+              }
 
-              // TODO: URL based on env
-              .setHTML(
-                `<a href="/farms/${el.slug}" style=margin-top:10px>
-                Click here to find out more about ${el.name}
-              </a>`
-              );
-            // .setHTML(popupContentString);
+              if (lngLat) {
+                const popup = new mapboxgl.Popup({
+                  offset: 30,
+                })
+                  .setLngLat(lngLat)
+                  .setHTML(
+                    `<a href="/farms/${el.slug}" style="margin-top:10px;">
+                    Click here to find out more about ${el.name}
+                  </a>`
+                  );
 
-            new mapboxgl.Marker()
-              .setLngLat([
-                el?.locations[0].coordinates[0],
-                el?.locations[0].coordinates[1],
-              ])
-              .setPopup(popup)
-              .addTo(map);
+                new mapboxgl.Marker()
+                  .setLngLat(lngLat)
+                  .setPopup(popup)
+                  .addTo(map);
+              }
+            }
           });
-
-      // bounds.extend(loc.coordinates);
+        });
 
       setTimeout(() => {
         if (data && data.length > 0) {
-          const dataWithPins = data.filter((el) => el.locations[0].description);
+          const dataWithPins = data.flatMap((el) =>
+            el.locations.filter((loc) => loc.description)
+          );
           const randomIndex = Math.floor(Math.random() * dataWithPins.length);
-          const randomLocation = dataWithPins[randomIndex]?.locations[0];
+          const randomLocation = dataWithPins[randomIndex];
+          const coordinates = randomLocation?.coordinates;
+          let center: [number, number] = [-74.0060152, 40.7127281]; // Default center
+
+          if (coordinates) {
+            if (Array.isArray(coordinates[0])) {
+              // Nested coordinates
+              const coord = coordinates[0] as number[];
+              if (
+                coord.length === 2 &&
+                typeof coord[0] === "number" &&
+                typeof coord[1] === "number"
+              ) {
+                center = [coord[0], coord[1]];
+              }
+            } else if (
+              coordinates.length === 2 &&
+              typeof coordinates[0] === "number" &&
+              typeof coordinates[1] === "number"
+            ) {
+              // Flat coordinates
+              center = [coordinates[0], coordinates[1]];
+            }
+          }
           map.flyTo({
-            center: [
-              randomLocation?.coordinates[0],
-              randomLocation?.coordinates[1],
-            ],
+            center: center,
             zoom: 2,
             essential: true, // this animation is considered essential with respect to prefers-reduced-motion
           });
@@ -130,9 +182,6 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
       ref={mapContainer}
       style={{
         position: "relative",
-        // width: "80vw",
-        // height: "50%",
-        //   minWidth: "65vw",
         width: "100%",
         height: "70vh",
       }}

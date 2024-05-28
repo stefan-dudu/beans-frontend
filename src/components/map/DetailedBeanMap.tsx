@@ -19,9 +19,6 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const [countryCodes, setCountryCodes] = useState<string[]>([]);
 
-  // console.log("1st location ", location && location[0].coordinates[0]);
-  // console.log("countryCodes", countryCodes);
-
   useEffect(() => {
     if (location && location.length > 0) {
       const codes: string[] = [];
