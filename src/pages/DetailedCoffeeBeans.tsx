@@ -321,9 +321,14 @@ const DetailedCoffeeBeans = (props: any) => {
     },
   });
 
-  // data && console.log(data);
+  data && console.log("data?.locations", data?.locations);
 
-  console.log("data?.locations", data?.locations);
+  // console.log(
+  //   "data?.locations",
+  //   data?.locations && data?.locations[0]?.coordinates?.length > 1
+  //     ? "Blend"
+  //     : "Single origin"
+  // );
 
   return (
     <div>
@@ -425,6 +430,18 @@ const DetailedCoffeeBeans = (props: any) => {
                     <div className="propValue">{data?.roastLevel}</div>
                   </div>
                 )}
+                {data?.locations &&
+                  data?.locations[0].coordinates.length > 0 && (
+                    <div className="propWrapper">
+                      <div className="propName">Origin: </div>
+                      <div className="propValue">
+                        {data?.locations &&
+                        data?.locations[0].coordinates.length > 1
+                          ? "Multi-origin (blend)"
+                          : "Single origin"}
+                      </div>
+                    </div>
+                  )}
                 {data?.processing && (
                   <div className="propWrapper">
                     <div className="propName">Processing: </div>

@@ -81,9 +81,9 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
         }
       });
 
-      if (location && location[0].description) {
-        new mapboxgl.Marker().setLngLat([-74.0060152, 40.7127281]).addTo(map);
-      }
+      // if (location && location[0]?.description?.length > 0) {
+      //   new mapboxgl.Marker().setLngLat([-74.0060152, 40.7127281]).addTo(map);
+      // }
 
       let firstLocation: [number, number] = [-74.0060152, 40.7127281];
       if (location && location[0] && location[0].coordinates) {
@@ -104,12 +104,15 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
       }
 
       setTimeout(() => {
-        map.flyTo({
-          center: firstLocation,
-          zoom: 2,
-          essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-        });
+        location &&
+          location[0].coordinates.length > 0 &&
+          map.flyTo({
+            center: firstLocation,
+            zoom: 2,
+            essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+          });
       }, 1500);
+      // console.log(location && location[0].coordinates.length > 0);
 
       return () => map.remove();
     }

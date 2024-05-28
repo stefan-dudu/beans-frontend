@@ -165,11 +165,13 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
               center = [coordinates[0], coordinates[1]];
             }
           }
-          map.flyTo({
-            center: center,
-            zoom: 2,
-            essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-          });
+
+          center &&
+            map.flyTo({
+              center: center,
+              zoom: 2,
+              essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+            });
         }
       }, 1500);
 
