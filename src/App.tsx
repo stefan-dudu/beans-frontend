@@ -25,6 +25,7 @@ import Contact from "./pages/Footer/Contact";
 import AboutUs from "./pages/Footer/AboutUs";
 import NextFeatures from "./pages/Footer/NextFeatures";
 import CatchPage from "./pages/CatchPage";
+import CountryPage from "./pages/CountryPage";
 function App() {
   const loadingData = useSelector(
     (state: RootState) => state.navBar.loadingData
@@ -56,6 +57,7 @@ function App() {
               <Route path="/locations" element={<Locations />} />
               <Route path="/favourites" element={<SavedBeans />} />
               <Route path="/farms/:name" element={<CoffeeFarms />} />
+              <Route path="/country/:isoCode" element={<CountryPage />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/search" element={<Search />} />
               <Route path="/explore" element={<Explore />} />

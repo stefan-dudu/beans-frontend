@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
 import { CoffeeType } from "../../types/Coffee";
 var wc = require("which-country");
@@ -10,6 +11,8 @@ type LocationsMapProps = {
 const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
   const [countryCode, setCountryCode] = useState<string[]>([]);
   const mapContainer = useRef<HTMLDivElement>(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || "";
@@ -66,28 +69,40 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
         ...countryCode.filter((code) => code !== null),
       ];
 
-      map
-        .on("load", function () {
-          map
-            .addLayer(
-              {
-                id: "country-boundaries",
-                source: {
-                  type: "vector",
-                  url: "mapbox://mapbox.country-boundaries-v1",
-                },
-                "source-layer": "country_boundaries",
-                type: "fill",
-                paint: {
-                  "fill-color": "#006241",
-                  "fill-opacity": 0.2,
-                },
+      map.on("load", function () {
+        map
+          .addLayer(
+            {
+              id: "country-boundaries",
+              source: {
+                type: "vector",
+                url: "mapbox://mapbox.country-boundaries-v1",
               },
-              "country-label"
-            )
-            .setFilter("country-boundaries", countryCodeFilter);
-        })
-        .addControl(new mapboxgl.NavigationControl(), "top-left");
+              "source-layer": "country_boundaries",
+              type: "fill",
+              paint: {
+                "fill-color": "#006241",
+                "fill-opacity": 0.2,
+              },
+            },
+            "country-label"
+          )
+          .setFilter("country-boundaries", countryCodeFilter);
+      });
+
+      // Add click event listener for country boundaries layer
+      map.on("click", "country-boundaries", (e) => {
+        // console.log("e", e?.lngLat);
+        if (e.features && e.features.length > 0) {
+          const feature = e.features[0];
+          const isoCode = feature?.properties?.iso_3166_1_alpha_3;
+          if (isoCode) {
+            // window.location.href = `/countries/${isoCode}`;
+
+            navigate(`/country/${isoCode}`, { state: { coord: e?.lngLat } });
+          }
+        }
+      });
 
       data &&
         data.forEach((el) => {

@@ -76,10 +76,10 @@ const Locations = (props: Props) => {
         />
         <link rel="canonical" href={`/locations`} />
       </Helmet>
-      <div className="location-title">
+      {/* <div className="location-title">
         Coffee farms locations and informations, so you know where you coffee
         beans are comming from
-      </div>
+      </div> */}
       {loadingData && <SkeletonComponent />}
       {data && <LocationsMap data={data} />}
     </div>
