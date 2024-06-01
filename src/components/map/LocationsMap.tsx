@@ -5,13 +5,12 @@ import { CoffeeType } from "../../types/Coffee";
 var wc = require("which-country");
 
 type LocationsMapProps = {
-  data: CoffeeType[] | null; // Define data prop with the appropriate type
+  data: CoffeeType[] | null;
 };
 
 const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
   const [countryCode, setCountryCode] = useState<string[]>([]);
   const mapContainer = useRef<HTMLDivElement>(null);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +24,6 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
 
           if (Array.isArray(coordinates)) {
             if (Array.isArray(coordinates[0])) {
-              // coordinates is number[][]
               (coordinates as unknown as number[][]).forEach((coord) => {
                 if (Array.isArray(coord) && coord.length === 2) {
                   const code = wc([coord[0], coord[1]]);
@@ -39,7 +37,6 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
               typeof coordinates[0] === "number" &&
               typeof coordinates[1] === "number"
             ) {
-              // coordinates is number[]
               const code = wc([coordinates[0], coordinates[1]]);
               if (code) {
                 codes.push(code);
@@ -90,15 +87,11 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
           .setFilter("country-boundaries", countryCodeFilter);
       });
 
-      // Add click event listener for country boundaries layer
       map.on("click", "country-boundaries", (e) => {
-        // console.log("e", e?.lngLat);
         if (e.features && e.features.length > 0) {
           const feature = e.features[0];
           const isoCode = feature?.properties?.iso_3166_1_alpha_3;
           if (isoCode) {
-            // window.location.href = `/countries/${isoCode}`;
-
             navigate(`/country/${isoCode}`, { state: { coord: e?.lngLat } });
           }
         }
@@ -112,7 +105,6 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
               let lngLat: [number, number] | null = null;
 
               if (Array.isArray(coordinates[0])) {
-                // Nested coordinates
                 const coord = coordinates[0] as number[];
                 if (
                   coord.length === 2 &&
@@ -126,7 +118,6 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
                 typeof coordinates[0] === "number" &&
                 typeof coordinates[1] === "number"
               ) {
-                // Flat coordinates
                 lngLat = [coordinates[0], coordinates[1]];
               }
 
@@ -136,19 +127,47 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
                 })
                   .setLngLat(lngLat)
                   .setHTML(
-                    `<a href="/farms/${el.slug}" style="margin-top:10px;">
-                    Click here to find out more about ${el.name}
-                  </a>`
+                    `<a href="/farms/${el.slug}"  data-slug="${el.slug}" style="margin-top:10px;">
+                      Click here to find out more about ${el.name}
+                    </a>`
                   );
 
-                new mapboxgl.Marker()
+                const marker = new mapboxgl.Marker()
                   .setLngLat(lngLat)
                   .setPopup(popup)
                   .addTo(map);
+
+                // Stop propagation for the marker element
+                marker.getElement().addEventListener("click", (e) => {
+                  e.stopPropagation();
+                  if (popup.isOpen()) {
+                    popup.remove();
+                  } else {
+                    popup.addTo(map);
+                  }
+                });
               }
             }
           });
         });
+
+      // Handle clicks on the popup links
+      map.on("popupopen", () => {
+        const popupElement = document.querySelector(
+          ".mapboxgl-popup-content a"
+        );
+        if (popupElement) {
+          popupElement.addEventListener("click", (e) => {
+            e.preventDefault();
+            const slug = (e.currentTarget as HTMLAnchorElement).getAttribute(
+              "data-slug"
+            );
+            if (slug) {
+              navigate(`/farms/${slug}`);
+            }
+          });
+        }
+      });
 
       setTimeout(() => {
         if (data && data.length > 0) {
@@ -162,7 +181,6 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
 
           if (coordinates) {
             if (Array.isArray(coordinates[0])) {
-              // Nested coordinates
               const coord = coordinates[0] as number[];
               if (
                 coord.length === 2 &&
@@ -176,7 +194,6 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
               typeof coordinates[0] === "number" &&
               typeof coordinates[1] === "number"
             ) {
-              // Flat coordinates
               center = [coordinates[0], coordinates[1]];
             }
           }
@@ -185,7 +202,7 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
             map.flyTo({
               center: center,
               zoom: 2,
-              essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+              essential: true,
             });
         }
       }, 1500);
