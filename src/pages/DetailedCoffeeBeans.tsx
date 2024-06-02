@@ -25,6 +25,18 @@ import { Helmet } from "react-helmet-async";
 const DetailedCoffeeBeans = (props: any) => {
   const [data, setData] = useState<CoffeeType | null>(null);
   const [value, setValue] = React.useState<number | null>(0);
+  const [usersAcidityRating, setUsersAcidityRating] = React.useState<
+    number | null
+  >(0);
+  const [usersSweetnessRating, setUsersSweetnessRating] = React.useState<
+    number | null
+  >(0);
+  const [usersBitternessRating, setUsersBitternessRating] = React.useState<
+    number | null
+  >(0);
+  const [usersBodyRating, setUsersBodyRating] = React.useState<number | null>(
+    0
+  );
   const [reviewText, setReviewText] = React.useState<string | null>("");
   const [ratingId, setRatingId] = React.useState<string | null>("");
   const [isFavourite, setIsFavourite] = React.useState<boolean>(false);
@@ -83,6 +95,11 @@ const DetailedCoffeeBeans = (props: any) => {
       const { data } = await response.json();
       if (data && data.review.length > 0) {
         setValue(data.review[0].rating);
+        setUsersAcidityRating(data.review[0].acidityRating);
+        setUsersSweetnessRating(data.review[0].sweetnessRating);
+        setUsersBitternessRating(data.review[0].bitternessRating);
+        setUsersBodyRating(data.review[0].bodyRating);
+
         setReviewText(data.review[0].review);
         setRatingId(data.review[0].id);
       }
@@ -265,32 +282,18 @@ const DetailedCoffeeBeans = (props: any) => {
     return (
       <div className="traits">
         <div className="propWrapper">
-          <div className="propName">Body: </div>
-          <div className="propValue">
-            <StyledRating
-              name="customized-color"
-              readOnly
-              value={data?.body}
-              precision={0.1}
-              icon={<LocalCafeIcon fontSize="inherit" />}
-              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-            />
-            {data?.body}
-          </div>
-        </div>
-        <div className="propWrapper">
           <div className="propName">Acidity: </div>
 
           <div className="propValue">
             <StyledRating
               name="customized-color"
               readOnly
-              value={data?.acidity}
+              value={data?.acidityAverage}
               precision={0.1}
               icon={<LocalCafeIcon fontSize="inherit" />}
               emptyIcon={<LocalCafeIcon fontSize="inherit" />}
             />{" "}
-            {data?.acidity}
+            {data?.acidityAverage}
           </div>
         </div>
         <div className="propWrapper">
@@ -300,12 +303,41 @@ const DetailedCoffeeBeans = (props: any) => {
             <StyledRating
               name="customized-color"
               readOnly
-              value={data?.sweetness}
+              value={data?.sweetnessAverage}
               precision={0.1}
               icon={<LocalCafeIcon fontSize="inherit" />}
               emptyIcon={<LocalCafeIcon fontSize="inherit" />}
             />{" "}
-            {data?.sweetness}
+            {data?.sweetnessAverage}
+          </div>
+        </div>
+        <div className="propWrapper">
+          <div className="propName">Bitterness: </div>
+          {/* TODO: alternative or another one INTENSITY */}
+          <div className="propValue">
+            <StyledRating
+              name="customized-color"
+              readOnly
+              value={data?.bitternessAverage}
+              precision={0.1}
+              icon={<LocalCafeIcon fontSize="inherit" />}
+              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+            />{" "}
+            {data?.bitternessAverage}
+          </div>
+        </div>
+        <div className="propWrapper">
+          <div className="propName">Body: </div>
+          <div className="propValue">
+            <StyledRating
+              name="customized-color"
+              readOnly
+              value={data?.bodyAverage}
+              precision={0.1}
+              icon={<LocalCafeIcon fontSize="inherit" />}
+              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+            />
+            {data?.bodyAverage}
           </div>
         </div>
       </div>
@@ -320,8 +352,6 @@ const DetailedCoffeeBeans = (props: any) => {
       color: COLORS.darkGreen,
     },
   });
-
-  data && console.log("data?.locations", data?.locations);
 
   // console.log(
   //   "data?.locations",
@@ -472,6 +502,10 @@ const DetailedCoffeeBeans = (props: any) => {
                 )}
                 <WrittenReview
                   usersRating={value}
+                  usersAcidityRating={usersAcidityRating}
+                  usersSweetnessRating={usersSweetnessRating}
+                  usersBitternessRating={usersBitternessRating}
+                  usersBodyRating={usersBodyRating}
                   reviewText={reviewText}
                   ratingId={ratingId}
                 />

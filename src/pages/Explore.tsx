@@ -78,7 +78,7 @@ const Explore: React.FC<Props> = (props) => {
         } else if (filter === "price") {
           return b.price - a.price; // Reverse order for descending
         } else if (filter === "acidity") {
-          return b.acidity - a.acidity; // Reverse order for descending
+          return b.acidityAverage - a.acidityAverage; // Reverse order for descending
         } else {
           // Default case, return 0 for no sorting
           return 0;
