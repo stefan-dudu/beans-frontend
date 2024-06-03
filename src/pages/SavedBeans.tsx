@@ -43,11 +43,8 @@ const SavedBeans = (props: Props) => {
       data.savedBeans.length > 0 && setFavouriteBeans(data.savedBeans);
       //   setError(null);
     } catch (err: any) {
-      //   setData(null);
-      //   setError(err);
       if (err && !loggedIn) {
-        // console.log("redirect to login");
-        navigate(`/login`);
+        navigate(`/login`, { replace: true });
       }
     } finally {
       dispatch(notLoading());
@@ -55,10 +52,8 @@ const SavedBeans = (props: Props) => {
   };
 
   useEffect(() => {
-    !loggedIn && navigate(`/login`);
-    loggedIn && fetchUsersFavouriteBeans();
+    fetchUsersFavouriteBeans();
   }, []);
-  // console.log("favouriteBeans", favouriteBeans);
 
   const SkeletonComponent = () => {
     const skeletons = [];
