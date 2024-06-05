@@ -6,6 +6,7 @@ import BestBeans2023 from "../components/BestBeans2023";
 import YouMightLike from "../components/YouMightLike";
 import Discover from "../components/Discover";
 import { Helmet } from "react-helmet-async";
+import CoffeeAnimation from "../components/CoffeeAnimation";
 
 type Props = {};
 
@@ -21,6 +22,7 @@ const Home = (props: Props) => {
         <link rel="canonical" href={`/`} />
       </Helmet>
       <section>
+        {<CoffeeAnimation />}
         <TopItems />
       </section>
       <Suspense fallback={<div>Loading...</div>}>
