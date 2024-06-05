@@ -4,6 +4,8 @@ import RateBean from "../components/RateBean";
 import DetailedBeanMap from "../components/map/DetailedBeanMap";
 import Skeleton from "@mui/material/Skeleton";
 import Rating from "@mui/material/Rating";
+import IconButton from "@mui/material/IconButton";
+import InfoIcon from "@mui/icons-material/Info";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
@@ -11,11 +13,13 @@ import catchBeanBag from "../assets/catchBeanBag.webp";
 import { COLORS } from "../values/colors";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import "./DetailedCoffeeBeans.scss";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
 import ReviewsComponent from "../components/ReviewsComponent";
 import { CoffeeType } from "../types/Coffee";
 import WrittenReview from "../components/WrittenReview";
@@ -41,6 +45,10 @@ const DetailedCoffeeBeans = (props: any) => {
   const [ratingId, setRatingId] = React.useState<string | null>("");
   const [isFavourite, setIsFavourite] = React.useState<boolean>(false);
   const [favouriteId, setFavouriteId] = React.useState<string | null>("");
+  const [anchorEl, setAnchorEl] = React.useState<{
+    [key: string]: HTMLButtonElement | null;
+  }>({});
+
   let { id } = useParams();
   const navigate = useNavigate();
   const userId = useSelector((state: RootState) => state.auth.id);
@@ -279,67 +287,70 @@ const DetailedCoffeeBeans = (props: any) => {
         color: COLORS.darkGreen,
       },
     });
+
+    const traits = [
+      {
+        name: "Acidity",
+        value: data?.acidityAverage,
+        text: "Refers to the bright, tangy sensation perceived on the palate. It adds liveliness and complexity to coffee, often described as a fruity or citrusy flavor.",
+      },
+      {
+        name: "Body",
+        value: data?.bodyAverage,
+        text: "Describes the texture and weight of the coffee in your mouth. A coffee with a full body feels heavier and more substantial, while a light body feels thin and watery.",
+      },
+      {
+        name: "Sweetness",
+        value: data?.sweetnessAverage,
+        text: "Indicates the presence of natural sugars in the coffee. It can range from subtle hints of sweetness to a pronounced sugary taste, contributing to the overall flavor balance.",
+      },
+      {
+        name: "Bitterness",
+        value: data?.bitternessAverage,
+        text: "Represents the sharp, slightly harsh taste that comes from certain compounds in coffee. While some bitterness is expected, excessive bitterness can overpower other flavors and indicate over-roasting or brewing.",
+      },
+    ];
+
     return (
       <div className="traits">
-        <div className="propWrapper">
-          <div className="propName">Acidity: </div>
-
-          <div className="propValue">
-            <StyledRating
-              name="customized-color"
-              readOnly
-              value={data?.acidityAverage}
-              precision={0.1}
-              icon={<LocalCafeIcon fontSize="inherit" />}
-              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-            />{" "}
-            {data?.acidityAverage}
+        {traits.map((trait) => (
+          <div className="propWrapper" key={trait.name}>
+            <div className="propName">
+              {trait.name}
+              <div>
+                <IconButton
+                  aria-label="delete"
+                  onClick={(
+                    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+                  ) => handleClick(event, trait.name)}
+                >
+                  <InfoIcon aria-describedby={trait.name} />
+                </IconButton>
+                <Popover
+                  id={trait.name}
+                  open={Boolean(anchorEl[trait.name])}
+                  // anchorEl={anchorEl[trait.name]}
+                  onClose={() => handleClose(trait.name)}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  transformOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                  <Typography sx={{ p: 2 }}>{`${trait.text}  `}</Typography>
+                </Popover>
+              </div>
+            </div>
+            <div className="propValue">
+              <StyledRating
+                name="customized-color"
+                readOnly
+                value={trait.value}
+                precision={0.1}
+                icon={<LocalCafeIcon fontSize="inherit" />}
+                emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+              />
+              {trait.value}
+            </div>
           </div>
-        </div>
-        <div className="propWrapper">
-          <div className="propName">Sweetness: </div>
-          {/* TODO: alternative or another one INTENSITY */}
-          <div className="propValue">
-            <StyledRating
-              name="customized-color"
-              readOnly
-              value={data?.sweetnessAverage}
-              precision={0.1}
-              icon={<LocalCafeIcon fontSize="inherit" />}
-              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-            />{" "}
-            {data?.sweetnessAverage}
-          </div>
-        </div>
-        <div className="propWrapper">
-          <div className="propName">Bitterness: </div>
-          {/* TODO: alternative or another one INTENSITY */}
-          <div className="propValue">
-            <StyledRating
-              name="customized-color"
-              readOnly
-              value={data?.bitternessAverage}
-              precision={0.1}
-              icon={<LocalCafeIcon fontSize="inherit" />}
-              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-            />{" "}
-            {data?.bitternessAverage}
-          </div>
-        </div>
-        <div className="propWrapper">
-          <div className="propName">Body: </div>
-          <div className="propValue">
-            <StyledRating
-              name="customized-color"
-              readOnly
-              value={data?.bodyAverage}
-              precision={0.1}
-              icon={<LocalCafeIcon fontSize="inherit" />}
-              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-            />
-            {data?.bodyAverage}
-          </div>
-        </div>
+        ))}
       </div>
     );
   };
@@ -353,12 +364,22 @@ const DetailedCoffeeBeans = (props: any) => {
     },
   });
 
-  // console.log(
-  //   "data?.locations",
-  //   data?.locations && data?.locations[0]?.coordinates?.length > 1
-  //     ? "Blend"
-  //     : "Single origin"
-  // );
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    prop: string
+  ) => {
+    setAnchorEl((prev) => ({ ...prev, [prop]: event.currentTarget }));
+    setTimeout(() => {
+      handleClose(prop);
+    }, 7000); //
+  };
+
+  const handleClose = (prop: string) => {
+    setAnchorEl((prev) => ({ ...prev, [prop]: null }));
+  };
+
+  const open = Boolean(anchorEl);
+  const id2 = open ? "simple-popover" : undefined;
 
   return (
     <div>

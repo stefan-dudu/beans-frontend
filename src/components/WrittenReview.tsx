@@ -5,6 +5,10 @@ import TextField from "@mui/material/TextField";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "./WrittenReview.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
@@ -197,9 +201,8 @@ const WrittenReview = ({
         ) : (
           <div className="add-rating-CTA">Your rating:</div>
         )}
-
         <div className="propWrapper">
-          <h2 className="propName">Overall rating:</h2>
+          <h2 className="propName">Overall rating*:</h2>
           <div className="propValue">
             <StyledRating
               name="simple-controlled"
@@ -213,81 +216,94 @@ const WrittenReview = ({
             />
           </div>
         </div>
-        <div className="propWrapper">
-          <h2 className="propName">Acidity:</h2>
-          <div className="propValue">
-            <StyledRating
-              name="simple-controlled"
-              size="large"
-              icon={<LocalCafeIcon fontSize="inherit" />}
-              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-              value={acidity}
-              onChange={(event, newValue) => {
-                setAcidity(newValue !== null ? newValue * 1 : 0);
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            Write a detailed review
+          </AccordionSummary>
+          <AccordionDetails>
+            <div className="traits">
+              <div className="propWrapper">
+                <h2 className="propName">Acidity:</h2>
+                <div className="propValue">
+                  <StyledRating
+                    name="simple-controlled"
+                    size="large"
+                    icon={<LocalCafeIcon fontSize="inherit" />}
+                    emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+                    value={acidity}
+                    onChange={(event, newValue) => {
+                      setAcidity(newValue !== null ? newValue * 1 : 0);
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="propWrapper">
+                <h2 className="propName">Sweetness:</h2>
+                <div className="propValue">
+                  <StyledRating
+                    name="simple-controlled"
+                    size="large"
+                    icon={<LocalCafeIcon fontSize="inherit" />}
+                    emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+                    value={sweetness}
+                    onChange={(event, newValue) => {
+                      setSweetness(newValue !== null ? newValue * 1 : 0);
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="propWrapper">
+                <h2 className="propName">Bitterness:</h2>
+                <div className="propValue">
+                  <StyledRating
+                    name="simple-controlled"
+                    size="large"
+                    icon={<LocalCafeIcon fontSize="inherit" />}
+                    emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+                    value={bitterness}
+                    onChange={(event, newValue) => {
+                      setBitterness(newValue !== null ? newValue * 1 : 0);
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="propWrapper">
+                <h2 className="propName">Body:</h2>
+                <div className="propValue">
+                  <StyledRating
+                    name="simple-controlled"
+                    size="large"
+                    icon={<LocalCafeIcon fontSize="inherit" />}
+                    emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+                    value={body}
+                    onChange={(event, newValue) => {
+                      setBody(newValue !== null ? newValue * 1 : 0);
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+            <TextField
+              id="outlined-multiline-static"
+              // label="Your opinion"
+              multiline
+              rows={4}
+              value={review}
+              style={{ width: "100%" }}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setReview(event.target.value);
               }}
             />
-          </div>
-        </div>
+          </AccordionDetails>
+        </Accordion>
 
-        <div className="propWrapper">
-          <h2 className="propName">Sweetness:</h2>
-          <div className="propValue">
-            <StyledRating
-              name="simple-controlled"
-              size="large"
-              icon={<LocalCafeIcon fontSize="inherit" />}
-              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-              value={sweetness}
-              onChange={(event, newValue) => {
-                setSweetness(newValue !== null ? newValue * 1 : 0);
-              }}
-            />
-          </div>
-        </div>
-
-        <div className="propWrapper">
-          <h2 className="propName">Bitterness:</h2>
-          <div className="propValue">
-            <StyledRating
-              name="simple-controlled"
-              size="large"
-              icon={<LocalCafeIcon fontSize="inherit" />}
-              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-              value={bitterness}
-              onChange={(event, newValue) => {
-                setBitterness(newValue !== null ? newValue * 1 : 0);
-              }}
-            />
-          </div>
-        </div>
-
-        <div className="propWrapper">
-          <h2 className="propName">Body:</h2>
-          <div className="propValue">
-            <StyledRating
-              name="simple-controlled"
-              size="large"
-              icon={<LocalCafeIcon fontSize="inherit" />}
-              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-              value={body}
-              onChange={(event, newValue) => {
-                setBody(newValue !== null ? newValue * 1 : 0);
-              }}
-            />
-          </div>
-        </div>
-
-        <TextField
-          id="outlined-multiline-static"
-          // label="Your opinion"
-          multiline
-          rows={4}
-          value={review}
-          style={{ width: "100%" }}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setReview(event.target.value);
-          }}
-        />
         <Button
           variant="contained"
           color="success"
