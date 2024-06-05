@@ -347,7 +347,7 @@ const DetailedCoffeeBeans = (props: any) => {
                 icon={<LocalCafeIcon fontSize="inherit" />}
                 emptyIcon={<LocalCafeIcon fontSize="inherit" />}
               />
-              {trait.value}
+              {/* {trait.value} */}
             </div>
           </div>
         ))}
