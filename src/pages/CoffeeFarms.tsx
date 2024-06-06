@@ -54,7 +54,6 @@ const CoffeeFarms = (props: Props) => {
   return (
     <div>
       <div
-        style={{ color: "black" }}
         dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
         className="article-content"
       />
