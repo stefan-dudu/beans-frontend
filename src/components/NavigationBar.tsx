@@ -60,6 +60,8 @@ function NavigationBar() {
                 as={NavLink}
                 to="/locations"
                 onClick={() => dispatch(minimize())}
+                className="link-text"
+                style={{ textAlign: "center" }}
               >
                 <h3>Coffee map</h3>
               </Nav.Link>
@@ -67,6 +69,7 @@ function NavigationBar() {
                 as={NavLink}
                 to="/explore"
                 onClick={() => dispatch(minimize())}
+                className="link-text"
               >
                 <h3>Explore</h3>
               </Nav.Link>
@@ -83,6 +86,7 @@ function NavigationBar() {
                 as={NavLink}
                 to="/favourites"
                 onClick={() => dispatch(minimize())}
+                className="link-text"
               >
                 <h3>Favourites</h3>
               </Nav.Link>
@@ -103,6 +107,7 @@ function NavigationBar() {
                 to="/signup"
                 onClick={() => dispatch(minimize())}
                 style={{ color: "#006241" }}
+                className="link-text"
               >
                 <h3>Sign up</h3>
               </Nav.Link>
@@ -113,8 +118,9 @@ function NavigationBar() {
                 as={NavLink}
                 to="/profile"
                 onClick={() => dispatch(minimize())}
+                className="link-text"
               >
-                <h3>User profile</h3>
+                <h3>Profile</h3>
               </Nav.Link>
             </Nav>
           )}
