@@ -11,4 +11,5 @@ export type CoffeeLocationType = {
   challenges: string[];
   __v: number;
   image: string;
+  harvest: string;
 };

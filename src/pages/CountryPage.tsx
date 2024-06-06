@@ -60,10 +60,13 @@ const CountryPage = (props: Props) => {
           <div className="prop">Main types:</div>
           <div className="regular-value">&nbsp; {data?.mainTypes}</div>
         </div>
-        <div className="facts-row">
-          <div className="prop">Harvest:</div>
-          <div className="big-value"> &nbsp; December - March</div>
-        </div>
+
+        {data?.harvest && (
+          <div className="facts-row">
+            <div className="prop">Harvest:</div>
+            <div className="big-value"> &nbsp; {data?.harvest}</div>
+          </div>
+        )}
         <div className="facts-row">
           <div className="prop">Altitude:</div>
           <div className="regular-value"> &nbsp; {data?.altitude}</div>
