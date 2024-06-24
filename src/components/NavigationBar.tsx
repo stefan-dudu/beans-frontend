@@ -65,6 +65,16 @@ function NavigationBar() {
               >
                 <h3>Coffee map</h3>
               </Nav.Link>
+
+              <Nav.Link
+                as={NavLink}
+                to="/guides"
+                onClick={() => dispatch(minimize())}
+                className="link-text"
+              >
+                <h3>Guides</h3>
+              </Nav.Link>
+
               <Nav.Link
                 as={NavLink}
                 to="/explore"
@@ -73,14 +83,6 @@ function NavigationBar() {
               >
                 <h3>Explore</h3>
               </Nav.Link>
-
-              {/* <Nav.Link
-                as={NavLink}
-                to="/features"
-                onClick={() => dispatch(minimize())}
-              >
-                About
-              </Nav.Link> */}
 
               <Nav.Link
                 as={NavLink}
