@@ -6,7 +6,9 @@ import BestBeans2023 from "../components/BestBeans2023";
 import YouMightLike from "../components/YouMightLike";
 import Discover from "../components/Discover";
 import { Helmet } from "react-helmet-async";
-import CoffeeAnimation from "../components/CoffeeAnimation";
+import CoffeeAnimation from "../components/textAnimation/CoffeeAnimation";
+import FirstSection from "../components/heroSection/FirstSection";
+import LocationSection from "../components/heroSection/LocationSection";
 
 type Props = {};
 
@@ -22,11 +24,13 @@ const Home = (props: Props) => {
         <link rel="canonical" href={`/`} />
       </Helmet>
       <section>
-        {<CoffeeAnimation />}
+        {/* {<CoffeeAnimation />} */}
+        <FirstSection />
         <TopItems />
       </section>
       <Suspense fallback={<div>Loading...</div>}>
         <section>
+          <LocationSection />
           <BeanSelector />
         </section>
         <section>

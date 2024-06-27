@@ -136,7 +136,7 @@ const UserProfile: React.FC = () => {
         </Button>
 
         {data?.role === "admin" && (
-          <button onClick={() => navigate(`/reviewBeans`, { replace: true })}>
+          <button onClick={() => navigate(`/locations`, { replace: true })}>
             To review beans page
           </button>
         )}

@@ -6,7 +6,7 @@ import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import BeanCard from "./BeanCard";
 import { CoffeeType } from "../types/Coffee";
-import CoffeeAnimation from "./CoffeeAnimation";
+import CoffeeAnimation from "./textAnimation/CoffeeAnimation";
 
 const TopItems = (props: any) => {
   const [data, setData] = useState<CoffeeType[] | null>(null);

@@ -41,6 +41,7 @@ const Locations = (props: Props) => {
         dispatch(notLoading());
       }
     };
+    window.scrollTo(0, 0);
     dispatch(isLoading());
     fetchDataForPosts();
   }, []);

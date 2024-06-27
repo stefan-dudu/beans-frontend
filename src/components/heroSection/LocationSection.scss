@@ -1,0 +1,55 @@
+.location-parent-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30rem;
+  width: 99vw;
+  //   object-fit: cover;
+  margin-top: -10px;
+  margin-left: -10px;
+  //   margin-right: -10px;
+  //   background: darkgreen;
+  background: radial-gradient(circle, rgba(113, 135, 114, 1) 0%, #006400 35%);
+
+  .bean-text-hero-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: 23px;
+    .behind-text {
+      position: relative;
+      bottom: -44px;
+      z-index: 1;
+      font-size: 4rem;
+      color: white;
+    }
+
+    .hero-bean-image {
+      width: 10rem;
+      z-index: 2;
+      position: relative;
+    }
+
+    .above-text {
+      top: -55px;
+      position: relative;
+      z-index: 3;
+      font-size: 4rem;
+      color: white;
+    }
+
+    .text-lower-component {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .map-button {
+      border-color: white;
+      color: white;
+      padding: 18px;
+      font-size: 1.4rem;
+      top: -24px;
+    }
+  }
+}
