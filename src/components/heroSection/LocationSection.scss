@@ -3,13 +3,12 @@
   align-items: center;
   justify-content: center;
   height: 30rem;
-  width: 100vw;
+  // width: 100vw;
   //   object-fit: cover;
   margin-top: -10px;
   margin-left: -10px;
-  //   margin-right: -10px;
-  //   background: darkgreen;
-  background: radial-gradient(circle, rgba(113, 135, 114, 1) 0%, #006400 35%);
+  margin-right: -10px;
+  background: radial-gradient(circle, rgba(113, 135, 114, 1) 0%, #006241 35%);
 
   .bean-text-hero-wrapper {
     display: flex;
