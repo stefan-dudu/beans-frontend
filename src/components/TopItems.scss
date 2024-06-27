@@ -29,11 +29,15 @@
   box-shadow: 10px 20px 55px 0 rgba(92, 92, 92, 0.1);
   border-radius: 20px;
   .image {
+    // margin: 0px 5px;
+    // width: 11rem;
+    // object-fit: contain;
+    // height: 11rem;
+    // // flex-grow: 1;
     margin: 0px 5px;
-    width: 11rem;
+    width: 100%;
     object-fit: contain;
-    height: 11rem;
-    // flex-grow: 1;
+    height: 15rem;
   }
 
   .underPic {

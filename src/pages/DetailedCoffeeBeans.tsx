@@ -402,8 +402,8 @@ const DetailedCoffeeBeans = (props: any) => {
                 {
                   <img
                     src={data?.image || catchBeanBag}
-                    width="200"
-                    height="200"
+                    width="250"
+                    height="250"
                     className="d-inline-block align-top"
                     alt={`Coffee bean pic, it this case is  ${data?.brand} ${data?.name}`}
                     onError={addDefaultSrc}
