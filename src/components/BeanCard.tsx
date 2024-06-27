@@ -69,6 +69,7 @@ const BeanCard = ({ data }: { data: Coffee }) => {
             precision={0.5}
             icon={<LocalCafeIcon fontSize="inherit" />}
             emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+            sx={{ fontSize: 30 }}
           />
           <h3 className="reviewsNo">{data.ratingsQuantity}</h3>
         </div>

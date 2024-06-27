@@ -58,9 +58,10 @@
       display: flex;
       flex-direction: row;
       gap: 10px;
+      align-items: stretch;
 
       .reviewsNo {
-        font-size: 1rem;
+        font-size: 1.3rem;
         color: darkgrey;
         font-weight: 400;
       }
