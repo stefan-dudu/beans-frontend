@@ -54,6 +54,7 @@ const Explore: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (!state?.data) {
       // console.log("there is no data so i will show beans to explore");
       dispatch(isLoading());
