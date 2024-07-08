@@ -2,11 +2,13 @@ import React, { SyntheticEvent } from "react";
 import farmer from "../assets/farmer.avif";
 import catchBeanBag from "../assets/catchBeanBag.webp";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 import "./Discover.scss";
 
 type Props = {};
 
 const Discover = (props: Props) => {
+  const navigate = useNavigate();
   function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
     e.currentTarget.src = catchBeanBag;
   }
@@ -21,14 +23,18 @@ const Discover = (props: Props) => {
           style={{ width: "24vw" }}
           loading="lazy"
           title="Image of a coffee farmer"
+          onClick={() => navigate(`/country/VNM`)}
         />
-        <div className="textDiscover">
+        <div className="textDiscover" onClick={() => navigate(`/country/VNM`)}>
           <div>The Tale of Vietnamese Coffee Farmers</div>
-          {/* <div>A Glimpse into Tradition, Challenges, and Resilience</div> */}
         </div>
       </div>
       <div className="rightDiscover">
-        <Button variant="outlined" color="success">
+        <Button
+          variant="outlined"
+          color="success"
+          onClick={() => navigate(`/country/VNM`)}
+        >
           Explore Now
         </Button>{" "}
       </div>
