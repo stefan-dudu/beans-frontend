@@ -82,7 +82,7 @@ const Locations = (props: Props) => {
         beans are comming from
       </div> */}
       {loadingData && <SkeletonComponent />}
-      {data && <LocationsMap data={data} />}
+      {data && <LocationsMap beansData={data} />}
     </div>
   );
 };

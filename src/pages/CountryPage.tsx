@@ -38,6 +38,7 @@ const CountryPage = (props: Props) => {
 
   useEffect(() => {
     fetchLoactionData();
+    window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     setCoord([location?.state?.coord?.lng, location?.state?.coord?.lat]);
   }, [isoCode]);

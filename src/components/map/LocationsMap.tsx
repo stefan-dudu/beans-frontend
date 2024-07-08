@@ -5,20 +5,20 @@ import { CoffeeType } from "../../types/Coffee";
 var wc = require("which-country");
 
 type LocationsMapProps = {
-  data: CoffeeType[] | null;
+  beansData: CoffeeType[] | null;
 };
 
-const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
+const LocationsMap: React.FC<LocationsMapProps> = ({ beansData }) => {
   const [countryCode, setCountryCode] = useState<string[]>([]);
   const mapContainer = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || "";
-    if (data) {
+    if (beansData) {
       const codes: string[] = [];
 
-      data.forEach((el) => {
+      beansData.forEach((el) => {
         el.locations.forEach((loc) => {
           const { coordinates } = loc;
 
@@ -48,7 +48,7 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
 
       setCountryCode(codes);
     }
-  }, [data]);
+  }, [beansData]);
 
   useEffect(() => {
     if (mapContainer.current && countryCode.length > 0) {
@@ -97,8 +97,8 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
         }
       });
 
-      data &&
-        data.forEach((el) => {
+      beansData &&
+        beansData.forEach((el) => {
           el.locations.forEach((loc) => {
             if (loc.description) {
               const coordinates = loc.coordinates;
@@ -170,9 +170,9 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
       });
 
       setTimeout(() => {
-        if (data && data.length > 0) {
-          const dataWithPins = data.flatMap((el) =>
-            el.locations.filter((loc) => loc.description)
+        if (beansData && beansData.length > 0) {
+          const dataWithPins = beansData.flatMap((el) =>
+            el.locations.filter((loc) => loc.coordinates[0])
           );
           const randomIndex = Math.floor(Math.random() * dataWithPins.length);
           const randomLocation = dataWithPins[randomIndex];
@@ -209,7 +209,7 @@ const LocationsMap: React.FC<LocationsMapProps> = ({ data }) => {
 
       return () => map.remove();
     }
-  }, [countryCode, data]);
+  }, [countryCode, beansData]);
 
   return (
     <div

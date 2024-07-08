@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
 import "./DetailedBeanMap.scss";
 var wc = require("which-country");
@@ -18,6 +19,8 @@ interface DetailedBeanMapProps {
 const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const [countryCodes, setCountryCodes] = useState<string[]>([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (location && location.length > 0) {
@@ -78,6 +81,16 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
             "iso_3166_1_alpha_3",
             ...countryCodes,
           ]);
+        }
+      });
+
+      map.on("click", "country-boundaries", (e) => {
+        if (e.features && e.features.length > 0) {
+          const feature = e.features[0];
+          const isoCode = feature?.properties?.iso_3166_1_alpha_3;
+          if (isoCode) {
+            navigate(`/country/${isoCode}`, { state: { coord: e?.lngLat } });
+          }
         }
       });
 
