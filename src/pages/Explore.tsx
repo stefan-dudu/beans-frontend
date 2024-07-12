@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import ExploreRow from "../components/ExploreRow";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ import "./Explore.scss";
 import Button from "@mui/material/Button";
 import Skeleton from "@mui/material/Skeleton";
 import { Helmet } from "react-helmet-async";
+import useIntersectionObserver from "../utils/useIntersectionObserver";
 
 type Props = {};
 
@@ -27,17 +28,18 @@ const Explore: React.FC<Props> = (props) => {
 
   const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
 
-  // TODO: Paginating, to decrease loading time
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isVisible = useIntersectionObserver(containerRef);
+  const hasFetchedData = useRef<boolean>(false);
+
   const fetchAllBeans = async () => {
     try {
-      // TODO: will have to update this inReview fasle thing
       const response = await fetch(
         `${process.env.REACT_APP_URL}api/v1/beans?inReview=false`,
         {
           headers: {
             "Content-Type": "application/json",
           },
-          // TODO: ESSENTIAL FOR jwt
           credentials: "include",
         }
       );
@@ -54,42 +56,37 @@ const Explore: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    if (!state?.data) {
-      // console.log("there is no data so i will show beans to explore");
-      dispatch(isLoading());
-      fetchAllBeans();
-    } else if (state?.data) {
-      // console.log("has data - it means it been redirected from a page ");
-      setData(state?.data);
+    if (isVisible && !hasFetchedData.current) {
+      window.scrollTo(0, 0);
+      if (!state?.data) {
+        dispatch(isLoading());
+        fetchAllBeans();
+      } else if (state?.data) {
+        setData(state?.data);
+      }
+      hasFetchedData.current = true;
     }
-  }, [state]);
+  }, [isVisible, state, dispatch]);
 
   useEffect(() => {
     if (data) {
-      // Create a copy of the data array to avoid mutating the state directly
       const sortedData = [...data];
-
-      // Sort the data based on the selected filter in descending order
       sortedData.sort((a, b) => {
         if (filter === "ratingsQuantity") {
-          return b.ratingsQuantity - a.ratingsQuantity; // Reverse order for descending
+          return b.ratingsQuantity - a.ratingsQuantity;
         } else if (filter === "ratingsAverage") {
-          return b.ratingsAverage - a.ratingsAverage; // Reverse order for descending
+          return b.ratingsAverage - a.ratingsAverage;
         } else if (filter === "price") {
-          return b.price - a.price; // Reverse order for descending
+          return b.price - a.price;
         } else if (filter === "acidity") {
-          return b.acidityAverage - a.acidityAverage; // Reverse order for descending
+          return b.acidityAverage - a.acidityAverage;
         } else {
-          // Default case, return 0 for no sorting
           return 0;
         }
       });
-
-      // Update the sorted data in the state
       setData(sortedData);
     }
-  }, [filter]);
+  }, [filter, data]);
 
   const filters = [
     {
@@ -112,14 +109,12 @@ const Explore: React.FC<Props> = (props) => {
 
   const SkeletonComponent = () => {
     const skeletons = [];
-
     for (let i = 0; i < 10; i++) {
       skeletons.push(
         <div key={i} className="skeletonItem">
           <Skeleton
             animation="wave"
             variant="rounded"
-            // width={200}
             width={"100%"}
             height={200}
             className="skeleton-component"
@@ -128,12 +123,11 @@ const Explore: React.FC<Props> = (props) => {
         </div>
       );
     }
-
     return <>{skeletons}</>;
   };
 
   return (
-    <div className="explore-wrapper">
+    <div className="explore-wrapper" ref={containerRef}>
       <Helmet>
         <title>Baristretto: Explore a wide selection of coffee beans.</title>
         <meta
@@ -143,8 +137,6 @@ const Explore: React.FC<Props> = (props) => {
         <link rel="canonical" href={`/explore`} />
       </Helmet>
       <div>
-        {/* TODO: have a filtering way for results */}
-        {/* <h4>Filter btn</h4> */}
         <div className="top-row">
           <TextField
             id="outlined-select-currency"
@@ -153,7 +145,6 @@ const Explore: React.FC<Props> = (props) => {
             label="Sort"
             defaultValue="ratingsAverage"
             helperText="Please select a value"
-            // value={filter}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setFilter(event.target.value);
             }}
@@ -180,7 +171,6 @@ const Explore: React.FC<Props> = (props) => {
           </Button>
         </div>
         {loadingData && <SkeletonComponent />}
-
         {data &&
           data.map((el) => {
             return (
