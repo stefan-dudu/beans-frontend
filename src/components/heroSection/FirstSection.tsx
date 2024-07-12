@@ -27,7 +27,7 @@ const FirstSection = (props: Props) => {
         color="success"
         size="large"
         className="hero-button"
-        onClick={() => navigate(`/coffee/6617c40592e870098a5f0329`)}
+        onClick={() => navigate(`/explore`)}
       >
         Explore
       </Button>
