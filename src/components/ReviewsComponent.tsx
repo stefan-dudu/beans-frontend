@@ -5,6 +5,7 @@ import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
 import { AppDispatch, RootState } from "../store/store";
 import { ReviewType } from "../types/Review";
 import ReviewCard from "./ReviewCard";
+import "./ReviewsComponent.scss";
 
 type Props = {};
 
@@ -50,6 +51,7 @@ const ReviewsComponent = (props: Props) => {
 
   return (
     <div style={{ width: "100%", padding: "1rem 0.3rem" }}>
+      <div className="review-title">The reviews</div>
       {data &&
         data
           ?.filter((el) => el.review)
