@@ -18,7 +18,7 @@
     display: flex;
     justify-content: space-between;
     padding: 2rem 1rem;
-    margin: 0.5rem 1rem;
+    // margin: 0.5rem 1rem;
 
     // .beanImage {
     //   transition: all 0.25s ease-in-out;
@@ -74,22 +74,34 @@
           font-weight: 600;
         }
 
+        .ratingsAndNo {
+          display: flex;
+          align-items: flex-end;
+          gap: 20px;
+          margin: 10px 0px;
+        }
+
         .producer {
           font-size: 1.3rem;
+          color: black;
         }
 
         .info {
           color: #006241;
           font-size: 1.3rem;
+
+          .chip-element {
+            font-size: 1rem;
+          }
         }
 
         .flavs {
           color: #1f3933;
           font-size: 1.3rem;
-          margin-top: 1rem;
+          // margin-top: 1rem;
           display: flex;
           flex-wrap: wrap;
-          gap: 1rem;
+          gap: 0.3rem;
         }
       }
     }

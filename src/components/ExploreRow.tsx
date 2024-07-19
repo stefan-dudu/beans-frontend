@@ -14,6 +14,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import Chip from "@mui/material/Chip";
 
 type Props = {
   data: CoffeeType;
@@ -167,20 +168,69 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
           <Grid item xs={7} sm={6} className="beanInfoGrid">
             <div className="beanInfo">
               <div className="name">{data?.name}</div>
+
               <div>
                 {/* <div className="propWrapper">
                   <div className="propName">Processing: </div>
                   <div className="propValue">Naturally washed</div>
                 </div> */}
                 <div className="producer">by: {data?.brand}</div>
-                {data?.type && <div className="info">{data?.type}</div>}
-                {data?.roastLevel && (
-                  <div className="info">{data?.roastLevel} roast</div>
-                )}
+                <div className="ratingsAndNo">
+                  <StyledRating
+                    name="customized-color"
+                    readOnly
+                    value={data?.ratingsAverage}
+                    precision={0.5}
+                    icon={<LocalCafeIcon fontSize="inherit" />}
+                    emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+                  />
+
+                  <div className="reviewsNo">{data?.ratingsAverage} </div>
+                </div>
+                <div className="flavs">
+                  {data?.type && (
+                    <div className="info">
+                      <Chip
+                        // color="success"
+                        variant="outlined"
+                        label={`${data?.origin}`}
+                        className="chip-element"
+                      />
+                    </div>
+                  )}
+                  {data?.type && (
+                    <div className="info">
+                      <Chip
+                        color="success"
+                        variant="outlined"
+                        label={`${data?.type}`}
+                        className="chip-element"
+                      />
+                    </div>
+                  )}
+                  {data?.roastLevel && (
+                    <div className="info">
+                      <Chip
+                        color="success"
+                        variant="outlined"
+                        label={`${data?.roastLevel} roast`}
+                        className="chip-element"
+                      />
+                    </div>
+                  )}
+                  {data &&
+                    data?.flavorNotes.map((el) => (
+                      <div className="info">
+                        <Chip
+                          color="success"
+                          variant="outlined"
+                          label={el}
+                          className="chip-element"
+                        />
+                      </div>
+                    ))}
+                </div>
               </div>
-              {/* <div className="flavs">
-                {data && data?.flavorNotes.map((el) => <div>{el}</div>)}
-              </div> */}
             </div>
           </Grid>
           <Grid item xs={5} sm={1}></Grid>
@@ -190,10 +240,8 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
             sm={2}
             style={{ display: "flex", justifyContent: "flex-end" }}
           >
-            <div className="beanRating">
+            {/* <div className="beanRating">
               <div className="ratingsAndNo">
-                {/* <div className="rating">4.3</div> */}
-
                 <StyledRating
                   name="customized-color"
                   readOnly
@@ -205,7 +253,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
 
                 <div className="reviewsNo">{data?.ratingsAverage} </div>
               </div>
-            </div>
+            </div> */}
             <IconButton
               aria-label="fingerprint"
               color="success"

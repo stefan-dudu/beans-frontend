@@ -86,7 +86,8 @@ const Explore: React.FC<Props> = (props) => {
       });
       setData(sortedData);
     }
-  }, [filter, data]);
+    // }, [filter, data]);
+  }, [filter]);
 
   const filters = [
     {

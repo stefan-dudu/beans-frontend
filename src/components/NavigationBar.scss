@@ -31,9 +31,9 @@
   .logoSearch {
     display: flex;
     flex-grow: 1;
-    flex-direction: row-reverse;
     justify-content: space-around;
-    align-items: center;
+    // align-items: center;
+    align-items: flex-end;
     margin-bottom: 11px;
   }
 }
