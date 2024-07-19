@@ -63,7 +63,7 @@ function NavigationBar() {
                 className="link-text"
                 style={{ textAlign: "center" }}
               >
-                <h3>Coffee map</h3>
+                <h3>Map</h3>
               </Nav.Link>
 
               <Nav.Link
