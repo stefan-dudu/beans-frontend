@@ -143,12 +143,13 @@ const Explore: React.FC<Props> = (props) => {
             id="outlined-select-currency"
             className="sort-field"
             select
-            label="Sort"
+            // label="Sort"
             defaultValue="ratingsAverage"
-            helperText="Please select a value"
+            // helperText="Please select a value"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setFilter(event.target.value);
             }}
+            // sx={{ background: "red" }}
           >
             {filters.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -160,6 +161,7 @@ const Explore: React.FC<Props> = (props) => {
           <Button
             variant="outlined"
             color="success"
+            sx={{ height: "55px" }}
             onClick={() => {
               if (signedIn) {
                 navigate(`/createbean`);

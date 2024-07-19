@@ -34,13 +34,13 @@ const Home = (props: Props) => {
           <BeanSelector />
         </section>
         <section>
-          <YouMightLike />
+          <BestBeans2023 />
         </section>
         <section>
           <Discover />
         </section>
         <section>
-          <BestBeans2023 />
+          <YouMightLike />
         </section>
       </Suspense>
     </div>
