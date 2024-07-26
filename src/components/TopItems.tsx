@@ -74,11 +74,12 @@ const TopItems = (props: any) => {
   return (
     <div className="top-items-wrapper">
       {/* {<CoffeeAnimation />} */}
-      <h1
+      {/* <h1
         style={{ padding: "1rem 0rem", marginLeft: "1rem", color: "#006241" }}
       >
         Trending right now ...
-      </h1>
+      </h1> */}
+      <div className="section-title">Trending right now ...</div>
       <div className="topBeansContainer">
         {loadingData && <SkeletonComponent />}
         {/* {true && <SkeletonComponent />} */}

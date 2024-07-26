@@ -9,6 +9,16 @@
   border-radius: 20px;
   box-shadow: 10px 20px 55px 0 rgba(92, 92, 92, 0.3);
 
+  .selector-title {
+    margin: 0 0 32px;
+    font-size: 41px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 40px;
+    letter-spacing: 0.56px;
+    text-transform: uppercase;
+  }
+
   .box {
     display: flex;
     gap: 2rem;

@@ -77,12 +77,8 @@ const BestBeans2023 = (props: any) => {
   };
 
   return (
-    <div style={{ marginBottom: "2rem", marginTop: "1rem" }} ref={containerRef}>
-      <h2
-        style={{ padding: "1rem 0rem", marginLeft: "1rem", color: "#006241" }}
-      >
-        2023 Awards
-      </h2>
+    <div className="top-items-wrapper" ref={containerRef}>
+      <div className="section-title">2024 Awards</div>
       <div className="topBeansContainer">
         {loadingData || loading ? (
           <SkeletonComponent />

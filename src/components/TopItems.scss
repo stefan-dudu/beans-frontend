@@ -1,6 +1,19 @@
 .top-items-wrapper {
   // margin-left: 1rem;
   padding: 1rem 0rem;
+
+  .section-title {
+    padding: 1rem 0rem;
+    margin-left: 1rem;
+    color: rgb(0, 98, 65);
+    margin: 0 0 32px;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 40px;
+    letter-spacing: -1.44px;
+    text-transform: uppercase;
+  }
 }
 .topBeansContainer {
   display: flex;
@@ -55,10 +68,9 @@
     }
 
     .brand {
-      color: lightgrey;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 400;
-      color: gray;
+      color: black;
     }
 
     .ratingsAndNo {

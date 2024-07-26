@@ -75,12 +75,8 @@ const YouMightLike = (props: any) => {
   };
 
   return (
-    <div style={{ marginBottom: "2rem", marginTop: "1rem" }} ref={containerRef}>
-      <h2
-        style={{ padding: "1rem 0rem", marginLeft: "1rem", color: "#006241" }}
-      >
-        You might like these
-      </h2>
+    <div className="top-items-wrapper" ref={containerRef}>
+      <div className="section-title">You might like these</div>
       <div className="topBeansContainer">
         {loadingData || loading ? (
           <SkeletonComponent />
