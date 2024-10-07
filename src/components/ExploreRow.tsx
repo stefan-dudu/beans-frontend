@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Chip from "@mui/material/Chip";
+import { findFlagUrlByCountryName } from "country-flags-svg-v2";
 
 type Props = {
   data: CoffeeType;
@@ -187,18 +188,29 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
 
                   <div className="reviewsNo">{data?.ratingsAverage} </div>
                 </div>
+                {data?.origin && (
+                  // ORIGIN
+                  <div className="origin">
+                    <div className="origin-name">{data?.origin}</div>
+
+                    {findFlagUrlByCountryName(data?.origin) && (
+                      <img
+                        src={findFlagUrlByCountryName(data?.origin)}
+                        style={{
+                          width: "37px",
+                          height: "auto",
+                          objectFit: "contain",
+                        }}
+                        className="origin-flag"
+                        alt={`Is representative for ${data?.name}`}
+                        title={`Image representative for ${data?.name}`}
+                      />
+                    )}
+                  </div>
+                )}
                 <div className="flavs">
                   {data?.type && (
-                    <div className="info">
-                      <Chip
-                        // color="success"
-                        variant="outlined"
-                        label={`${data?.origin}`}
-                        className="chip-element"
-                      />
-                    </div>
-                  )}
-                  {data?.type && (
+                    // TYPE - ARABICA /ROBUSTA
                     <div className="info">
                       <Chip
                         color="success"
@@ -209,16 +221,17 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
                     </div>
                   )}
                   {data?.roastLevel && (
+                    // ROAST
                     <div className="info">
                       <Chip
-                        color="success"
+                        // color="warning"
                         variant="outlined"
                         label={`${data?.roastLevel} roast`}
                         className="chip-element"
                       />
                     </div>
                   )}
-                  {data &&
+                  {/* {data &&
                     data?.flavorNotes.map((el) => (
                       <div className="info">
                         <Chip
@@ -228,7 +241,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
                           className="chip-element"
                         />
                       </div>
-                    ))}
+                    ))} */}
                 </div>
               </div>
             </div>
@@ -240,20 +253,6 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
             sm={2}
             style={{ display: "flex", justifyContent: "flex-end" }}
           >
-            {/* <div className="beanRating">
-              <div className="ratingsAndNo">
-                <StyledRating
-                  name="customized-color"
-                  readOnly
-                  value={data?.ratingsAverage}
-                  precision={0.5}
-                  icon={<LocalCafeIcon fontSize="inherit" />}
-                  emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-                />
-
-                <div className="reviewsNo">{data?.ratingsAverage} </div>
-              </div>
-            </div> */}
             <IconButton
               aria-label="fingerprint"
               color="success"

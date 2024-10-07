@@ -95,6 +95,19 @@
           }
         }
 
+        .origin {
+          display: flex;
+          flex-direction: row;
+          align-items: stretch;
+          gap: 11px;
+          margin: 15px 0px;
+
+          .origin-name {
+            color: #1f3933;
+            font-size: 1.3rem;
+          }
+        }
+
         .flavs {
           color: #1f3933;
           font-size: 1.3rem;
