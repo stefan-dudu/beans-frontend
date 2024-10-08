@@ -25,6 +25,7 @@ import { CoffeeType } from "../types/Coffee";
 import WrittenReview from "../components/WrittenReview";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Helmet } from "react-helmet-async";
+import { findFlagUrlByCountryName } from "country-flags-svg-v2";
 
 const DetailedCoffeeBeans = (props: any) => {
   const [data, setData] = useState<CoffeeType | null>(null);
@@ -466,7 +467,19 @@ const DetailedCoffeeBeans = (props: any) => {
                   <div className="propWrapper">
                     <div className="propName">Origin: </div>
                     <div className="propValue">{data?.origin}</div>
-                    {/* flag maybe? */}
+                    {findFlagUrlByCountryName(data?.origin) && (
+                      <img
+                        src={findFlagUrlByCountryName(data?.origin)}
+                        style={{
+                          width: "37px",
+                          height: "auto",
+                          objectFit: "contain",
+                        }}
+                        className="origin-flag"
+                        alt={`Is representative for ${data?.name}`}
+                        title={`Image representative for ${data?.name}`}
+                      />
+                    )}
                   </div>
                 )}
                 {data?.type && (

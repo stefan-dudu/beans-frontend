@@ -184,6 +184,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
                     precision={0.5}
                     icon={<LocalCafeIcon fontSize="inherit" />}
                     emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+                    sx={{ fontSize: 30 }}
                   />
 
                   <div className="reviewsNo">{data?.ratingsAverage} </div>

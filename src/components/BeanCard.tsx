@@ -6,6 +6,7 @@ import { styled } from "@mui/material/styles";
 import { COLORS } from ".././values/colors";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import useIntersectionObserver from "../utils/useIntersectionObserver";
+import { findFlagUrlByCountryName } from "country-flags-svg-v2";
 
 type Coffee = {
   _id: string;
@@ -73,7 +74,22 @@ const BeanCard = ({ data }: { data: Coffee }) => {
           />
           <h3 className="reviewsNo">{data.ratingsQuantity}</h3>
         </div>
-        <h3 className="origin">{data.origin}</h3>
+        <div className="ratingsAndNo">
+          <div className="origin">{data.origin}</div>
+          {findFlagUrlByCountryName(data?.origin) && (
+            <img
+              src={findFlagUrlByCountryName(data?.origin)}
+              style={{
+                width: "37px",
+                height: "auto",
+                objectFit: "contain",
+              }}
+              className="origin-flag"
+              alt={`Is representative for ${data?.name}`}
+              title={`Image representative for ${data?.name}`}
+            />
+          )}
+        </div>
       </div>
     </Link>
   );
