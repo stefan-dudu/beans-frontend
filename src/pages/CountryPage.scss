@@ -11,6 +11,12 @@
       gap: 1rem;
       .left {
         color: #1f3933;
+
+        .title {
+          display: flex;
+          gap: 10px;
+          align-items: baseline;
+        }
       }
       .article-image {
       }

@@ -3,6 +3,10 @@ import { useParams, useLocation } from "react-router-dom";
 import { CoffeeLocationType } from "../types/Location";
 import "./CountryPage.scss";
 import CountryMap from "../components/map/CountryMap";
+import {
+  findFlagUrlByIso3Code,
+  findFlagUrlByCountryName,
+} from "country-flags-svg-v2";
 
 type Props = {};
 
@@ -44,7 +48,10 @@ const CountryPage = (props: Props) => {
   }, [isoCode]);
 
   console.log("data", data);
-  // console.log("coord", coord);
+  console.log(
+    "findFlagUrlByIso3Code",
+    data?.name && findFlagUrlByIso3Code(data?.name)
+  );
 
   const KeyFacts = () => {
     return (
@@ -81,7 +88,22 @@ const CountryPage = (props: Props) => {
       <div className="article-wrapper">
         <div className="upper-part">
           <div className="left">
-            <h1>{data?.name}</h1>
+            <div className="title">
+              <h1>{data?.name}</h1>
+              {data?.name && findFlagUrlByIso3Code(data?.name) && (
+                <img
+                  src={findFlagUrlByIso3Code(data?.name)}
+                  style={{
+                    width: "44px",
+                    height: "auto",
+                    objectFit: "contain",
+                  }}
+                  className="origin-flag"
+                  alt={`Is representative for ${data?.name}`}
+                  title={`Image representative for ${data?.name}`}
+                />
+              )}
+            </div>
             <div>{data?.subtitle}</div>
           </div>
           <img
