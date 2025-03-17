@@ -47,12 +47,6 @@ const CountryPage = (props: Props) => {
     setCoord([location?.state?.coord?.lng, location?.state?.coord?.lat]);
   }, [isoCode]);
 
-  console.log("data", data);
-  console.log(
-    "findFlagUrlByIso3Code",
-    data?.name && findFlagUrlByIso3Code(data?.name)
-  );
-
   const KeyFacts = () => {
     return (
       <div className="key-facts">

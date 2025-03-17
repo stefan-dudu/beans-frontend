@@ -83,6 +83,7 @@ const BeanCard = ({ data }: { data: Coffee }) => {
                 width: "37px",
                 height: "auto",
                 objectFit: "contain",
+                borderRadius: "15px",
               }}
               className="origin-flag"
               alt={`Is representative for ${data?.name}`}

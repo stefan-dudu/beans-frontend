@@ -26,6 +26,8 @@ import NextFeatures from "./pages/Footer/NextFeatures";
 import CatchPage from "./pages/CatchPage";
 import CountryPage from "./pages/CountryPage";
 import Guides from "./pages/Guides";
+import GuidePage from "./pages/GuidePage";
+
 function App() {
   const loadingData = useSelector(
     (state: RootState) => state.navBar.loadingData
@@ -54,6 +56,7 @@ function App() {
               </Route>
               <Route index element={<Home />} />
               <Route path="/guides" element={<Guides />} />
+              <Route path="/guide/:name" element={<GuidePage />} />
               <Route path="/locations" element={<Locations />} />
               <Route path="/favourites" element={<SavedBeans />} />
               <Route path="/farms/:name" element={<CoffeeFarms />} />
