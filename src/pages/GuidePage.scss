@@ -1,0 +1,15 @@
+.guidesPageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  .guidesPageTitle {
+    color: rgb(0, 98, 65);
+    font-size: 3rem;
+  }
+
+  .guidesPageContent {
+    color: black;
+    padding: 2rem;
+  }
+}

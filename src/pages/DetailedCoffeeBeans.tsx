@@ -474,6 +474,7 @@ const DetailedCoffeeBeans = (props: any) => {
                           width: "37px",
                           height: "auto",
                           objectFit: "contain",
+                          borderRadius: "8px",
                         }}
                         className="origin-flag"
                         alt={`Is representative for ${data?.name}`}

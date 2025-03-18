@@ -17,7 +17,8 @@ type Props = {};
 
 const Explore: React.FC<Props> = (props) => {
   const [data, setData] = useState<CoffeeType[] | null>(null);
-  const [filter, setFilter] = useState("Ratings average");
+  const [sortedData, setSortedData] = useState<CoffeeType[] | null>(null);
+  const [filter, setFilter] = useState("ratingsQuantity");
   const { state } = useLocation();
 
   const navigate = useNavigate();
@@ -69,9 +70,8 @@ const Explore: React.FC<Props> = (props) => {
   }, [isVisible, state, dispatch]);
 
   useEffect(() => {
-    if (data) {
-      const sortedData = [...data];
-      sortedData.sort((a, b) => {
+    if (data && data.length > 0) {
+      const sorted = [...data].sort((a, b) => {
         if (filter === "ratingsQuantity") {
           return b.ratingsQuantity - a.ratingsQuantity;
         } else if (filter === "ratingsAverage") {
@@ -84,10 +84,9 @@ const Explore: React.FC<Props> = (props) => {
           return 0;
         }
       });
-      setData(sortedData);
+      setSortedData(sorted);
     }
-    // }, [filter, data]);
-  }, [filter]);
+  }, [filter, data]);
 
   const filters = [
     {
@@ -144,7 +143,7 @@ const Explore: React.FC<Props> = (props) => {
             className="sort-field"
             select
             // label="Sort"
-            defaultValue="ratingsAverage"
+            defaultValue="ratingsQuantity"
             // helperText="Please select a value"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setFilter(event.target.value);
@@ -174,8 +173,8 @@ const Explore: React.FC<Props> = (props) => {
           </Button>
         </div>
         {loadingData && <SkeletonComponent />}
-        {data &&
-          data.map((el) => {
+        {sortedData &&
+          sortedData.map((el) => {
             return (
               <div key={el._id}>
                 <ExploreRow data={el} />

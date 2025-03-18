@@ -56,7 +56,7 @@ function App() {
               </Route>
               <Route index element={<Home />} />
               <Route path="/guides" element={<Guides />} />
-              <Route path="/guide/:name" element={<GuidePage />} />
+              <Route path="/guide/:slug" element={<GuidePage />} />
               <Route path="/locations" element={<Locations />} />
               <Route path="/favourites" element={<SavedBeans />} />
               <Route path="/farms/:name" element={<CoffeeFarms />} />

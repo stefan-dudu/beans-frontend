@@ -6,24 +6,29 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import farmerImg from "../assets/farmer.avif";
 import { useNavigate, useLocation } from "react-router-dom";
+import { GuideType } from "../types/Guide";
+
 type Props = {
   page: string;
+  guide: GuideType;
 };
 
-const GuideCardComponent = ({ page }: Props) => {
+const GuideCardComponent = ({ page, guide }: Props) => {
   const navigate = useNavigate();
+
+  console.log("from child,xyz ", guide);
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea onClick={() => navigate(`/guide/${page}`)}>
         <CardMedia
           component="img"
           height="140"
-          image={farmerImg}
-          alt="green iguana"
+          image={guide.imageLink}
+          alt={guide.title}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            PAGE: {page}
+            {guide.title}
           </Typography>
         </CardContent>
       </CardActionArea>
