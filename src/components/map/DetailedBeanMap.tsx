@@ -14,9 +14,13 @@ interface Location {
 
 interface DetailedBeanMapProps {
   location: Location[] | undefined;
+  inView: boolean;
 }
 
-const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
+const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({
+  location,
+  inView,
+}) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const [countryCodes, setCountryCodes] = useState<string[]>([]);
 
@@ -117,19 +121,23 @@ const DetailedBeanMap: React.FC<DetailedBeanMapProps> = ({ location }) => {
       }
 
       setTimeout(() => {
-        location &&
-          location[0].coordinates.length > 0 &&
-          map.flyTo({
-            center: firstLocation,
-            zoom: 2,
-            essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-          });
+        if (location && location[0]?.coordinates?.length > 0) {
+          if (typeof inView === "boolean" && inView) {
+            // console.log("Triggering flyTo because inView is true");
+            map.flyTo({
+              center: firstLocation,
+              zoom: 3,
+              essential: true,
+            });
+          } else {
+            // console.log("Skipping flyTo because inView is false");
+          }
+        }
       }, 1500);
-      // console.log(location && location[0].coordinates.length > 0);
 
       return () => map.remove();
     }
-  }, [countryCodes]);
+  }, [countryCodes, inView]);
 
   return location ? <div ref={mapContainer} className="map" /> : null;
 };

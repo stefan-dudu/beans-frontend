@@ -26,6 +26,7 @@ import WrittenReview from "../components/WrittenReview";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Helmet } from "react-helmet-async";
 import { findFlagUrlByCountryName } from "country-flags-svg-v2";
+import { useInView } from "react-intersection-observer";
 
 const DetailedCoffeeBeans = (props: any) => {
   const [data, setData] = useState<CoffeeType | null>(null);
@@ -62,6 +63,11 @@ const DetailedCoffeeBeans = (props: any) => {
     loggedIn && fetchUsersRatingForBean();
     loggedIn && fetchUsersSavedBean();
   }, [id]);
+
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 0.1,
+  });
 
   const fetchDataForPosts = async () => {
     try {
@@ -546,10 +552,13 @@ const DetailedCoffeeBeans = (props: any) => {
                 />
               </div>
               {data?.locations && (
-                <DetailedBeanMap location={data?.locations} key={data?._id} />
+                <DetailedBeanMap
+                  location={data?.locations}
+                  key={data?._id}
+                  inView={inView}
+                />
               )}
-              {/* TODO: CTA */}
-              {/* <div>Call to action: Add review</div> */}
+              {data?.locations && <div ref={ref}></div>}
               <ReviewsComponent />
             </Grid>
           </Grid>
