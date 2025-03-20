@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import "./Guides.scss";
 import { GuideType } from "../types/Guide";
+import Skeleton from "@mui/material/Skeleton";
 
 type Props = {};
 
@@ -12,6 +13,9 @@ const Guides = (props: Props) => {
   const [guides, setGuides] = useState<GuideType[]>([]);
 
   const dispatch = useDispatch<AppDispatch>();
+  const loadingData = useSelector(
+    (state: RootState) => state.navBar.loadingData
+  );
 
   const fetchGuides = async () => {
     try {
@@ -44,17 +48,55 @@ const Guides = (props: Props) => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(isLoading());
     fetchGuides();
   }, []);
 
+  const SkeletonComponent = () => {
+    const skeletons = [];
+
+    skeletons.push(
+      <div className="skeletonItemGuideHome">
+        <Skeleton
+          animation="wave"
+          variant="rounded"
+          width={225}
+          height={"12rem"}
+        />
+        <Skeleton
+          animation="wave"
+          variant="rounded"
+          width={225}
+          height={"12rem"}
+        />
+        <Skeleton
+          animation="wave"
+          variant="rounded"
+          width={225}
+          height={"12rem"}
+        />
+      </div>
+    );
+
+    return <>{skeletons}</>;
+  };
+
   return (
     <div className="guidesParent">
-      <div className="guidesTitle">Tips, guides and helpful informations</div>
-      <div className="guideCardCompWrapper">
-        {guides.map((el) => (
-          <GuideCardComponent page={el.slug} guide={el} />
-        ))}
-      </div>
+      {guides && (
+        <>
+          <div className="guidesTitle">
+            Tips, guides and helpful informations
+          </div>
+          <div className="guideCardCompWrapper">
+            {guides.map((el) => (
+              <GuideCardComponent page={el.slug} guide={el} />
+            ))}
+          </div>
+        </>
+      )}
+      {loadingData && <SkeletonComponent />}
     </div>
   );
 };
