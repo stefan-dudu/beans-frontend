@@ -90,7 +90,12 @@ const GuidePage = (props: Props) => {
           <div className="guidesPageTitle">{guides?.title}</div>
           <img
             src={guides?.imageLink}
-            style={{ width: "20rem", height: "auto", objectFit: "contain" }}
+            style={{
+              width: "100%",
+              maxWidth: "500px",
+              height: "auto",
+              objectFit: "contain",
+            }}
             className="article-image"
             alt={`Is representative for ${guides?.title}`}
             title={`Image representative for ${guides?.title}`}

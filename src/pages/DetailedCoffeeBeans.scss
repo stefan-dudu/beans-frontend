@@ -42,6 +42,7 @@
       gap: 1rem;
       padding: 0.3rem 0rem;
       flex-wrap: wrap;
+
       .propName {
         display: flex;
         color: #1f3933;
@@ -61,6 +62,10 @@
         display: flex;
         gap: 1rem;
       }
+    }
+
+    .clickable {
+      cursor: pointer;
     }
 
     .traits {

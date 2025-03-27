@@ -470,7 +470,10 @@ const DetailedCoffeeBeans = (props: any) => {
                   {!!data?.ratingsAverage && data?.ratingsAverage}
                 </div>
                 {data?.origin && (
-                  <div className="propWrapper">
+                  <div
+                    className="propWrapper clickable"
+                    onClick={() => navigate("/guide/origins")}
+                  >
                     <div className="propName">Origin: </div>
                     <div className="propValue">{data?.origin}</div>
                     {findFlagUrlByCountryName(data?.origin) && (
@@ -490,21 +493,27 @@ const DetailedCoffeeBeans = (props: any) => {
                   </div>
                 )}
                 {data?.type && (
-                  <div className="propWrapper">
+                  <div
+                    className="propWrapper clickable"
+                    onClick={() => navigate("/guide/types")}
+                  >
                     <div className="propName">Type: </div>
                     <div className="propValue">{data?.type}</div>
                   </div>
                 )}
                 {data?.roastLevel && (
-                  <div className="propWrapper">
+                  <div
+                    className="propWrapper clickable"
+                    onClick={() => navigate("/guide/roast-levels")}
+                  >
                     <div className="propName">Roast level: </div>
                     <div className="propValue">{data?.roastLevel}</div>
                   </div>
                 )}
-                {data?.locations &&
+                {/* {data?.locations &&
                   data?.locations[0].coordinates.length > 0 && (
                     <div className="propWrapper">
-                      <div className="propName">Origin: </div>
+                      <div className="propName">Variety: </div>
                       <div className="propValue">
                         {data?.locations &&
                         data?.locations[0].coordinates.length > 1
@@ -512,28 +521,40 @@ const DetailedCoffeeBeans = (props: any) => {
                           : "Single origin"}
                       </div>
                     </div>
-                  )}
+                  )} */}
                 {data?.processing && (
-                  <div className="propWrapper">
+                  <div
+                    className="propWrapper clickable"
+                    onClick={() => navigate("/guide/processing")}
+                  >
                     <div className="propName">Processing: </div>
                     <div className="propValue">{data?.processing}</div>
                   </div>
                 )}
                 {data?.qGrading && (
-                  <div className="propWrapper">
+                  <div
+                    className="propWrapper clickable"
+                    onClick={() => navigate("/guide/score")}
+                  >
                     <div className="propName">QGrading: </div>
                     <div className="propValue">{data?.qGrading}</div>
                   </div>
                 )}
                 {data && data?.altitude > 200 && (
-                  <div className="propWrapper">
+                  <div
+                    className="propWrapper clickable"
+                    onClick={() => navigate("/guide/altitude")}
+                  >
                     <div className="propName">Altitude:</div>
                     <div className="propValue">{data?.altitude} m</div>
                   </div>
                 )}
                 <Traits />
                 {data && data?.flavorNotes.length > 0 && (
-                  <div className="propWrapper">
+                  <div
+                    className="propWrapper clickable"
+                    onClick={() => navigate("/guide/notes")}
+                  >
                     <div className="propName">Flavour notes: </div>
                     <div className="flavorNotes">
                       {data &&
