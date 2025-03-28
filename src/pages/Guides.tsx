@@ -85,6 +85,7 @@ const Guides = (props: Props) => {
 
   return (
     <div className="guidesParent">
+      <div className="guidesTitle">Tips, guides and helpful informations</div>
       {loadingData || loading ? (
         <SkeletonComponent />
       ) : (
