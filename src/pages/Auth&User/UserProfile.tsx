@@ -8,6 +8,10 @@ import userPic from "../../assets/user.png";
 import Button from "@mui/material/Button";
 import "./UserProfile.scss";
 import { Helmet } from "react-helmet-async";
+import AbcIcon from "@mui/icons-material/Abc";
+import AdUnitsIcon from "@mui/icons-material/AdUnits";
+import AcUnitIcon from "@mui/icons-material/AcUnit";
+import AddTaskIcon from "@mui/icons-material/AddTask";
 
 type User = {
   email: string;
@@ -16,12 +20,18 @@ type User = {
   _id: string;
 };
 
+const buttons = [
+  { id: 1, label: "Overview", icon: <AbcIcon /> },
+  { id: 2, label: "Reviews", icon: <AdUnitsIcon /> },
+  { id: 3, label: "Equipment", icon: <AcUnitIcon /> },
+  { id: 4, label: "Settings", icon: <AddTaskIcon /> },
+];
+
 const UserProfile: React.FC = () => {
   const [data, setData] = useState<User | null>(null);
+  const [activeSection, setActiveSection] = useState<number>(1); // Default to first button
 
   const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
-
-  useEffect(() => {}, []);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -31,54 +41,23 @@ const UserProfile: React.FC = () => {
         const response = await fetch(
           `${process.env.REACT_APP_URL}api/v1/users/me`,
           {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            // TODO: ESSENTIAL FOR jwt
+            headers: { "Content-Type": "application/json" },
             credentials: "include",
           }
         );
-        if (!response.ok) {
-          throw new Error(`HTTP error: Status ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
         const { data } = await response.json();
         setData(data.data);
       } catch (err: any) {
-        if (err && !loggedIn) {
-          // console.log("redirect to login");
-          navigate(`/login`);
-        }
+        if (err && !loggedIn) navigate(`/login`);
         setData(null);
-      } finally {
       }
     };
 
     fetchUserData();
   }, []);
 
-  const fetchInReviewBeans = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_URL}api/v1/beans?inReview=true`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // TODO: ESSENTIAL FOR jwt
-          credentials: "include",
-        }
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error: Status ${response.status}`);
-      }
-      const { data } = await response.json();
-      // console.log("in review data", data.data);
-      // setData(data.data);
-    } catch (err: any) {
-      // setData(null);
-    } finally {
-    }
-  };
+  console.log("data", data);
 
   return (
     <div className="profile-wrapper">
@@ -90,39 +69,43 @@ const UserProfile: React.FC = () => {
         />
         <link rel="canonical" href={`/profile`} />
       </Helmet>
-      <img
-        src={userPic}
-        width="40"
-        height="40"
-        className="d-inline-block align-top"
-        alt="User profile pic"
-        loading="lazy"
-        title="user profile picture"
-      />
-      <div className="right-side">
-        <div className="propWrapper">
-          <div className="propName">Name</div>
-          <div className="propValue">{data && data?.name}</div>
-        </div>
-        <div className="propWrapper">
-          <div className="propName">Email</div>
-          <div className="propValue">{data && data?.email}</div>
-        </div>
-        <div className="propWrapper">
-          <div className="propName">Brewing method</div>
-          <div className="propValue">AeroPress</div>
-        </div>
-        <div className="propWrapper">
-          <div className="propName">Favourite origin</div>
-          <div className="propValue">Ethiopian</div>
-        </div>
-        <div className="propWrapper">
-          <div className="propName">Coffee grinder</div>
-          <div className="propValue">Lelit PL71</div>
-        </div>
-        {/* <div>name : {data && data?.name}</div>
-        <div>role : {data && data?.role}</div>
-        <div>id : {data && data?._id}</div> */}
+
+      <div className="profile-top-component">
+        <img
+          src={userPic}
+          width="40"
+          height="40"
+          className="d-inline-block align-top"
+          alt="User profile pic"
+          loading="lazy"
+          title="user profile picture"
+        />
+        <div>{data?.name}</div>
+      </div>
+
+      {/* Navigation buttons */}
+      <div className="profile-middle-buttons-component">
+        {buttons.map(({ id, label, icon }) => (
+          <button
+            key={id}
+            className={`nav-button ${activeSection === id ? "active" : ""}`}
+            onClick={() => setActiveSection(id)}
+          >
+            <div className="icon-circle">{icon}</div>
+            <span>{label}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Content sections */}
+      <div className="profile-bottom-component">
+        {activeSection === 1 && <h2>Work in progress - Overview Content</h2>}
+        {activeSection === 2 && <h2>Work in progress - Reviews Content</h2>}
+        {activeSection === 3 && <h2>Work in progress - Equipment Content</h2>}
+        {activeSection === 4 && <h2>Work in progress - Settings Content</h2>}
+      </div>
+
+      <div className="LATER-USE-DIV">
         <Button
           variant="outlined"
           color="error"
@@ -134,15 +117,12 @@ const UserProfile: React.FC = () => {
         >
           Log out
         </Button>
-
         {data?.role === "admin" && (
           <button onClick={() => navigate(`/locations`, { replace: true })}>
             To review beans page
           </button>
         )}
       </div>
-
-      {/* <SavedBeans /> */}
     </div>
   );
 };
