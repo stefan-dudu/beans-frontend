@@ -11,7 +11,7 @@ type Props = {};
 
 const Guides = (props: Props) => {
   const [guides, setGuides] = useState<GuideType[]>([]);
-
+  const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatch<AppDispatch>();
   const loadingData = useSelector(
     (state: RootState) => state.navBar.loadingData
@@ -43,6 +43,7 @@ const Guides = (props: Props) => {
       //   navigate(`/login`, { replace: true });
       // }
     } finally {
+      setLoading(false);
       dispatch(notLoading());
     }
   };
@@ -84,19 +85,17 @@ const Guides = (props: Props) => {
 
   return (
     <div className="guidesParent">
-      {guides && (
-        <>
-          <div className="guidesTitle">
-            Tips, guides and helpful informations
-          </div>
+      {loadingData || loading ? (
+        <SkeletonComponent />
+      ) : (
+        guides && (
           <div className="guideCardCompWrapper">
             {guides.map((el) => (
               <GuideCardComponent page={el.slug} guide={el} />
             ))}
           </div>
-        </>
+        )
       )}
-      {loadingData && <SkeletonComponent />}
     </div>
   );
 };
