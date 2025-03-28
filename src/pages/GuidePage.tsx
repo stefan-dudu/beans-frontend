@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Markdown from "react-markdown";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { isLoading, notLoading } from "../store/navBar/NavBarSlice";
-import { AppDispatch } from "../store/store";
+import { AppDispatch, RootState } from "../store/store";
 import { GuideType } from "../types/Guide";
+import Skeleton from "@mui/material/Skeleton";
 
 import "./GuidePage.scss";
 
@@ -15,6 +16,9 @@ const GuidePage = (props: Props) => {
   const [guides, setGuides] = useState<GuideType>();
 
   const dispatch = useDispatch<AppDispatch>();
+  const loadingData = useSelector(
+    (state: RootState) => state.navBar.loadingData
+  );
 
   const fetchCurrentGuide = async () => {
     try {
@@ -48,22 +52,59 @@ const GuidePage = (props: Props) => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(isLoading());
     fetchCurrentGuide();
   }, []);
 
+  const SkeletonComponent = () => {
+    const skeletons = [];
+
+    skeletons.push(
+      <div className="skeletonItemGuide">
+        <Skeleton animation="wave" variant="text" width={"30%"} />
+
+        <Skeleton
+          animation="wave"
+          variant="rounded"
+          width={200}
+          height={"20rem"}
+        />
+        <Skeleton animation="wave" variant="text" width={"90%"} />
+        <Skeleton animation="wave" variant="text" width={"80vw"} />
+        <Skeleton animation="wave" variant="text" width={"80vw"} />
+        <Skeleton animation="wave" variant="text" width={"80vw"} />
+        <Skeleton animation="wave" variant="text" width={"80vw"} />
+        <Skeleton animation="wave" variant="text" width={"80vw"} />
+      </div>
+    );
+
+    return <>{skeletons}</>;
+  };
+
   return (
     <div className="guidesPageWrapper">
-      <div className="guidesPageTitle">{guides?.title}</div>
-      <img
-        src={guides?.imageLink}
-        style={{ width: "20rem", height: "auto", objectFit: "contain" }}
-        className="article-image"
-        alt={`Is representative for ${guides?.title}`}
-        title={`Image representative for ${guides?.title}`}
-      />
-      <div className="guidesPageContent">
-        <Markdown>{guides?.content}</Markdown>
-      </div>
+      {loadingData && <SkeletonComponent />}
+      {guides && (
+        <>
+          <div className="guidesPageTitle">{guides?.title}</div>
+          <img
+            src={guides?.imageLink}
+            style={{
+              width: "100%",
+              maxWidth: "500px",
+              height: "auto",
+              objectFit: "contain",
+            }}
+            className="article-image"
+            alt={`Is representative for ${guides?.title}`}
+            title={`Image representative for ${guides?.title}`}
+          />
+          <div className="guidesPageContent">
+            <Markdown>{guides?.content}</Markdown>
+          </div>
+        </>
+      )}
     </div>
   );
 };

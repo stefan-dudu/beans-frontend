@@ -6,17 +6,27 @@ import TextField from "@mui/material/TextField";
 import { login } from "../../store/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo2.webp";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import { isLoading, notLoading } from "../../store/navBar/NavBarSlice";
 
 import "./Login.scss";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [severity, setSeverity] = useState<
+    "success" | "error" | "info" | "warning" | undefined
+  >(undefined);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [open, setOpen] = React.useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const loginCall = async () => {
     try {
+      dispatch(isLoading());
       const response = await fetch(
         `${process.env.REACT_APP_URL}api/v1/users/login`,
         {
@@ -42,13 +52,24 @@ const Login = () => {
             id: String(data?.data.user._id),
           })
         );
+        setOpen(true);
+        setSeverity("success");
+        setAlertMessage("Login successful");
 
         localStorage.setItem("token", data.token); // Store token in local storage
         navigate(-1);
       }
+
+      if (data.status === "error") {
+        setOpen(true);
+        setSeverity("error");
+        setAlertMessage(`There was an issue. Error: ${data?.message}`);
+      }
     } catch (error) {
       // enter your logic for when there is an error (ex. error toast)
       console.log(error);
+    } finally {
+      dispatch(notLoading());
     }
   };
 
@@ -60,8 +81,29 @@ const Login = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
     <div className="pageWrapper ">
+      <div className="snackbar">
+        <Snackbar open={open} autoHideDuration={7000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity={severity}
+            sx={{ width: "100%" }}
+          >
+            {alertMessage}
+          </Alert>
+        </Snackbar>
+      </div>
       <div className="text">
         <div>Sign in to your account</div>
       </div>

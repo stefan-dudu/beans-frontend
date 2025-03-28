@@ -1,4 +1,12 @@
 .guidesParent {
+  .skeletonItemGuideHome {
+    display: flex;
+    justify-items: center;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
   .guidesTitle {
     margin-bottom: 2rem;
   }

@@ -16,13 +16,12 @@ type Props = {
 const GuideCardComponent = ({ page, guide }: Props) => {
   const navigate = useNavigate();
 
-  console.log("from child,xyz ", guide);
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 350 }}>
       <CardActionArea onClick={() => navigate(`/guide/${page}`)}>
         <CardMedia
           component="img"
-          height="140"
+          height="250"
           image={guide.imageLink}
           alt={guide.title}
         />

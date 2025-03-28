@@ -84,15 +84,14 @@ function NavigationBar() {
                 <h3>Explore</h3>
               </Nav.Link>
 
-              {/* TODO: This page is done but I have to do later: show it only if the user is logged? Got to reasearch it */}
-              {/* <Nav.Link
+              <Nav.Link
                 as={NavLink}
                 to="/favourites"
                 onClick={() => dispatch(minimize())}
                 className="link-text"
               >
                 <h3>Favourites</h3>
-              </Nav.Link> */}
+              </Nav.Link>
             </Nav>
           </Container>
           {!signedIn ? (

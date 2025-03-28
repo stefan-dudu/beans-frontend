@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState, useEffect } from "react";
+import React, { SyntheticEvent, useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./DynamicSearchBar.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,9 +6,7 @@ import { AppDispatch, RootState } from "../../store/store";
 import { minimize } from "../../store/navBar/NavBarSlice";
 import catchBeanBag from "../../assets/catchBeanBag.webp";
 import TextField from "@mui/material/TextField";
-
 import SearchIcon from "@mui/icons-material/Search";
-
 import Box from "@mui/material/Box";
 
 interface SearchResult {
@@ -25,11 +23,10 @@ const DynamicSearchBar: React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const signedIn = useSelector((state: RootState) => state.auth.loggedIn);
-
   const navigate = useNavigate();
+  const wrapperRef = useRef<HTMLDivElement>(null); // Ref for detecting outside clicks
 
   useEffect(() => {
-    // Function to fetch data based on search term
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -44,14 +41,28 @@ const DynamicSearchBar: React.FC = () => {
       setLoading(false);
     };
 
-    // Trigger search only when searchTerm has at least 2 characters
     if (searchTerm.trim().length >= 2) {
       fetchData();
     } else {
-      // Reset search results if searchTerm is empty or less than 2 characters
       setSearchResults([]);
     }
   }, [searchTerm]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        setSearchTerm("");
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dispatch]);
 
   const redirectToLogin = () => {
     navigate(`/login`, { replace: true });
@@ -66,6 +77,7 @@ const DynamicSearchBar: React.FC = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
+
   function addDefaultSrc(e: SyntheticEvent<HTMLImageElement, Event>) {
     e.currentTarget.src = catchBeanBag;
   }
@@ -73,38 +85,31 @@ const DynamicSearchBar: React.FC = () => {
   const SearchResultRow: React.FC<{ item: SearchResult; index: number }> = ({
     item,
     index,
-  }) => {
-    // console.log("item", item);
-    return (
-      <Link to={`/coffee/${item._id}`} style={{ width: "100%" }}>
-        {/* TODO: close navbar after been redirected to page */}
-        <div
-          key={index}
-          onClick={() => {
-            setSearchTerm("");
-            dispatch(minimize());
-          }}
-          className="SearchResultRow"
-        >
-          <img
-            src={item?.image || catchBeanBag}
-            style={{ width: "5rem", height: "5rem", marginLeft: "10px" }}
-            // width="10rem"
-            // height="10rem"
-            // className="d-inline-block align-top"
-            alt="Pic of the coffee bean that is the result of search bar"
-            onError={addDefaultSrc}
-            loading="lazy"
-            title="Image of the coffee bag"
-          />
-          <div className="rightSide">
-            <p className="title">{item.name}</p>
-            <p className="subtitle">by {item.brand}</p>
-          </div>
+  }) => (
+    <Link to={`/coffee/${item._id}`} style={{ width: "100%" }}>
+      <div
+        key={index}
+        onClick={() => {
+          setSearchTerm("");
+          dispatch(minimize());
+        }}
+        className="SearchResultRow"
+      >
+        <img
+          src={item?.image || catchBeanBag}
+          style={{ width: "5rem", height: "5rem", marginLeft: "10px" }}
+          alt="Pic of the coffee bean that is the result of search bar"
+          onError={addDefaultSrc}
+          loading="lazy"
+          title="Image of the coffee bag"
+        />
+        <div className="rightSide">
+          <p className="title">{item.name}</p>
+          <p className="subtitle">by {item.brand}</p>
         </div>
-      </Link>
-    );
-  };
+      </div>
+    </Link>
+  );
 
   const handleCreateMissingBean = () => {
     setSearchTerm("");
@@ -113,7 +118,7 @@ const DynamicSearchBar: React.FC = () => {
   };
 
   return (
-    <div className="SearchWrapper">
+    <div className="SearchWrapper" ref={wrapperRef}>
       <Box sx={{ display: "flex", alignItems: "flex-end" }}>
         <SearchIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
         <TextField
@@ -128,10 +133,9 @@ const DynamicSearchBar: React.FC = () => {
         <div className="resultWrapper">
           <p className="loadingText">Loading...</p>
         </div>
-      ) : searchTerm.trim().length >= 2 && // Display results only if searchTerm has at least 2 characters
-        searchResults.length === 0 ? (
+      ) : searchTerm.trim().length >= 2 && searchResults.length === 0 ? (
         <div className="resultWrapper">
-          <p className="loadingText" onClick={() => handleCreateMissingBean()}>
+          <p className="loadingText" onClick={handleCreateMissingBean}>
             Add new coffee!
           </p>
         </div>

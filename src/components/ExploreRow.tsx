@@ -153,7 +153,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
   return (
     <div className="wrapper" onClick={() => RowClickHandler()}>
       <Box sx={{ flexGrow: 1 }} className="beanCard">
-        <Grid container spacing={2}>
+        <Grid container spacing={0.5}>
           <Grid item xs={5} sm={3} className="imageGrid">
             <img
               src={data?.image || catchBeanBag}
@@ -184,7 +184,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
                     precision={0.5}
                     icon={<LocalCafeIcon fontSize="inherit" />}
                     emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-                    sx={{ fontSize: 30 }}
+                    sx={{ fontSize: 25 }}
                   />
 
                   <div className="reviewsNo">{data?.ratingsAverage} </div>
@@ -219,6 +219,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
                         variant="outlined"
                         label={`${data?.type}`}
                         className="chip-element"
+                        style={{ fontSize: "14px" }}
                       />
                     </div>
                   )}
@@ -230,6 +231,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
                         variant="outlined"
                         label={`${data?.roastLevel} roast`}
                         className="chip-element"
+                        style={{ fontSize: "14px" }}
                       />
                     </div>
                   )}
