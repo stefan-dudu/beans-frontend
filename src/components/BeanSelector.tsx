@@ -14,13 +14,18 @@ import { AppDispatch, RootState } from "../store/store";
 import { notLoading, isLoading } from "../store/navBar/NavBarSlice";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import Chip from "@mui/material/Chip";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
 
 // Define types
 type Props = {};
 
 const BeanSelector = (props: Props) => {
   // State variables
-  const [roastLevel, setRoastLevel] = useState("");
+  const [roastLevel, setRoastLevel] = useState("Medium");
+  const [flavorNotes, setFlavorNotes] = useState<string[]>([]);
   const [data, setData] = useState<CoffeeType[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -46,6 +51,25 @@ const BeanSelector = (props: Props) => {
     { value: 100, label: "Dark" },
   ];
 
+  const falvorOptions = [
+    "Earthy",
+    "Rich",
+    "Winey",
+    "Smoky",
+    "Caramel",
+    "Fruity",
+    "Herbal",
+    "Citrus",
+    "Berry",
+    "Floral",
+    "Bold",
+    "Chocolate",
+    "Spicy",
+    "Delicate",
+    "Nutty",
+    "Cocoa",
+  ];
+
   // Function to fetch bean data
   const fetchBeansData = async () => {
     try {
@@ -60,6 +84,7 @@ const BeanSelector = (props: Props) => {
           body: JSON.stringify({
             roastLevel,
             type: checkedItems,
+            flavorNotes,
           }),
         }
       );
@@ -208,6 +233,41 @@ const BeanSelector = (props: Props) => {
               label="Blend"
             />
           </FormGroup>
+        </div>
+
+        <div className="flavorNotes">
+          <Stack>
+            <Autocomplete
+              multiple
+              id="tags-standard"
+              options={falvorOptions}
+              onChange={(event, newValue) => setFlavorNotes(newValue)}
+              defaultValue={[]}
+              renderTags={(value: string[], getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
+                    label={option}
+                    {...getTagProps({ index })}
+                    sx={{ backgroundColor: "palegreen", color: "black" }} // Custom chip style
+                  />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  label="Flavor Notes"
+                  placeholder="Select flavors"
+                  sx={{
+                    "& label.Mui-focused": { color: COLORS.darkGreen },
+                    "& .MuiInput-underline:after": {
+                      borderBottomColor: COLORS.darkGreen,
+                    },
+                  }}
+                />
+              )}
+            />
+          </Stack>
         </div>
         {/* Button to trigger bean search */}
         <div className="findButton">
