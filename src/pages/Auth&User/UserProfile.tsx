@@ -123,6 +123,10 @@ const UserProfile: React.FC = () => {
           </button>
         )}
       </div>
+      <h2>
+        If you found this page, it means you really like our website. Happy to
+        see that. Currently we are working on implementing this feature ✌️
+      </h2>
     </div>
   );
 };

@@ -21,7 +21,7 @@ const GuideCardComponent = ({ page, guide }: Props) => {
       <CardActionArea onClick={() => navigate(`/guide/${page}`)}>
         <CardMedia
           component="img"
-          height="250"
+          height="350"
           image={guide.imageLink}
           alt={guide.title}
         />
