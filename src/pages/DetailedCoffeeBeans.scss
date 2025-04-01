@@ -35,6 +35,17 @@
       justify-content: flex-start;
       flex-direction: row;
       gap: 1rem;
+
+      .ratingsAverage {
+        color: black;
+        font-size: 20px;
+      }
+
+      .reviewsNo {
+        font-size: 17px;
+        color: darkgrey;
+        font-weight: 400;
+      }
     }
     .propWrapper {
       display: flex;

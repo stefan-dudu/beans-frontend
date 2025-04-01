@@ -79,10 +79,22 @@
           display: flex;
           align-items: center;
           margin: 10px 0px;
-          justify-content: space-between;
-          width: 95%;
+          justify-content: flex-start;
+          flex-wrap: wrap;
+          max-width: 200px;
           gap: 7px;
           font-size: 18px;
+
+          .ratingsAverage {
+            color: black;
+            font-size: 18px;
+          }
+
+          .reviewsNo {
+            font-size: 15px;
+            color: darkgrey;
+            font-weight: 400;
+          }
         }
 
         .producer {
@@ -135,8 +147,7 @@
         gap: 1rem;
         justify-content: center;
         flex-direction: row;
-
-        .rating {
+        background:red .rating {
           color: #1f3933;
         }
       }
@@ -151,6 +162,7 @@
           align-items: center;
           gap: 1rem;
           justify-content: center;
+          background: green;
         }
       }
     }

@@ -154,7 +154,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
     <div className="wrapper" onClick={() => RowClickHandler()}>
       <Box sx={{ flexGrow: 1 }} className="beanCard">
         <Grid container spacing={0.5}>
-          <Grid item xs={5} sm={3} className="imageGrid">
+          <Grid item xs={6} sm={3} className="imageGrid">
             <img
               src={data?.image || catchBeanBag}
               className="d-inline-block align-top beanImage"
@@ -166,7 +166,7 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
               // height={100}
             />
           </Grid>
-          <Grid item xs={7} sm={6} className="beanInfoGrid">
+          <Grid item xs={6} sm={6} className="beanInfoGrid">
             <div className="beanInfo">
               <div className="name">{data?.name}</div>
 
@@ -187,7 +187,10 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
                     sx={{ fontSize: 25 }}
                   />
 
-                  <div className="reviewsNo">{data?.ratingsAverage} </div>
+                  <span className="ratingsAverage">
+                    {data?.ratingsAverage.toFixed(1)}
+                  </span>
+                  <span className="reviewsNo">({data?.ratingsQuantity})</span>
                 </div>
                 {data?.origin && (
                   // ORIGIN

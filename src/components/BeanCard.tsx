@@ -72,9 +72,12 @@ const BeanCard = ({ data }: { data: Coffee }) => {
             emptyIcon={<LocalCafeIcon fontSize="inherit" />}
             sx={{ fontSize: 25 }}
           />
-          <h3 className="reviewsNo">{data.ratingsQuantity}</h3>
+          <span className="ratingsAverage">
+            {data.ratingsAverage.toFixed(1)}
+          </span>
+          <span className="reviewsNo">({data.ratingsQuantity})</span>
         </div>
-        <div className="ratingsAndNo">
+        <div className="originWrapper">
           <div className="origin">{data.origin}</div>
           {findFlagUrlByCountryName(data?.origin) && (
             <img

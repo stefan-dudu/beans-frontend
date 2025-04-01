@@ -77,18 +77,32 @@
       display: flex;
       flex-direction: row;
       gap: 10px;
-      align-items: stretch;
+      align-items: center;
+      position: relative;
+      left: -13px;
+      margin-bottom: 0.5rem;
+
+      .ratingsAverage {
+        color: black;
+        font-size: 20px;
+      }
 
       .reviewsNo {
-        font-size: 20px;
+        font-size: 17px;
         color: darkgrey;
         font-weight: 400;
       }
     }
 
-    .origin {
-      font-size: 1.2rem;
-      font-weight: 400;
+    .originWrapper {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      align-items: center;
+      .origin {
+        font-size: 1.2rem;
+        font-weight: 400;
+      }
     }
   }
 }

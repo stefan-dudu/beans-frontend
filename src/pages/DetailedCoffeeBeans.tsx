@@ -467,7 +467,10 @@ const DetailedCoffeeBeans = (props: any) => {
                       readOnly
                     />
                   )}
-                  {!!data?.ratingsAverage && data?.ratingsAverage}
+                  <span className="ratingsAverage">
+                    {data?.ratingsAverage.toFixed(1)}
+                  </span>
+                  <span className="reviewsNo">({data?.ratingsQuantity})</span>
                 </div>
                 {data?.origin && (
                   <div
