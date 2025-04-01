@@ -2,25 +2,59 @@
   display: flex;
   justify-content: space-evenly;
   padding-top: 2rem;
-  .right-side {
-    gap: 1rem;
-    display: flex;
-    flex-direction: column;
-    .propWrapper {
-      display: flex;
-      align-items: baseline;
-      gap: 1rem;
-      padding: 0.3rem 0rem;
-      .propName {
-        color: #1f3933;
-        font-size: 1.5rem;
-        font-weight: 600;
-      }
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 
-      .propValue {
-        color: #006241;
-        font-size: 1.3rem;
-      }
+  .profile-top-component {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .profile-middle-buttons-component {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 0.5rem;
+
+    .nav-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: white;
+      transition: 0.3s;
+    }
+
+    .icon-circle {
+      width: 50px;
+      height: 50px;
+      background-color: lightgrey; /* White background for the circle */
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+      transition: 0.3s;
+    }
+
+    .nav-button.active .icon-circle {
+      background-color: darkgreen; /* Highlight active button */
+      color: white;
+    }
+
+    .nav-button span {
+      font-size: 14px;
+      font-weight: bold;
+      color: darkgreen; /* Text color */
+    }
+
+    .nav-button:hover {
+      color: lightgreen; /* Hover effect */
     }
   }
 }
