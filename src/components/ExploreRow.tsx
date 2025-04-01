@@ -150,6 +150,21 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
     }
   };
 
+  const getRoastLevelColor = (roastLevel: string) => {
+    switch (roastLevel) {
+      case "Light":
+        return "#D7B29E"; // Light brown for light roast
+      case "Medium":
+        return "#8B5C42"; // Medium brown for medium roast
+      case "Medium-Dark":
+        return "#6F3D2E"; // Medium dark brown for medium dark roast
+      case "Dark":
+        return "#3E2B1C"; // Dark brown for dark roast
+      default:
+        return "#B4A89B"; // Default color if roastLevel is undefined
+    }
+  };
+
   return (
     <div className="wrapper" onClick={() => RowClickHandler()}>
       <Box sx={{ flexGrow: 1 }} className="beanCard">
@@ -234,7 +249,11 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
                         variant="outlined"
                         label={`${data?.roastLevel} roast`}
                         className="chip-element"
-                        style={{ fontSize: "14px" }}
+                        style={{
+                          fontSize: "14px",
+                          backgroundColor: getRoastLevelColor(data?.roastLevel), // Dynamic background color based on roast level
+                          color: "white", // Text color
+                        }}
                       />
                     </div>
                   )}

@@ -47,7 +47,8 @@ const BeanSelector = (props: Props) => {
   // Marks for the slider
   const marks = [
     { value: 0, label: "Light" },
-    { value: 50, label: "Medium" },
+    { value: 33, label: "Medium" },
+    { value: 66, label: "Medium-Dark" },
     { value: 100, label: "Dark" },
   ];
 
@@ -124,8 +125,11 @@ const BeanSelector = (props: Props) => {
       case 0:
         setRoastLevel("Light");
         break;
-      case 50:
+      case 33:
         setRoastLevel("Medium");
+        break;
+      case 66:
+        setRoastLevel("Medium-Dark");
         break;
       case 100:
         setRoastLevel("Dark");
@@ -164,10 +168,50 @@ const BeanSelector = (props: Props) => {
     fetchBeansData();
   };
 
+  const getRoastLevelColor = (roastLevel: string) => {
+    switch (roastLevel) {
+      case "Light":
+        return "#D7B29E"; // Light brown for light roast
+      case "Medium":
+        return "#8B5C42"; // Medium brown for medium roast
+      case "Medium-Dark":
+        return "#6F3D2E"; // Medium dark brown for medium dark roast
+      case "Dark":
+        return "#3E2B1C"; // Dark brown for dark roast
+      default:
+        return "#B4A89B"; // Default color if roastLevel is undefined
+    }
+  };
+
+  const getBoxShadowColor = (roastLevel: string) => {
+    switch (roastLevel) {
+      case "Light":
+        return "rgba(194, 140, 94, 0.6)"; // Light roast brown
+      case "Medium":
+        return "rgba(135, 90, 50, 0.6)"; // Medium roast brown
+      case "Medium-Dark":
+        return "rgba(102, 57, 25, 0.6)"; // Medium-Dark roast brown
+      case "Dark":
+        return "rgba(57, 28, 10, 0.6)"; // Dark roast brown
+      default:
+        return "rgba(92, 92, 92, 0.6)"; // Default gray (fallback)
+    }
+  };
+
+  const boxShadow = getBoxShadowColor(roastLevel);
+
   return (
     // Have a shodown this card for selector
-    <div className="beanSelectorWrapper">
-      <div className="selector-title">
+    <div
+      className="beanSelectorWrapper"
+      style={{
+        boxShadow: `10px 20px 55px 0 ${boxShadow}`,
+      }}
+    >
+      <div
+        className="selector-title"
+        style={{ color: getRoastLevelColor(roastLevel) }}
+      >
         Roast finder: Discover your ideal blend
       </div>
       <Box className="box">
@@ -176,11 +220,34 @@ const BeanSelector = (props: Props) => {
           <h2>Roast level</h2>
           <Slider
             aria-label="Roast Level"
-            defaultValue={50}
+            defaultValue={33}
             getAriaValueText={(value: number) => `${value}°C`}
             step={null}
             marks={marks}
             onChange={handleSliderChange}
+            sx={{
+              "& .MuiSlider-thumb": {
+                backgroundColor: getRoastLevelColor(roastLevel), // Thumb color based on roast level
+                border: `2px solid ${getRoastLevelColor(roastLevel)}`, // Adding border to the thumb
+              },
+              "& .MuiSlider-rail": {
+                backgroundColor: getRoastLevelColor(roastLevel), // Rail color based on roast level
+                opacity: 0.3, // Make the rail a bit lighter (optional)
+              },
+              "& .MuiSlider-track": {
+                backgroundColor: getRoastLevelColor(roastLevel),
+                border: `1px solid ${getRoastLevelColor(roastLevel)}`, // Track color based on roast level
+              },
+              "& .MuiSlider-mark": {
+                backgroundColor: getRoastLevelColor(roastLevel), // Marks color based on roast level
+                width: "6px",
+                height: "6px",
+                borderRadius: "3px",
+              },
+              "& .MuiSlider-markLabel": {
+                color: getRoastLevelColor(roastLevel), // Mark labels color based on roast level
+              },
+            }}
           />
         </div>
         <div className="type">
@@ -193,9 +260,9 @@ const BeanSelector = (props: Props) => {
                   checked={checkedItems.includes("Arabica")}
                   onChange={() => handleCheckboxChange("Arabica")}
                   sx={{
-                    color: COLORS.darkGreen,
+                    color: getRoastLevelColor(roastLevel),
                     "&.Mui-checked": {
-                      color: COLORS.darkGreen,
+                      color: getRoastLevelColor(roastLevel),
                     },
                   }}
                 />
@@ -208,9 +275,9 @@ const BeanSelector = (props: Props) => {
                   checked={checkedItems.includes("Robusta")}
                   onChange={() => handleCheckboxChange("Robusta")}
                   sx={{
-                    color: COLORS.darkGreen,
+                    color: getRoastLevelColor(roastLevel),
                     "&.Mui-checked": {
-                      color: COLORS.darkGreen,
+                      color: getRoastLevelColor(roastLevel),
                     },
                   }}
                 />
@@ -223,9 +290,9 @@ const BeanSelector = (props: Props) => {
                   checked={checkedItems.includes("Blend")}
                   onChange={() => handleCheckboxChange("Blend")}
                   sx={{
-                    color: COLORS.darkGreen,
+                    color: getRoastLevelColor(roastLevel),
                     "&.Mui-checked": {
-                      color: COLORS.darkGreen,
+                      color: getRoastLevelColor(roastLevel),
                     },
                   }}
                 />
