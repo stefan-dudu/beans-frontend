@@ -398,10 +398,8 @@ const DetailedCoffeeBeans = (props: any) => {
         />
         <link rel="canonical" href={`/coffee`} />
       </Helmet>
-      {loadingData ? (
-        // {true ? (
-        <SkeletonComponent />
-      ) : (
+      {loadingData && <SkeletonComponent />}
+      {data && (
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4} className="imageBookmarkRating">
