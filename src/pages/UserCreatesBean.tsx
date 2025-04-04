@@ -30,13 +30,11 @@ import Checkbox from "@mui/material/Checkbox";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import AWS from "aws-sdk";
+import { countries } from "../data/countries";
+import { topFlavors } from "../data/coffeeFalvors";
+import { coffeeProcessingMethods } from "../data/coffeeProcessingMethods";
 
 type Props = {};
-
-// interface Coordinates {
-//   lng: number;
-//   lat: number;
-// }
 
 type Coordinates = [number, number][];
 
@@ -48,16 +46,17 @@ const initialCoordinates: Coordinates = [
 const UserCreatesBean = (props: Props) => {
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
-  const [origin, setOrigin] = useState("");
+  const [origin, setOrigin] = useState<string[]>(["Brazil"]);
   const [type, setType] = useState("Arabica");
   const [roastLevel, setRoastLevel] = useState("Medium");
-  const [processing, setProcessing] = useState("");
-  const [qGrading, setQgrading] = useState("");
-  const [altitude, setAltitude] = useState(0);
+  const [processing, setProcessing] = useState<string | null>("Washed (Wet)");
+  const [qGrading, setQgrading] = useState<number | "">("");
+  const [altitude, setAltitude] = React.useState<number[]>([800, 1500]);
   const [body, setBody] = useState(0);
   const [acidity, setAcidity] = useState(0);
   const [sweetness, setSweetness] = useState(0);
-  const [flavor, setFlavor] = useState<string[]>(["Nutty"]);
+  const [bitterness, setBitterness] = useState(0);
+  const [flavor, setFlavor] = useState<string[]>([""]);
   const [file, setFile] = useState<File | null>(null);
   const [pictureURL, setPictureURL] = useState("");
   const [coord, setCoord] = useState<Coordinates>(initialCoordinates);
@@ -95,27 +94,10 @@ const UserCreatesBean = (props: Props) => {
     width: 1,
   });
 
-  const topFlavors = [
-    "Chocolate",
-    "Caramel",
-    "Nutty",
-    "Fruity",
-    "Earthy",
-    "Citrus",
-    "Vanilla",
-    "Spicy",
-    "Berry",
-    "Floral",
-    "Sweet",
-    "Smokey",
-    "Woody",
-    "Rich",
-    "Acidic",
-  ];
-
   const marks = [
     { value: 0, label: "Light" },
-    { value: 50, label: "Medium" },
+    { value: 33, label: "Medium" },
+    { value: 66, label: "Medium-Dark" },
     { value: 100, label: "Dark" },
   ];
 
@@ -135,10 +117,11 @@ const UserCreatesBean = (props: Props) => {
           roastLevel,
           processing,
           qGrading,
-          altitude,
-          body,
-          acidity,
-          sweetness,
+          altitude: `${altitude[0]} - ${altitude[1]}`,
+          bodyAverage: body,
+          acidityAverage: acidity,
+          sweetnessAverage: sweetness,
+          bitternessAverage: bitterness,
           flavorNotes: flavor,
           locations: {
             coordinates: coord,
@@ -177,8 +160,11 @@ const UserCreatesBean = (props: Props) => {
       case 0:
         setRoastLevel("Light");
         break;
-      case 50:
+      case 33:
         setRoastLevel("Medium");
+        break;
+      case 66:
+        setRoastLevel("Medium-Dark");
         break;
       case 100:
         setRoastLevel("Dark");
@@ -278,7 +264,7 @@ const UserCreatesBean = (props: Props) => {
       .toLowerCase()
       .replace(/\s+/g, "-")}.${fileExtension}`;
 
-    new S3({
+    const s3 = new S3({
       params: { Bucket: S3_BUCKET_NAME },
       region: REGION,
       accessKeyId: AccessKeyId,
@@ -294,6 +280,7 @@ const UserCreatesBean = (props: Props) => {
     };
 
     try {
+      await s3.upload(params).promise();
       dispatch(notLoading());
     } catch (error) {
       console.error(error);
@@ -376,7 +363,7 @@ const UserCreatesBean = (props: Props) => {
         <FormGroup>
           <FormControlLabel
             control={<Checkbox />}
-            label="Add informations about the coffee origin"
+            label="Check this to add informations about the coffee farm"
             checked={checked}
             onChange={(event, newValue) => {
               setChecked((prevCheck) => !prevCheck);
@@ -448,8 +435,46 @@ const UserCreatesBean = (props: Props) => {
             {sweetness}
           </div>
         </div>
+        <div className="propWrapper">
+          <div className="propName">Bitterness: </div>
+          <div className="propValue">
+            <StyledRating
+              name="simple-controlled"
+              value={bitterness}
+              icon={<LocalCafeIcon fontSize="inherit" />}
+              emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+              onChange={(event, newValue) => {
+                newValue && setBitterness(newValue);
+              }}
+            />
+            {bitterness}
+          </div>
+        </div>
       </div>
     );
+  };
+
+  const handleChangeAltitude = (_event: Event, newValue: number | number[]) => {
+    if (Array.isArray(newValue)) {
+      setAltitude(newValue as [number, number]);
+    }
+  };
+
+  const handleQGradingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let inputValue = event.target.value;
+
+    // Allow empty input
+    if (inputValue === "") {
+      setQgrading("");
+      return;
+    }
+
+    // Allow only numbers with one decimal place
+    const parsedValue = parseFloat(inputValue);
+    if (!isNaN(parsedValue)) {
+      const clampedValue = Math.min(100, Math.max(0, parsedValue)); // Clamp 0-100
+      setQgrading(Number(clampedValue.toFixed(1))); // Ensure one decimal place
+    }
   };
 
   return (
@@ -529,15 +554,20 @@ const UserCreatesBean = (props: Props) => {
 
             <div className="titleTextFieldWrapper">
               <div className="brand">Origin: </div>
-              <TextField
+              <Autocomplete
+                multiple
                 sx={{ width: "100%" }}
-                id="standard-basic"
-                label="Country, Region"
-                variant="standard"
-                value={origin}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setOrigin(event.target.value);
-                }}
+                id="tags-standard"
+                options={countries}
+                defaultValue={[countries[0]]}
+                onChange={(event, newValue) => setOrigin(newValue)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Country"
+                    placeholder="Country"
+                  />
+                )}
               />
             </div>
 
@@ -567,7 +597,6 @@ const UserCreatesBean = (props: Props) => {
                         native: true,
                       }}
                       helperText="Please select a type"
-                      variant="standard"
                       defaultValue="Arabica"
                       value={type}
                       onChange={(
@@ -583,18 +612,16 @@ const UserCreatesBean = (props: Props) => {
                       ))}
                     </TextField>
                   </div>
-                  <div className="subtitleTextFieldWrapper">
+                  <div className="roast-slider" style={{ width: "80%" }}>
                     <div className="subtitle">Altitude: </div>
-                    <TextField
-                      id="standard-basic"
-                      label="meters"
-                      variant="standard"
-                      // value={altitude}
-                      onChange={(
-                        event: React.ChangeEvent<HTMLInputElement>
-                      ) => {
-                        setAltitude(parseFloat(event.target.value));
-                      }}
+                    <Slider
+                      getAriaLabel={() => "Temperature range"}
+                      value={altitude}
+                      onChange={handleChangeAltitude}
+                      valueLabelDisplay="on"
+                      min={0}
+                      max={2500}
+                      step={100}
                     />
                   </div>
                   <div className="roast-slider">
@@ -603,7 +630,7 @@ const UserCreatesBean = (props: Props) => {
                       className="slider"
                       sx={{ width: "215px" }}
                       aria-label="Roast Level"
-                      defaultValue={50}
+                      defaultValue={33}
                       getAriaValueText={(value: number) => `${value}°C`}
                       step={null}
                       marks={marks}
@@ -612,30 +639,33 @@ const UserCreatesBean = (props: Props) => {
                   </div>
                   <div className="subtitleTextFieldWrapper">
                     <div className="subtitle">Processing: </div>
-                    <TextField
-                      id="standard-basic"
-                      // label="type of processing"
-                      variant="standard"
+
+                    <Autocomplete
+                      options={coffeeProcessingMethods}
                       value={processing}
-                      onChange={(
-                        event: React.ChangeEvent<HTMLInputElement>
-                      ) => {
-                        setProcessing(event.target.value);
-                      }}
+                      defaultValue={coffeeProcessingMethods[0]}
+                      onChange={(_, newValue) => setProcessing(newValue)}
+                      renderInput={(params) => <TextField {...params} />}
+                      sx={{ width: "40vw" }}
                     />
                   </div>
                   <div className="subtitleTextFieldWrapper">
                     <div className="subtitle">QGrading: </div>
                     <TextField
-                      id="standard-basic"
-                      label="points"
-                      variant="standard"
-                      // value={qgrading}
-                      onChange={(
-                        event: React.ChangeEvent<HTMLInputElement>
-                      ) => {
-                        setQgrading(event.target.value);
-                      }}
+                      label="0 to 100"
+                      type="number"
+                      value={qGrading}
+                      onChange={handleQGradingChange}
+                      inputProps={{ step: "0.1", min: "0", max: "100" }} // Step of 0.1 for decimals
+                      sx={{ width: "200px" }}
+                      helperText={
+                        qGrading !== "" && (qGrading < 0 || qGrading > 100)
+                          ? "Must be between 0 and 100"
+                          : ""
+                      }
+                      error={
+                        qGrading !== "" && (qGrading < 0 || qGrading > 100)
+                      }
                     />
                   </div>
                   <Traits />
@@ -644,8 +674,8 @@ const UserCreatesBean = (props: Props) => {
                     fullWidth
                     id="tags-standard"
                     options={topFlavors}
+                    defaultValue={[topFlavors[1]]}
                     getOptionLabel={(option) => option}
-                    defaultValue={[topFlavors[2]]}
                     onChange={(event, newValue) => {
                       setFlavor(newValue);
                     }}
@@ -664,23 +694,29 @@ const UserCreatesBean = (props: Props) => {
           </div>
           <AddFarmData />
           {checked && (
-            <div className="editorWr" style={{ width: "100%" }}>
-              <CKEditor
-                editor={ClassicEditor}
-                data={farmData}
-                onChange={(event, editor) => {
-                  const data = editor.getData();
-                  setFarmData(data);
-                }}
-                config={{
-                  placeholder:
-                    "Tell us more about the origin of the coffee such as the region, coffee farm, farmer, etc.",
-                  extraPlugins: [MyCustomUploadAdapterPlugin],
-                }}
-              />
-            </div>
+            <>
+              <div className="editorWr" style={{ width: "100%" }}>
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={farmData}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setFarmData(data);
+                  }}
+                  config={{
+                    placeholder:
+                      "Tell us more about the origin of the coffee such as the region, coffee farm, farmer, etc.",
+                    extraPlugins: [MyCustomUploadAdapterPlugin],
+                  }}
+                />
+              </div>
+              <p>
+                Add a pin with the location of the farm and tell us it's story
+              </p>
+              <AddPinpoint sendDataToParent={handleDataFromChild} />
+            </>
           )}
-          <AddPinpoint sendDataToParent={handleDataFromChild} />
+
           <div className="snackbar">
             <Snackbar open={open} autoHideDuration={7000} onClose={handleClose}>
               <Alert

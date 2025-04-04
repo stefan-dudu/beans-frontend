@@ -71,7 +71,7 @@ const CountryPage = (props: Props) => {
         )}
         <div className="facts-row">
           <div className="prop">Altitude:</div>
-          <div className="regular-value"> &nbsp; {data?.altitude}</div>
+          <div className="regular-value"> &nbsp; {data?.altitude} m</div>
         </div>
       </div>
     );

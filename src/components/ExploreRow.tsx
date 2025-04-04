@@ -203,29 +203,35 @@ const ExploreRow: React.FC<Props> = ({ data }) => {
                   />
 
                   <span className="ratingsAverage">
-                    {data?.ratingsAverage.toFixed(1)}
+                    {!!data?.ratingsAverage && data?.ratingsAverage.toFixed(1)}
                   </span>
-                  <span className="reviewsNo">({data?.ratingsQuantity})</span>
+
+                  {!!data?.ratingsQuantity && (
+                    <span className="reviewsNo">({data?.ratingsQuantity})</span>
+                  )}
                 </div>
                 {data?.origin && (
-                  // ORIGIN
                   <div className="origin">
-                    <div className="origin-name">{data?.origin}</div>
-
-                    {findFlagUrlByCountryName(data?.origin) && (
-                      <img
-                        src={findFlagUrlByCountryName(data?.origin)}
-                        style={{
-                          width: "37px",
-                          height: "auto",
-                          objectFit: "contain",
-                          borderRadius: "8px",
-                        }}
-                        className="origin-flag"
-                        alt={`Is representative for ${data?.name}`}
-                        title={`Image representative for ${data?.name}`}
-                      />
-                    )}
+                    <div className="origin-name">
+                      {data.origin.length === 1
+                        ? data?.origin[0]
+                        : "Multiple origins"}
+                    </div>
+                    {data.origin.length === 1 &&
+                      findFlagUrlByCountryName(data?.origin[0]) && (
+                        <img
+                          src={findFlagUrlByCountryName(data?.origin[0])}
+                          style={{
+                            width: "37px",
+                            height: "auto",
+                            objectFit: "contain",
+                            borderRadius: "8px",
+                          }}
+                          className="origin-flag"
+                          alt={`Is representative for ${data?.name}`}
+                          title={`Image representative for ${data?.name}`}
+                        />
+                      )}
                   </div>
                 )}
                 <div className="flavs">

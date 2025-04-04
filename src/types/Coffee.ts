@@ -7,7 +7,7 @@ export type CoffeeType = {
   roastLevel: string;
   processing: string;
   qGrading: string;
-  altitude: number;
+  altitude: string;
   flavorNotes: string[];
   aroma: string;
   acidityAverage: number;

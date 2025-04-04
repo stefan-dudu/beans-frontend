@@ -394,7 +394,7 @@ const DetailedCoffeeBeans = (props: any) => {
         <title>{`${data?.brand} ${data?.name}`} reviews and informations</title>
         <meta
           name="description"
-          content={`Discover more informations and reviews about this coffe. It's a ${data?.type} from ${data?.origin}, with a ${data?.roastLevel} roast level. Brew coffee your way: Espresso, French press, pour-over, cold brew - Find your perfect cup!`}
+          content={`Discover more informations and reviews about this coffe. It's a ${data?.type} from ${data?.origin[0]}, with a ${data?.roastLevel} roast level. Brew coffee your way: Espresso, French press, pour-over, cold brew - Find your perfect cup!`}
         />
         <link rel="canonical" href={`/coffee`} />
       </Helmet>
@@ -466,31 +466,39 @@ const DetailedCoffeeBeans = (props: any) => {
                     />
                   )}
                   <span className="ratingsAverage">
-                    {data?.ratingsAverage.toFixed(1)}
+                    {!!data?.ratingsAverage && data?.ratingsAverage.toFixed(1)}
                   </span>
-                  <span className="reviewsNo">({data?.ratingsQuantity})</span>
+
+                  {!!data?.ratingsQuantity && (
+                    <span className="reviewsNo">({data?.ratingsQuantity})</span>
+                  )}
                 </div>
-                {data?.origin && (
+                {data.origin.length > 0 && (
                   <div
                     className="propWrapper clickable"
                     onClick={() => navigate("/guide/origins")}
                   >
                     <div className="propName">Origin: </div>
-                    <div className="propValue">{data?.origin}</div>
-                    {findFlagUrlByCountryName(data?.origin) && (
-                      <img
-                        src={findFlagUrlByCountryName(data?.origin)}
-                        style={{
-                          width: "37px",
-                          height: "auto",
-                          objectFit: "contain",
-                          borderRadius: "8px",
-                        }}
-                        className="origin-flag"
-                        alt={`Is representative for ${data?.name}`}
-                        title={`Image representative for ${data?.name}`}
-                      />
-                    )}
+                    <div className="propValue">
+                      {data.origin.length === 1
+                        ? data?.origin[0]
+                        : "Multiple origins"}
+                    </div>
+                    {data.origin.length === 1 &&
+                      findFlagUrlByCountryName(data?.origin[0]) && (
+                        <img
+                          src={findFlagUrlByCountryName(data?.origin[0])}
+                          style={{
+                            width: "37px",
+                            height: "auto",
+                            objectFit: "contain",
+                            borderRadius: "8px",
+                          }}
+                          className="origin-flag"
+                          alt={`Is representative for ${data?.name}`}
+                          title={`Image representative for ${data?.name}`}
+                        />
+                      )}
                   </div>
                 )}
                 {data?.type && (
@@ -541,7 +549,7 @@ const DetailedCoffeeBeans = (props: any) => {
                     <div className="propValue">{data?.qGrading}</div>
                   </div>
                 )}
-                {data && data?.altitude > 200 && (
+                {data && data?.altitude.length > 1 && (
                   <div
                     className="propWrapper clickable"
                     onClick={() => navigate("/guide/altitude")}

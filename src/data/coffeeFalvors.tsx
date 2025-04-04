@@ -1,0 +1,17 @@
+export const topFlavors = [
+  "Chocolate",
+  "Caramel",
+  "Nutty",
+  "Fruity",
+  "Earthy",
+  "Citrus",
+  "Vanilla",
+  "Spicy",
+  "Berry",
+  "Floral",
+  "Sweet",
+  "Smokey",
+  "Woody",
+  "Rich",
+  "Acidic",
+];
