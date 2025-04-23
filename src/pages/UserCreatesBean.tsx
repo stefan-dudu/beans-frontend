@@ -155,6 +155,29 @@ const UserCreatesBean = (props: Props) => {
     }
   };
 
+  async function getCoordinatesFromCountry(countryName: string) {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?country=${encodeURIComponent(
+        countryName
+      )}&format=json&limit=1`
+    );
+    const data = await response.json();
+    if (data.length > 0) {
+      return {
+        country: countryName,
+        lat: parseFloat(data[0].lat),
+        lng: parseFloat(data[0].lon),
+      };
+    } else {
+      return {
+        country: countryName,
+        lat: null,
+        lng: null,
+        error: "Country not found",
+      };
+    }
+  }
+
   const handleSliderChange = (event: Event, value: number | number[]) => {
     switch (value) {
       case 0:
@@ -378,6 +401,26 @@ const UserCreatesBean = (props: Props) => {
     setPictureURL(updatedFileName);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file, name, brand, origin]);
+
+  useEffect(() => {
+    const fetchCoordinates = async () => {
+      if (!origin || origin.length === 0) return;
+
+      try {
+        const results = await Promise.all(
+          origin.map(async (country) => {
+            const { lat, lng } = await getCoordinatesFromCountry(country);
+            return [lng, lat] as [number, number];
+          })
+        );
+        setCoord(results);
+      } catch (error) {
+        console.error("Error fetching coordinates:", error);
+      }
+    };
+
+    fetchCoordinates();
+  }, [origin]);
 
   const Traits = () => {
     const StyledRating = styled(Rating)({
