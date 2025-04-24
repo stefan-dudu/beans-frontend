@@ -95,7 +95,7 @@ const BeanSelector = (props: Props) => {
       }
 
       const data = await response.json();
-      console.log("Data from request:", data);
+      // console.log("Data from request:", data);
       if (data.results > 0) {
         navigate("/explore", { state: data.data });
       }

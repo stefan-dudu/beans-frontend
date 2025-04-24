@@ -80,7 +80,7 @@ const WrittenReview = ({
         }
       );
       const data = await response.json();
-      console.log("data", data);
+      // console.log("data", data);
 
       if (data.status === "success") {
         console.log("new review created");
@@ -243,6 +243,22 @@ const WrittenReview = ({
               </div>
 
               <div className="propWrapper">
+                <h2 className="propName">Body:</h2>
+                <div className="propValue">
+                  <StyledRating
+                    name="simple-controlled"
+                    size="large"
+                    icon={<LocalCafeIcon fontSize="inherit" />}
+                    emptyIcon={<LocalCafeIcon fontSize="inherit" />}
+                    value={body}
+                    onChange={(event, newValue) => {
+                      setBody(newValue !== null ? newValue * 1 : 0);
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="propWrapper">
                 <h2 className="propName">Sweetness:</h2>
                 <div className="propValue">
                   <StyledRating
@@ -269,22 +285,6 @@ const WrittenReview = ({
                     value={bitterness}
                     onChange={(event, newValue) => {
                       setBitterness(newValue !== null ? newValue * 1 : 0);
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="propWrapper">
-                <h2 className="propName">Body:</h2>
-                <div className="propValue">
-                  <StyledRating
-                    name="simple-controlled"
-                    size="large"
-                    icon={<LocalCafeIcon fontSize="inherit" />}
-                    emptyIcon={<LocalCafeIcon fontSize="inherit" />}
-                    value={body}
-                    onChange={(event, newValue) => {
-                      setBody(newValue !== null ? newValue * 1 : 0);
                     }}
                   />
                 </div>

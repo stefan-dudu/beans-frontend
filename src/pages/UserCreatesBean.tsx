@@ -49,9 +49,9 @@ const UserCreatesBean = (props: Props) => {
   const [origin, setOrigin] = useState<string[]>(["Brazil"]);
   const [type, setType] = useState("Arabica");
   const [roastLevel, setRoastLevel] = useState("Medium");
-  const [processing, setProcessing] = useState<string | null>("Washed (Wet)");
+  const [processing, setProcessing] = useState<string | null>("");
   const [qGrading, setQgrading] = useState<number | "">("");
-  const [altitude, setAltitude] = React.useState<number[]>([800, 1500]);
+  const [altitude, setAltitude] = React.useState<number[]>([0, 0]);
   const [body, setBody] = useState(0);
   const [acidity, setAcidity] = useState(0);
   const [sweetness, setSweetness] = useState(0);
@@ -688,7 +688,9 @@ const UserCreatesBean = (props: Props) => {
                       value={processing}
                       defaultValue={coffeeProcessingMethods[0]}
                       onChange={(_, newValue) => setProcessing(newValue)}
-                      renderInput={(params) => <TextField {...params} />}
+                      renderInput={(params) => (
+                        <TextField label="Processing methods" {...params} />
+                      )}
                       sx={{ width: "40vw" }}
                     />
                   </div>

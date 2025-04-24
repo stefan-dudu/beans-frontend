@@ -178,7 +178,7 @@ const DetailedCoffeeBeans = (props: any) => {
       }
 
       const data = await response.json();
-      console.log("Data from request:", data);
+      // console.log("Data from request:", data);
       setIsFavourite((prevCheck) => !prevCheck);
     } catch (err: any) {
       if (err && !loggedIn) {
@@ -549,7 +549,7 @@ const DetailedCoffeeBeans = (props: any) => {
                     <div className="propValue">{data?.qGrading}</div>
                   </div>
                 )}
-                {data && data?.altitude.length > 1 && (
+                {data && data?.altitude !== "0 - 0" && (
                   <div
                     className="propWrapper clickable"
                     onClick={() => navigate("/guide/altitude")}
